@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Salas</title>
+  <link rel="stylesheet" href="/static/css/bootstrap.css">
+</head>
+<body>
+  {% extends "master.html" %}
+  {% block contenido %}
+
+  <table class ="table table-striped">
+      <tr>
+        <td>Numero de Sala</td>
+        <td>Fecha de Asientos</td>
+        <td>Tipo de Sala</td>
+        <td>Opciones</td>
+      </tr>
+
+      <tr>
+        <td>{{s.NumSala}}</td>
+        <td>{{s.NumAsientos}}</td>
+        <td>{{s.TipoDeSala}}</td>
+        <td>
+          <a href="/Cinemax/modificarS?idSala={{s.idSala}}">
+            <button type="button" class="btn btn-info" aria-label="Left Align">
+              <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+            </button>
+          </a>
+
+        </td>
+      </tr>
+  
+  </table>
+{% endblock %}
+
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Administración</title>
+    <link rel="stylesheet" href="/static/css/bootstrap.css">
+</head>
+<body>
+  {% extends "master.html" %}
+  {% block contenido %}
+    <div>
+      <table class="table-responsive">
+        <tr>
+          {% for p in p %}
+          <td >
+            <a href="/Cinemax/infoP?idPelicula={{p.idPelicula}}" class="btn">
+              <img src="/{{p.imagenPortada}}" alt="{{p.imagenPortada}}" width="129" height="193">
+              <br>
+              <p>{{p.titulo}}</p>
+            </a>
+          </td>
+          {% endfor %}
+        </tr>
+      </table>
+    </div>
+
+
+  {% endblock %}
+
+</body>
+</html>

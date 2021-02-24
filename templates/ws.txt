@@ -1,0 +1,25 @@
+{
+  "movies":
+  [
+      {
+      "director": "Jun Ji-hyun (AKA Gianna Jun)",
+      "rating": "B",
+      "story": "1933. Corea est\u00e1 ocupada por los japoneses. Un grupo de exiliados rebeldes planea matar a un comandante nip\u00f3n, pero la \u00fanica asesina que puede hacerse cargo de tan delicada tarea est\u00e1 en la c\u00e1rcel. La resistencia se dispone a sacarla de prisi\u00f3n, cuando un esp\u00eda alerta a los japoneses, acelerando un entramado de traiciones.",
+      "tagline": "Suspenso",
+      "duration": "1",
+      "movie": "Asesinos",
+      "year": "2015-01-03",
+      "cast": "Jun Ji-hyun (AKA Gianna Jun), Lee Jung-jae, Ha Jung-woo, Oh Dal-su, Jo Jin-woong, Choi Dok-mun, Lee"
+      },
+      {
+      "director": "Jun Ji-hyun (AKA Gianna Jun)",
+      "rating": "B",
+      "story": "Narrar\u00e1 la vida de un grupo de jugadores de f\u00fatbol americano, algunos en activo y otros retirados, con Dwayne Johnson en el papel de Spencer Strasmore, un atleta ya retirado. El grupo se compone de Charles (Omar Benson Miller), un jugador retirado que est\u00e1 buscando cual es el siguiente paso en su carrera; Ricky (John David Washington), un atleta muy competitivo y espiritual; y Vernon (Donovan Carter), un deportista muy centrado en su familia. Adem\u00e1s, tendr\u00e1n que lidiar con Joe (Rob Corddry), un asesor financiero al que le cuesta encajar; Jason (Troy Garity), un agente de primer nivel; Michaels (Taylor Cole) una reportera de ESPN que est\u00e1 enamorada de Spencer; y Tina (LeToya Luckett), la viuda de uno de los mejores amigos de Spencer.",
+      "tagline": "Drama",
+      "duration": "1 hora 30 minutos",
+      "movie": "Ballers",
+      "year": "2015",
+      "cast": "Dwayne \"The Rock\" Johnson, Carmelo Oquendo, Anabelle Acosta, Hakim Callender, Christopher De Stefan"
+      }
+    ]
+}

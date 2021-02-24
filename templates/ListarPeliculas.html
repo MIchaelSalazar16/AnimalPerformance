@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Listar Peliculas</title>
+  <link rel="stylesheet" href="/static/css/bootstrap.css">
+</head>
+<body>
+  {% extends "master.html" %}
+  {% block contenido %}
+<div class="">
+
+  <table class ="table table-striped">
+      <tr>
+        <td>Titulo</td>
+        <td>Portada</td>
+        <td>Genero</td>
+        <td>Clasificacion</td>
+        <td>Director</td>
+        <td>Interpretes</td>
+        <td>Sinopsis</td>
+        <td>Nacionalidad</td>
+        <td>Año</td>
+        <td>Duracion</td>
+        <td>Opciones</td>
+      </tr>
+      {%for p in p %}
+      <tr>
+        <td>{{p.titulo}}</td>
+        <td><img src="/{{p.imagenPortada}}" width="150" height="200" alt="{{p.titulo}}" class="img-rounded"></td>
+        <td>{{p.genero}}</td>
+        <td>{{p.clasificacion}}</td>
+        <td>{{p.director}}</td>
+        <td>{{p.interpretes}}</td>
+        <td>{{p.sinopsis}}</td>
+        <td>{{p.nacionalidad}}</td>
+        <td>{{p.anio}}</td>
+        <td>{{p.duracion}}</td>
+        <td>
+          <a href="/Cinemax/modificarP?idPelicula={{p.idPelicula}}">
+            <button type="button" class="btn btn-info" aria-label="Left Align">
+              <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+            </button>
+          </a>
+          |
+          <a href="/Cinemax/ingresarP">
+            <button type="button" class="btn btn-info" aria-label="Left Align">
+            <span class="glyphicon glyphicon-plus" ></span>
+            </button>
+          </a>
+        </td>
+      </tr>
+      {%endfor%}
+  </table>
+</div>
+{% endblock %}
+</body>
+</html>
