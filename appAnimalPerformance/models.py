@@ -5,6 +5,7 @@ class Animal(models.Model):
     idAnimal= models.AutoField(primary_key=True)
     nombreAnimal=  models.CharField(max_length=100)
     peso_animal=  models.FloatField()
+    precio_costo= models.FloatField()
 
     def __str__(self):
         return self.idAnimal
