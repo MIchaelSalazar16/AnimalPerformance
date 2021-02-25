@@ -5,5 +5,4 @@ from appAnimalPerformance.views import inicioAdmin
 
 urlpatterns=[
 	url(r'^$',inicioAdmin,name="inicioAdmin"),
-
 ]
