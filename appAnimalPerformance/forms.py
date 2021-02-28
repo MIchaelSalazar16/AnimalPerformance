@@ -27,4 +27,4 @@ class RendimientoForm(ModelForm):
     class Meta:
         model = Rendimiento
         fields = ['idRendimiento','idLoteAnimal','idProducto','nombreProveedor','total_costo','total_venta','margen_utilidad',
-                    'rendimiento_neto','merma_deshidratacion','porcentaje_peso_neto','hora','fecha']
+                    'rendimiento_neto','merma_deshidratacion','porcentaje_peso_neto']

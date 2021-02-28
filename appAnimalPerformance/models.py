@@ -7,16 +7,10 @@ class Animal(models.Model):
     peso_animal=  models.FloatField()
     precio_costo= models.FloatField()
 
-    def __str__(self):
-        return self.idAnimal
-
 class LoteAnimal(models.Model):
     idLoteAnimal= models.AutoField(primary_key=True)
     idAnimal= models.ForeignKey(Animal,on_delete=models.CASCADE,default="")
     peso_lote=  models.FloatField()
-
-    def __str__(self):
-        return self.idLoteAnimal
 
 class Producto(models.Model):
     idProducto= models.AutoField(primary_key=True)
@@ -30,9 +24,6 @@ class Producto(models.Model):
     total_costo_producto=  models.FloatField()
     total_venta_producto=  models.FloatField()
     margen_utilidad_producto=  models.FloatField()
-
-    def __str__(self):
-        return self.idProducto
 
 class Usuario(models.Model):
     idUsuario= models.AutoField(primary_key=True)
@@ -53,5 +44,5 @@ class Rendimiento(models.Model):
     rendimiento_neto=  models.FloatField()
     merma_deshidratacion=  models.FloatField()
     porcentaje_peso_neto=  models.FloatField()
-    hora=  models.DateField()
-    fecha=  models.DateField()
+    #hora=  models.DateField()
+    #fecha=  models.DateField()

@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Sesiones</title>
+  <title>Animal</title>
       <link rel="stylesheet" href="/static/css/bootstrap.css">
 </head>
 <body>
   {% extends "master.html" %}
   {% block contenido %}
-    <a href="/Cinemax/verSe"><button type="button" class="btn btn-success">
+    <a href="/Cinemax/verS"><button type="button" class="btn btn-success">
         <span class="glyphicon glyphicon-arrow-left" ></span>REGRESAR</button></a>
         <br>
         <br>
@@ -16,9 +16,9 @@
         <form action="" method="post" enctype="multipart/form-data">
            {% csrf_token %}
            <table class="table-responsive">
-             <tr class="info">{{f}}</tr>
+             <tr class="info">{{fa}}</tr>
            </table>
-           <input type="submit" value="Guardar" class="btn btn-success">
+           <input type="submit" href="/AnimalPerformance/ingresarLt?idAnimal={{fa.idAnimal}}" value="Guardar" class="btn btn-success">
         </form>
       </div>
   {% endblock %}

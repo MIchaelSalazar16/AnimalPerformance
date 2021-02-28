@@ -56,9 +56,9 @@ admin.site.register(Producto,AdminProducto)
 
 class AdminRendimiento(admin.ModelAdmin):
 	list_display=["idRendimiento","idLoteAnimal","idProducto","nombreProveedor","total_costo","total_venta","margen_utilidad",
-                "rendimiento_neto","merma_deshidratacion","porcentaje_peso_neto","hora","fecha"]
+                "rendimiento_neto","merma_deshidratacion","porcentaje_peso_neto"]
 	list_editable=["nombreProveedor","total_costo","total_venta","margen_utilidad",
-                "rendimiento_neto","merma_deshidratacion","porcentaje_peso_neto","hora","fecha"]
+                "rendimiento_neto","merma_deshidratacion","porcentaje_peso_neto"]
 	list_filter=["nombreProveedor"]
 	search_fields=["nombreProveedor"]
 
