@@ -10,22 +10,23 @@ from django.core import serializers
 
 # Create your views here.
 def inicioAdmin(request):
-    r=Rendimiento.objects.all()
-    context={
-    'r':r,
-    }
-    return render(request,"InicioAdmin.html",context)
+	r=Rendimiento.objects.all()
+	context={
+	'r':r,
+	}
+	return render(request,"InicioAdmin.html",context)
 
 def IngresarAnimal(request):
 	fa=AnimalForm(request.POST or None, request.FILES or None)
 	#Declaración de variables de las clases
-	a=Animal()
+	a=Animal.objects.get(idAnimal=request.GET['idAnimal'])
+	fa.fields["nombreAnimal"].initial=a.nombreAnimal
 	if request.method == 'POST':
 		if fa.is_valid():
 			#Limpieza de la lista que guarda el formulario
 			datosA= fa.cleaned_data
 			#Para registrar a los animales que entran
-			a.nombreAnimal=datosA.get("nombreAnimal")
+			a.nombre_animal=datosA.get("nombre_animal")
 			a.peso_animal=datosA.get("peso_animal")
 			a.precio_costo=datosA.get("precio_costo")
 			if a.save() != True:
@@ -64,7 +65,7 @@ def IngresarProducto(request):
 			#Limpieza de la lista que guarda el formulario
 			datosP= fp.cleaned_data
 			#Para ingresar el producto con sus campos calculados en la tabla a la base
-			p.nombreProducto=datosP.get("nombreProducto")
+			p.nombre_producto=datosP.get("nombre_producto")
 			p.peso_producto=datosP.get("peso_producto")
 			p.utilidad_producto=datosP.get("utilidad_producto")
 			p.precio_costo=datosP.get("precio_costo")
@@ -92,7 +93,7 @@ def IngresarRendimiento(request):
 			#Para registrar el rendimiento animal.
 			r.idLoteAnimal=datosR.get("idLoteAnimal")
 			r.idProducto=datosR.get("idProducto")
-			r.nombreProveedor=datosR.get("nombreProveedor")
+			r.nombre_proveedor=datosR.get("nombre_proveedor")
 			r.total_costo=datosR.get("total_costo")
 			r.total_venta=datosR.get("total_venta")
 			r.margen_utilidad=datosR.get("margen_utilidad")

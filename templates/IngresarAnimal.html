@@ -18,7 +18,12 @@
            <table class="table-responsive">
              <tr class="info">{{fa}}</tr>
            </table>
-           <input type="submit" href="/AnimalPerformance/ingresarLt?idAnimal={{fa.idAnimal}}" value="Guardar" class="btn btn-success">
+           
+           <a href="/Cinemax/modificarS?idSala={{s.idSala}}">
+            <button type="button" class="btn btn-info" aria-label="Left Align">
+              <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+            </button>
+          </a>
         </form>
       </div>
   {% endblock %}

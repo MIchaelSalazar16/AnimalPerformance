@@ -7,10 +7,10 @@ from .models import Usuario
 
 
 class AdminAnimal(admin.ModelAdmin):
-	list_display=["idAnimal", "nombreAnimal", "peso_animal", "precio_costo"]
-	list_editable=["nombreAnimal", "peso_animal", "precio_costo"]
-	list_filter=["nombreAnimal"]
-	search_fields=["nombreAnimal"]
+	list_display=["idAnimal", "nombre_animal", "peso_animal", "precio_costo"]
+	list_editable=["nombre_animal", "peso_animal", "precio_costo"]
+	list_filter=["nombre_animal"]
+	search_fields=["nombre_animal"]
 
 	class Meta:
 		model= Animal
@@ -40,14 +40,14 @@ class AdminUsuario(admin.ModelAdmin):
 admin.site.register(Usuario,AdminUsuario)
 
 class AdminProducto(admin.ModelAdmin):
-	list_display=["idProducto","idAnimal","nombreProducto","peso_producto",
+	list_display=["idProducto","idAnimal","nombre_producto","peso_producto",
                     "utilidad_producto","precio_costo","precio_venta",
                     "porcentaje_peso","total_costo_producto","total_venta_producto","margen_utilidad_producto"]
-	list_editable=["nombreProducto","peso_producto",
+	list_editable=["nombre_producto","peso_producto",
                     "utilidad_producto","precio_costo","precio_venta",
                     "porcentaje_peso","total_costo_producto","total_venta_producto","margen_utilidad_producto"]
-	list_filter=["nombreProducto"]
-	search_fields=["nombreProducto"]
+	list_filter=["nombre_producto"]
+	search_fields=["nombre_producto"]
 
 	class Meta:
 		model= Producto
@@ -55,12 +55,12 @@ class AdminProducto(admin.ModelAdmin):
 admin.site.register(Producto,AdminProducto)
 
 class AdminRendimiento(admin.ModelAdmin):
-	list_display=["idRendimiento","idLoteAnimal","idProducto","nombreProveedor","total_costo","total_venta","margen_utilidad",
+	list_display=["idRendimiento","idLoteAnimal","idProducto","nombre_proveedor","total_costo","total_venta","margen_utilidad",
                 "rendimiento_neto","merma_deshidratacion","porcentaje_peso_neto"]
-	list_editable=["nombreProveedor","total_costo","total_venta","margen_utilidad",
+	list_editable=["nombre_proveedor","total_costo","total_venta","margen_utilidad",
                 "rendimiento_neto","merma_deshidratacion","porcentaje_peso_neto"]
-	list_filter=["nombreProveedor"]
-	search_fields=["nombreProveedor"]
+	list_filter=["nombre_proveedor"]
+	search_fields=["nombre_proveedor"]
 
 	class Meta:
 		model= Rendimiento

@@ -4,29 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Administración</title>
+  <title>Inicio</title>
     <link rel="stylesheet" href="/static/css/bootstrap.css">
+    <script src="/static/js/babel.js"></script>
 </head>
 <body>
   {% extends "master.html" %}
   {% block contenido %}
-    <div>
-      <table class="table-responsive">
-        <tr>
-          
-          <td >
-            <!-- <a href="/AnimalPerformance/infoP?idPelicula={{p.idPelicula}}" class="btn"> -->
-             
-              <br>
-              <p><h1>ANIMAL PERFORMANCE</h1></p>
-            </a>
-          </td>
-          
-        </tr>
-      </table>
-    </div>
-
-
+   <a href="/AnimalPerformance/ingresarA?idAnimal=1">
+    <button type="button" class="btn btn-info" aria-label="Left Align">
+      <h3><p>Ingresar un nuevo rendimiento</p><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span></h3>
+    </button>
+  </a>
   {% endblock %}
 
 </body>

@@ -1,9 +1,10 @@
 from django.db import models
 from django import forms
 
+
 class Animal(models.Model):
     idAnimal= models.AutoField(primary_key=True)
-    nombreAnimal=  models.CharField(max_length=100)
+    nombre_animal=  models.CharField(max_length=100)
     peso_animal=  models.FloatField()
     precio_costo= models.FloatField()
 
@@ -15,7 +16,7 @@ class LoteAnimal(models.Model):
 class Producto(models.Model):
     idProducto= models.AutoField(primary_key=True)
     idAnimal= models.ForeignKey(Animal,on_delete=models.CASCADE,default="")
-    nombreProducto=  models.CharField(max_length=100)
+    nombre_producto=  models.CharField(max_length=100)
     peso_producto=  models.FloatField()
     utilidad_producto=  models.FloatField()
     precio_costo=  models.FloatField()
@@ -37,7 +38,7 @@ class Rendimiento(models.Model):
     idRendimiento= models.AutoField(primary_key=True)
     idLoteAnimal= models.ForeignKey(LoteAnimal,on_delete=models.CASCADE,default="")
     idProducto= models.ForeignKey(Producto,on_delete=models.CASCADE,default="")
-    nombreProveedor=  models.CharField(max_length=100)
+    nombre_proveedor=  models.CharField(max_length=100)
     total_costo=  models.FloatField()
     total_venta=  models.FloatField()
     margen_utilidad=  models.FloatField()
