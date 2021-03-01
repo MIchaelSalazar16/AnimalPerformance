@@ -7,39 +7,17 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 import json as simplejson
 from django.http import HttpResponse,HttpResponseRedirect
 from django.core import serializers
-
+from django.utils import timezone
 # Create your views here.
 def inicioAdmin(request):
-	r=Rendimiento.objects.all()
+	lt=LoteAnimal.objects.all()
 	context={
-	'r':r,
+	'lt':lt,
 	}
 	return render(request,"InicioAdmin.html",context)
 
-def IngresarAnimal(request):
-	fa=AnimalForm(request.POST or None, request.FILES or None)
-	#Declaración de variables de las clases
-	a=Animal.objects.get(idAnimal=request.GET['idAnimal'])
-	fa.fields["nombreAnimal"].initial=a.nombreAnimal
-	if request.method == 'POST':
-		if fa.is_valid():
-			#Limpieza de la lista que guarda el formulario
-			datosA= fa.cleaned_data
-			#Para registrar a los animales que entran
-			a.nombre_animal=datosA.get("nombre_animal")
-			a.peso_animal=datosA.get("peso_animal")
-			a.precio_costo=datosA.get("precio_costo")
-			if a.save() != True:
-				return redirect(IngresarLote)
-	context={
-	'fa':fa,
-	}
-	return render(request,"IngresarAnimal.html",context)
-
 def IngresarLote(request):
 	flt=LoteAnimalForm(request.POST or None, request.FILES or None)
-	a=Animal.objects.get(idAnimal=request.GET['idAnimal'])
-	flt.fields['idAnimal'].initial=a.idAnimal
 	lt=LoteAnimal()
 	#Declaración de variables de las clases
 	if request.method == 'POST':
@@ -47,14 +25,32 @@ def IngresarLote(request):
 			#Limpieza de la lista que guarda el formulario
 			datosLt= flt.cleaned_data
 			#Para registrar a los animales que entran
-			lt.idAnimal=datosLt.get("idAnimal")
+			lt.nombre_animal=datosLt.get("nombre_animal")
 			lt.peso_lote=datosLt.get("peso_lote")
+			lt.precio_costo=datosLt.get("precio_costo")
 			if lt.save() != True:
-				return redirect(IngresarRendimiento)
+				return redirect(inicioAdmin)
 	context={
 	'flt':flt,
 	}
-	return render(request,"IngresarLote.html",context)
+	return render(request,"InicioAdmin.html",context)
+
+def IngresarAnimal(request):
+	fa=AnimalForm(request.POST or None, request.FILES or None)
+	a=Animal()
+	if request.method == 'POST':
+		if fa.is_valid():
+			#Limpieza de la lista que guarda el formulario
+			datosA= fa.cleaned_data
+			#Para registrar a los animales que entran
+			a.idLoteAnimal=datosA.get("idLoteAnimal")
+			a.peso_animal=datosA.get("peso_animal")
+			if a.save() != True:
+				return redirect(IngresarAnimal)
+	context={
+	'fa':fa,
+	}
+	return render(request,"IngresarAnimal.html",context)
 
 def IngresarProducto(request):
 	#Variables de los formularios
@@ -73,11 +69,11 @@ def IngresarProducto(request):
 			p.total_costo_producto=datosP.get("total_costo_producto")
 			p.total_venta_producto=datosP.get("total_venta_producto")
 			p.margen_utilidad_producto=datosP.get("margen_utilidad_producto")
+			
 			if p.save() != True:
 				return redirect(IngresarProducto)
 	context={
 	'fp':fp,
-	'p':p,
 	}
 	return render(request,"IngresarProducto.html",context)
 
@@ -92,7 +88,6 @@ def IngresarRendimiento(request):
 			datosR= fr.cleaned_data
 			#Para registrar el rendimiento animal.
 			r.idLoteAnimal=datosR.get("idLoteAnimal")
-			r.idProducto=datosR.get("idProducto")
 			r.nombre_proveedor=datosR.get("nombre_proveedor")
 			r.total_costo=datosR.get("total_costo")
 			r.total_venta=datosR.get("total_venta")
@@ -100,13 +95,10 @@ def IngresarRendimiento(request):
 			r.rendimiento_neto=datosR.get("rendimiento_neto")
 			r.merma_deshidratacion=datosR.get("merma_deshidratacion")
 			r.porcentaje_peso_neto=datosR.get("porcentaje_peso_neto")
-			#r.hora=datosR.get("hora")
-			#r.fecha=datosR.get("fecha")
 			if r.save() != True:
 				return redirect(ExportarRendimiento)
 	context={
 	'fr':fr,
-	'r':r,	
 	}
 	return render(request,"IngresarRendimiento.html",context)
 
