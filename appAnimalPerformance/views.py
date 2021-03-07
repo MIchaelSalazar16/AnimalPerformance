@@ -16,6 +16,27 @@ def inicioAdmin(request):
 	}
 	return render(request,"InicioAdmin.html",context)
 
+def IngresarAnimal(request):
+	fa=AnimalForm(request.POST or None, request.FILES or None)
+	#a=Animal.objects.get(nombre_animal=request.GET['nombre_animal'])
+	#fa.fields['nombre_animal'].initial='SSSSSSSS'
+	A=5;
+	a=Animal()
+	if request.method == 'POST':
+		if fa.is_valid():
+			#Limpieza de la lista que guarda el formulario
+			datosA= fa.cleaned_data
+			#Para registrar a los animales que entran
+			a.nombre_animal=datosA.get("nombre_animal")
+			a.peso_animal=datosA.get("peso_animal")
+			if a.save() != True:
+				return redirect(IngresarAnimal)
+	context={
+	'fa':fa,
+	'A':A,
+	}
+	return render(request,"IngresarAnimal.html",context)
+
 def IngresarLote(request):
 	flt=LoteAnimalForm(request.POST or None, request.FILES or None)
 	lt=LoteAnimal()
@@ -34,23 +55,6 @@ def IngresarLote(request):
 	'flt':flt,
 	}
 	return render(request,"InicioAdmin.html",context)
-
-def IngresarAnimal(request):
-	fa=AnimalForm(request.POST or None, request.FILES or None)
-	a=Animal()
-	if request.method == 'POST':
-		if fa.is_valid():
-			#Limpieza de la lista que guarda el formulario
-			datosA= fa.cleaned_data
-			#Para registrar a los animales que entran
-			a.idLoteAnimal=datosA.get("idLoteAnimal")
-			a.peso_animal=datosA.get("peso_animal")
-			if a.save() != True:
-				return redirect(IngresarAnimal)
-	context={
-	'fa':fa,
-	}
-	return render(request,"IngresarAnimal.html",context)
 
 def IngresarProducto(request):
 	#Variables de los formularios

@@ -1,22 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Inicio</title>
-    <link rel="stylesheet" href="/static/css/bootstrap.css">
-    <script src="/static/js/babel.js"></script>
-</head>
-<body>
-  {% extends "master.html" %}
-  {% block contenido %}
-   <a href="/AnimalPerformance/ingresarA?nombre_animal=CERDO">
-    <button type="button" class="btn btn-info" aria-label="Left Align">
-      <h3><p>Ingresar un nuevo rendimiento</p><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span></h3>
-    </button>
+{% extends "master.html" %}
+{% block contenido %}
+  <a href="/AnimalPerformance/ingresarA">
+  <button type="button" class="btn btn-info" aria-label="Left Align">
+    <h3><p>Ingresar un nuevo rendimiento</p><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span></h3>
+  </button>
   </a>
-  {% endblock %}
+{% endblock %}
 
-</body>
-</html>
+
