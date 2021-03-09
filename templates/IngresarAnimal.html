@@ -20,6 +20,9 @@
               </tr>
           </thead>
           <tbody>
+            {% for a in a%}
+              <tr><br>{{a.peso_animal}}</tr>
+            {% endfor %}
             <tr>
               <td>{{fa.nombre_animal}}</td>
               <td>{{fa.peso_animal}}</td>
@@ -33,4 +36,3 @@
           </a>
     </div>
  {% endblock %}
-

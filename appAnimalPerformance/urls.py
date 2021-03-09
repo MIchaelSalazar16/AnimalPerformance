@@ -12,7 +12,8 @@ urlpatterns=[
 	path('', inicioAdmin),
 	path('ingresarR/',IngresarRendimiento),
 	path('ingresarA/',IngresarAnimal),
-	path('ingresarLt/<int:aux>',IngresarLote),
+	#path('ingresarA/<int:na>',IngresarAnimal),
+	path('ingresarLt/',IngresarLote),
 	path('ingresarP/',IngresarProducto),
-	path('num/',NumAnimales),	
+	path('na/',NumAnimales),
 ]
