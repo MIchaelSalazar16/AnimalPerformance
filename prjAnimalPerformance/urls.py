@@ -15,10 +15,14 @@ Including another URLconf
 """
 from django.conf.urls import url,include
 from django.contrib import admin
+from django.urls import path
 
 
 urlpatterns = [
-    url(r'^AnimalPerformance/admin/', admin.site.urls),
-	url(r'^AnimalPerformance/', include("appAnimalPerformance.urls")),
+    path('AnimalPerformance/admin/',admin.site.urls),
+    path('AnimalPerformance/', include("appAnimalPerformance.urls")),
+
+    #url(r'^AnimalPerformance/admin/', admin.site.urls),
+	#url(r'^AnimalPerformance/', include("appAnimalPerformance.urls")),
 	#url(r'^CrearU','appCinemax.views.ModificarUsuario',name='ModificarUsuario'),
 ]

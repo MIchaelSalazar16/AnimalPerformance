@@ -8,6 +8,7 @@ import json as simplejson
 from django.http import HttpResponse,HttpResponseRedirect
 from django.core import serializers
 from django.utils import timezone
+from django.shortcuts import redirect,render
 # Create your views here.
 def inicioAdmin(request):
 	lt=LoteAnimal.objects.all()
@@ -15,6 +16,13 @@ def inicioAdmin(request):
 	'lt':lt,
 	}
 	return render(request,"InicioAdmin.html",context)
+
+def NumAnimales(request):
+	lt=LoteAnimal.objects.all()
+	context={
+	'lt':lt,
+	}
+	return render(request,"NumAnimales.html",context)
 
 def IngresarAnimal(request):
 	fa=AnimalForm(request.POST or None, request.FILES or None)
@@ -37,7 +45,9 @@ def IngresarAnimal(request):
 	}
 	return render(request,"IngresarAnimal.html",context)
 
-def IngresarLote(request):
+def IngresarLote(request, aux):
+	#aux=5;
+	animales=Animal.objects.all().order_by('-fecha')[:aux]
 	flt=LoteAnimalForm(request.POST or None, request.FILES or None)
 	lt=LoteAnimal()
 	#Declaración de variables de las clases
@@ -53,8 +63,9 @@ def IngresarLote(request):
 				return redirect(inicioAdmin)
 	context={
 	'flt':flt,
+	'a':animales,
 	}
-	return render(request,"InicioAdmin.html",context)
+	return render(request,"IngresarLote.html",context)
 
 def IngresarProducto(request):
 	#Variables de los formularios

@@ -1,16 +1,18 @@
 from django.conf.urls import url
 from django.contrib import admin
+from django.urls import path
 from appAnimalPerformance.views import inicioAdmin
 from appAnimalPerformance.views import IngresarRendimiento
 from appAnimalPerformance.views import IngresarAnimal
 from appAnimalPerformance.views import IngresarLote
 from appAnimalPerformance.views import IngresarProducto
+from appAnimalPerformance.views import NumAnimales
 
 urlpatterns=[
-	url(r'^$',inicioAdmin,name="inicioAdmin"),
-	url(r'^ingresarR/',IngresarRendimiento,name="IngresarRendimiento"),
-	url(r'^ingresarA/',IngresarAnimal,name="IngresarAnimal"),
-	url(r'^ingresarLt/',IngresarLote,name="IngresarLote"),
-	url(r'^ingresarP/',IngresarProducto,name="IngresarProducto"),
-	
+	path('', inicioAdmin),
+	path('ingresarR/',IngresarRendimiento),
+	path('ingresarA/',IngresarAnimal),
+	path('ingresarLt/<int:aux>',IngresarLote),
+	path('ingresarP/',IngresarProducto),
+	path('num/',NumAnimales),	
 ]

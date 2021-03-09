@@ -1,0 +1,17 @@
+{% extends "master.html" %}
+  {% block contenido %}
+      <h3 class="label">INGRESE EL NUMERO DE ANIMALES</h3>
+      <label class="block clearfix">
+        <span class="block input-icon input-icon-left">
+          <input type="number" id="NumAnimales" class="form-control" placeholder="Número de Animales" required />
+          <i class="ace-icon fa fa-lock"></i>
+        </span>
+      </label>
+
+       <a href="/AnimalPerformance/ingresarLt/">
+          <button type="button" class="btn btn-info" aria-label="Left Align">
+            <h5><p>SIGUIENTE  <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></p></h5>
+          </button>
+        </a>
+      </div>
+  {% endblock %}
