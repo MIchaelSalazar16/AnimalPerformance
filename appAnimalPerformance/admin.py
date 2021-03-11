@@ -39,10 +39,8 @@ class AdminUsuario(admin.ModelAdmin):
 admin.site.register(Usuario,AdminUsuario)
 
 class AdminProducto(admin.ModelAdmin):
-	list_display=["idProducto","nombre_producto","peso_producto","utilidad_producto","precio_costo","precio_venta",
-                    "porcentaje_peso","total_costo_producto","total_venta_producto","margen_utilidad_producto"]
-	list_editable=["nombre_producto","peso_producto","utilidad_producto","precio_costo","precio_venta",
-                    "porcentaje_peso","total_costo_producto","total_venta_producto","margen_utilidad_producto"]
+	list_display=["idProducto","nombre_producto","peso_producto","utilidad_producto","precio_costo","precio_venta"]
+	list_editable=["nombre_producto","peso_producto","utilidad_producto","precio_costo","precio_venta"]
 	list_filter=["nombre_producto"]
 	search_fields=["nombre_producto"]
 
@@ -53,7 +51,8 @@ admin.site.register(Producto,AdminProducto)
 
 class AdminRendimiento(admin.ModelAdmin):
 	list_display=["idRendimiento","total_costo","total_venta","margen_utilidad",
-                "rendimiento_neto","merma_deshidratacion","porcentaje_peso_neto"]
+                "rendimiento_neto","merma_deshidratacion","porcentaje_peso_neto",
+                "porcentaje_peso_producto","total_costo_producto","total_venta_producto","margen_utilidad_producto"]
 	list_editable=["total_costo","total_venta","margen_utilidad",
                 "rendimiento_neto","merma_deshidratacion","porcentaje_peso_neto"]
 	list_filter=["total_costo"]

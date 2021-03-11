@@ -15,8 +15,12 @@ class LoteAnimalForm(ModelForm):
 class ProductoForm(ModelForm):
     class Meta:
         model = Producto
-        fields = ['idProducto','nombre_producto','peso_producto','utilidad_producto','precio_costo','precio_venta',
-                    'porcentaje_peso','total_costo_producto','total_venta_producto','margen_utilidad_producto']
+        fields = ['idProducto','nombre_producto','precio_venta','unidad']
+
+class ProductoForm2(ModelForm):
+    class Meta:
+        model = Producto
+        fields = ['idProducto','peso_producto','precio_costo','nombre_producto','precio_venta','unidad','utilidad_producto']
 
 class UsuarioForm(ModelForm):
     class Meta:
@@ -27,4 +31,5 @@ class RendimientoForm(ModelForm):
     class Meta:
         model = Rendimiento
         fields = ['idRendimiento','total_costo','total_venta','margen_utilidad',
-                    'rendimiento_neto','merma_deshidratacion','porcentaje_peso_neto']
+                    'rendimiento_neto','merma_deshidratacion','porcentaje_peso_neto',
+                    'porcentaje_peso_producto','total_costo_producto','total_venta_producto','margen_utilidad_producto']
