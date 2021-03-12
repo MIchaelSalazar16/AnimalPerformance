@@ -82,6 +82,11 @@ def IngresarProducto(request):
 	return render(request,"IngresarProducto.html",context)
 
 def IngresarRendimiento(request):
+	Productos=Producto.objects.all()
+	for Productos in Productos:
+		Formularios=Productos.idProducto
+	#Formularios=list(map('fp',Productos))
+	
 	#Variables de producto y recorrer la lista de productos
 	fp1= ProductoForm2(request.POST or None,request.FILES or None)
 	fp2= ProductoForm2(request.POST or None,request.FILES or None)
@@ -194,6 +199,7 @@ def IngresarRendimiento(request):
 	'Prod15':Prod15,'fp15':fp15,'Prod16':Prod16,'fp16':fp16,'Prod17':Prod17,'fp17':fp17,'Prod18':Prod18,'fp18':fp18,
 	'Prod19':Prod19,'fp19':fp19,'Prod20':Prod20,'fp20':fp20,'Prod21':Prod21,'fp21':fp21,'Prod22':Prod22,'fp22':fp22,
 	'Prod23':Prod23,'fp23':fp23,'Prod24':Prod24,'fp24':fp24,'Prod25':Prod25,'fp25':fp25,'Prod26':Prod26,'fp26':fp26,
+	'Productos':Productos,
 	}
 	return render(request,"IngresarRendimiento.html",context)
 
