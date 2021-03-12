@@ -32,201 +32,26 @@
             </tr>
         </thead>
         <tbody>
-          {%for Productos in Productos %}
-              <li>{{Productos.idProducto}}</li>
+          {%for ListForms in ListForms %}
+              <tr class="row">
+                <td class="col-md-3">{{ListForms.nombre_producto}}</td>
+                <td class="col-md-3">{{ListForms.peso_producto}}</td>
+                <td class="col-md-2">{{Prod1.precio_costo}}</td>
+                <td class="col-md-2">{{Prod1.precio_venta}}</td>
+                <td class="col-md-2">{{Prod1.utilidad_producto}}</td>
+              </tr>
           {% endfor %}
-          <tr class="row">
-            <td class="col-md-3">{{Prod1.nombre_producto}}</td>
-            <td class="col-md-3">{{fp1.peso_producto}}</td>
-            <td class="col-md-2">{{Prod1.precio_costo}}</td>
-            <td class="col-md-2">{{Prod1.precio_venta}}</td>
-            <td class="col-md-2">{{Prod1.utilidad_producto}}</td>
-          </tr>
-          <tr class="row">
-            <td class="col-md-3">{{Prod2.nombre_producto}}</td>
-            <td class="col-md-3">{{fp2.peso_producto}}</td>
-            <td class="col-md-2">{{Prod2.precio_costo}}</td>
-            <td class="col-md-2">{{Prod2.precio_venta}}</td>
-            <td class="col-md-2">{{Prod2.utilidad_producto}}</td>
-          </tr>
-          <tr class="row">
-            <td class="col-md-3">{{Prod3.nombre_producto}}</td>
-            <td class="col-md-3">{{fp3.peso_producto}}</td>
-            <td class="col-md-2">{{Prod3.precio_costo}}</td>
-            <td class="col-md-2">{{Prod3.precio_venta}}</td>
-            <td class="col-md-2">{{Prod3.utilidad_producto}}</td>
-          </tr>
-          <tr class="row">
-            <td class="col-md-3">{{Prod4.nombre_producto}}</td>
-            <td class="col-md-3">{{fp4.peso_producto}}</td>
-            <td class="col-md-2">{{Prod4.precio_costo}}</td>
-            <td class="col-md-2">{{Prod4.precio_venta}}</td>
-            <td class="col-md-2">{{Prod4.utilidad_producto}}</td>
-          </tr>
-          <tr class="row">
-            <td class="col-md-3">{{Prod5.nombre_producto}}</td>
-            <td class="col-md-3">{{fp5.peso_producto}}</td>
-            <td class="col-md-2">{{Prod5.precio_costo}}</td>
-            <td class="col-md-2">{{Prod5.precio_venta}}</td>
-            <td class="col-md-2">{{Prod5.utilidad_producto}}</td>
-          </tr>
-           <tr class="row">
-            <td class="col-md-3">{{Prod6.nombre_producto}}</td>
-            <td class="col-md-3">{{fp6.peso_producto}}</td>
-            <td class="col-md-2">{{Prod6.precio_costo}}</td>
-            <td class="col-md-2">{{Prod6.precio_venta}}</td>
-            <td class="col-md-2">{{Prod6.utilidad_producto}}</td>
-          </tr>
-          <tr class="row">
-            <td class="col-md-3">{{Prod7.nombre_producto}}</td>
-            <td class="col-md-3">{{fp7.peso_producto}}</td>
-            <td class="col-md-2">{{Prod7.precio_costo}}</td>
-            <td class="col-md-2">{{Prod7.precio_venta}}</td>
-            <td class="col-md-2">{{Prod7.utilidad_producto}}</td>
-          </tr>
-          <tr class="row">
-            <td class="col-md-3">{{Prod8.nombre_producto}}</td>
-            <td class="col-md-3">{{fp8.peso_producto}}</td>
-            <td class="col-md-2">{{Prod8.precio_costo}}</td>
-            <td class="col-md-2">{{Prod8.precio_venta}}</td>
-            <td class="col-md-2">{{Prod8.utilidad_producto}}</td>
-          </tr>
-          <tr class="row">
-            <td class="col-md-3">{{Prod9.nombre_producto}}</td>
-            <td class="col-md-3">{{fp9.peso_producto}}</td>
-            <td class="col-md-2">{{Prod9.precio_costo}}</td>
-            <td class="col-md-2">{{Prod9.precio_venta}}</td>
-            <td class="col-md-2">{{Prod9.utilidad_producto}}</td>
-          </tr>
-          <tr class="row">
-            <td class="col-md-3">{{Prod10.nombre_producto}}</td>
-            <td class="col-md-3">{{fp10.peso_producto}}</td>
-            <td class="col-md-2">{{Prod10.precio_costo}}</td>
-            <td class="col-md-2">{{Prod10.precio_venta}}</td>
-            <td class="col-md-2">{{Prod10.utilidad_producto}}</td>
-          </tr>
-           <tr class="row">
-            <td class="col-md-3">{{Prod11.nombre_producto}}</td>
-            <td class="col-md-3">{{fp11.peso_producto}}</td>
-            <td class="col-md-2">{{Prod11.precio_costo}}</td>
-            <td class="col-md-2">{{Prod11.precio_venta}}</td>
-            <td class="col-md-2">{{Prod11.utilidad_producto}}</td>
-          </tr>
-          <tr class="row">
-            <td class="col-md-3">{{Prod12.nombre_producto}}</td>
-            <td class="col-md-3">{{fp12.peso_producto}}</td>
-            <td class="col-md-2">{{Prod12.precio_costo}}</td>
-            <td class="col-md-2">{{Prod12.precio_venta}}</td>
-            <td class="col-md-2">{{Prod12.utilidad_producto}}</td>
-          </tr>
-          <tr class="row">
-            <td class="col-md-3">{{Prod13.nombre_producto}}</td>
-            <td class="col-md-3">{{fp13.peso_producto}}</td>
-            <td class="col-md-2">{{Prod13.precio_costo}}</td>
-            <td class="col-md-2">{{Prod13.precio_venta}}</td>
-            <td class="col-md-2">{{Prod13.utilidad_producto}}</td>
-          </tr>
-          <tr class="row">
-            <td class="col-md-3">{{Prod14.nombre_producto}}</td>
-            <td class="col-md-3">{{fp14.peso_producto}}</td>
-            <td class="col-md-2">{{Prod14.precio_costo}}</td>
-            <td class="col-md-2">{{Prod14.precio_venta}}</td>
-            <td class="col-md-2">{{Prod14.utilidad_producto}}</td>
-          </tr>
-          <tr class="row">
-            <td class="col-md-3">{{Prod15.nombre_producto}}</td>
-            <td class="col-md-3">{{fp15.peso_producto}}</td>
-            <td class="col-md-2">{{Prod15.precio_costo}}</td>
-            <td class="col-md-2">{{Prod15.precio_venta}}</td>
-            <td class="col-md-2">{{Prod15.utilidad_producto}}</td>
-          </tr>
-           <tr class="row">
-            <td class="col-md-3">{{Prod16.nombre_producto}}</td>
-            <td class="col-md-3">{{fp16.peso_producto}}</td>
-            <td class="col-md-2">{{Prod16.precio_costo}}</td>
-            <td class="col-md-2">{{Prod16.precio_venta}}</td>
-            <td class="col-md-2">{{Prod16.utilidad_producto}}</td>
-          </tr>
-          <tr class="row">
-            <td class="col-md-3">{{Prod17.nombre_producto}}</td>
-            <td class="col-md-3">{{fp17.peso_producto}}</td>
-            <td class="col-md-2">{{Prod17.precio_costo}}</td>
-            <td class="col-md-2">{{Prod17.precio_venta}}</td>
-            <td class="col-md-2">{{Prod17.utilidad_producto}}</td>
-          </tr>
-          <tr class="row">
-            <td class="col-md-3">{{Prod18.nombre_producto}}</td>
-            <td class="col-md-3">{{fp18.peso_producto}}</td>
-            <td class="col-md-2">{{Prod18.precio_costo}}</td>
-            <td class="col-md-2">{{Prod18.precio_venta}}</td>
-            <td class="col-md-2">{{Prod18.utilidad_producto}}</td>
-          </tr>
-          <tr class="row">
-            <td class="col-md-3">{{Prod19.nombre_producto}}</td>
-            <td class="col-md-3">{{fp19.peso_producto}}</td>
-            <td class="col-md-2">{{Prod19.precio_costo}}</td>
-            <td class="col-md-2">{{Prod19.precio_venta}}</td>
-            <td class="col-md-2">{{Prod19.utilidad_producto}}</td>
-          </tr>
-          <tr class="row">
-            <td class="col-md-3">{{Prod20.nombre_producto}}</td>
-            <td class="col-md-3">{{fp20.peso_producto}}</td>
-            <td class="col-md-2">{{Prod20.precio_costo}}</td>
-            <td class="col-md-2">{{Prod20.precio_venta}}</td>
-            <td class="col-md-2">{{Prod20.utilidad_producto}}</td>
-          </tr>
-           <tr class="row">
-            <td class="col-md-3">{{Prod21.nombre_producto}}</td>
-            <td class="col-md-3">{{fp21.peso_producto}}</td>
-            <td class="col-md-2">{{Prod21.precio_costo}}</td>
-            <td class="col-md-2">{{Prod21.precio_venta}}</td>
-            <td class="col-md-2">{{Prod21.utilidad_producto}}</td>
-          </tr>
-          <tr class="row">
-            <td class="col-md-3">{{Prod22.nombre_producto}}</td>
-            <td class="col-md-3">{{fp22.peso_producto}}</td>
-            <td class="col-md-2">{{Prod22.precio_costo}}</td>
-            <td class="col-md-2">{{Prod22.precio_venta}}</td>
-            <td class="col-md-2">{{Prod22.utilidad_producto}}</td>
-          </tr>
-          <tr class="row">
-            <td class="col-md-3">{{Prod23.nombre_producto}}</td>
-            <td class="col-md-3">{{fp23.peso_producto}}</td>
-            <td class="col-md-2">{{Prod23.precio_costo}}</td>
-            <td class="col-md-2">{{Prod23.precio_venta}}</td>
-            <td class="col-md-2">{{Prod23.utilidad_producto}}</td>
-          </tr>
-          <tr class="row">
-            <td class="col-md-3">{{Prod24.nombre_producto}}</td>
-            <td class="col-md-3">{{fp24.peso_producto}}</td>
-            <td class="col-md-2">{{Prod24.precio_costo}}</td>
-            <td class="col-md-2">{{Prod24.precio_venta}}</td>
-            <td class="col-md-2">{{Prod24.utilidad_producto}}</td>
-          </tr>
-          <tr class="row">
-            <td class="col-md-3">{{Prod25.nombre_producto}}</td>
-            <td class="col-md-3">{{fp25.peso_producto}}</td>
-            <td class="col-md-2">{{Prod25.precio_costo}}</td>
-            <td class="col-md-2">{{Prod25.precio_venta}}</td>
-            <td class="col-md-2">{{Prod25.utilidad_producto}}</td>
-          </tr>
-           <tr class="row">
-            <td class="col-md-3">{{Prod26.nombre_producto}}</td>
-            <td class="col-md-3">{{fp26.peso_producto}}</td>
-            <td class="col-md-2">{{Prod26.precio_costo}}</td>
-            <td class="col-md-2">{{Prod26.precio_venta}}</td>
-            <td class="col-md-2">{{Prod26.utilidad_producto}}</td>
-          </tr>
-          
+
+
         </tbody>
         </table>
-                 
+
        <a href="/AnimalPerformance/ingresarLt">
           <button type="submit" class="btn btn-info" aria-label="Left Align">
             <h5><p>GUARDAR<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></p></h5>
           </button>
         </a>
-   
+
       <a href="/AnimalPerformance/ingresarR">
         <button type="submit" class="btn btn-info" aria-label="Left Align">
           <h5><p>SIGUIENTE<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></p></h5>
