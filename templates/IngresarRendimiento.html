@@ -32,16 +32,16 @@
             </tr>
         </thead>
         <tbody>
-          {%for ListForms in ListForms %}
-              <tr class="row">
-                <td class="col-md-3">{{ListForms.nombre_producto}}</td>
-                <td class="col-md-3">{{ListForms.peso_producto}}</td>
-                <td class="col-md-2">{{Prod1.precio_costo}}</td>
-                <td class="col-md-2">{{Prod1.precio_venta}}</td>
-                <td class="col-md-2">{{Prod1.utilidad_producto}}</td>
-              </tr>
-          {% endfor %}
 
+            {%for ListForms in ListForms %}
+                <tr class="row">
+                  <td class="col-md-3">{{ListForms.nombre_producto | lower}}</td>
+                  <td class="col-md-3">{{ListForms.peso_producto}}</td>
+                  <td class="col-md-2">{{Productos.precio_costo}}</td>
+                  <td class="col-md-2">{{ListForms.precio_venta}}</td>
+                  <td class="col-md-2">{{ListForms.utilidad_producto}}</td>
+                </tr>
+            {% endfor %}
 
         </tbody>
         </table>

@@ -83,25 +83,16 @@ def IngresarProducto(request):
 
 def IngresarRendimiento(request):
 	ListForms=[]
+	# Creo la instancia de todos los productos de la base
 	Productos=Producto.objects.all()
+	# recorremos la lsita de productos para crear una lista alterna que luego vamos a utilizar
 	for x in range(0,len(Productos)):
-		ListForms.append('fp'+str(x))
-
+		ListForms.append(str(x))
+	# For para recorrer nuevamente la lista de productos e inicializar los furmularios
 	for x in range(0,len(Productos)):
 		ListForms[x]=ProductoForm2(request.POST or None,request.FILES or None)
-
-	#Formularios=list(map('fp',Productos))
-
-	P=Producto.objects.all()
-	range(0,len(P))
-	Prod1=Producto.objects.get(idProducto=P[0].idProducto)
-	ListForms[3].fields['nombre_producto'].initial=Prod1.nombre_producto
-	Prod2=Producto.objects.get(idProducto=P[1].idProducto)
-	# fp2.fields['precio_costo'].initial=Prod2.precio_costo
-	Prod3=Producto.objects.get(idProducto=P[2].idProducto)
-	# 	fp3.fields['precio_costo'].initial=Prod3.precio_costo
-
-
+		ListForms[x].fields['nombre_producto'].initial=Productos[x].nombre_producto
+		ListForms[x].fields['precio_venta'].initial=Productos[x].precio_venta
 
 	a=Animal.objects.all().order_by('-fecha')[:2]
 	lt=LoteAnimal.objects.latest('fecha')
@@ -124,7 +115,6 @@ def IngresarRendimiento(request):
 				return redirect(ExportarRendimiento)
 	context={
 	'fr':fr,'lt':lt,'ct':CostoTotal,'ListForms':ListForms,
-	'Prod1':Prod1,'Prod2':Prod2,'Prod3':Prod3,
 	'Productos':Productos,
 	}
 	return render(request,"IngresarRendimiento.html",context)
