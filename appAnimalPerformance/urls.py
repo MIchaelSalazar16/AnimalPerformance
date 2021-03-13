@@ -7,6 +7,7 @@ from appAnimalPerformance.views import IngresarAnimal
 from appAnimalPerformance.views import IngresarLote
 from appAnimalPerformance.views import IngresarProducto
 from appAnimalPerformance.views import NumAnimales
+from appAnimalPerformance.views import RegistrarUsuario,Login
 
 urlpatterns=[
 	path('', inicioAdmin),
@@ -16,4 +17,6 @@ urlpatterns=[
 	path('ingresarLt/',IngresarLote),
 	path('ingresarP/',IngresarProducto),
 	path('na/',NumAnimales),
+	path('registro/',RegistrarUsuario),
+	path('login/',Login),
 ]

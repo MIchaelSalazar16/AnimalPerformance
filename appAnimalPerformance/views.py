@@ -1,11 +1,12 @@
 from django.shortcuts import redirect,render
 from .models import Animal,Producto,Rendimiento,LoteAnimal,Usuario
-from .forms import AnimalForm,LoteAnimalForm,ProductoForm,RendimientoForm,UsuarioForm, ProductoForm2
+from .forms import AnimalForm,LoteAnimalForm,ProductoForm,RendimientoForm,UsuarioForm, ProductoForm2 , UsuarioLoginForm
 from django.core.files.uploadedfile import SimpleUploadedFile
 import json as simplejson
 from django.http import HttpResponse,HttpResponseRedirect
 from django.core import serializers
 from django.utils import timezone
+
 
 # Create your views here.
 def inicioAdmin(request):
@@ -84,15 +85,31 @@ def IngresarProducto(request):
 def IngresarRendimiento(request):
 	ListForms=[]
 	# Creo la instancia de todos los productos de la base
-	Productos=Producto.objects.all()
+	P=Producto.objects.all()
 	# recorremos la lsita de productos para crear una lista alterna que luego vamos a utilizar
-	for x in range(0,len(Productos)):
+	for x in range(0,len(P)):
 		ListForms.append(str(x))
 	# For para recorrer nuevamente la lista de productos e inicializar los furmularios
-	for x in range(0,len(Productos)):
+	for x in range(0,len(P)):
 		ListForms[x]=ProductoForm2(request.POST or None,request.FILES or None)
-		ListForms[x].fields['nombre_producto'].initial=Productos[x].nombre_producto
-		ListForms[x].fields['precio_venta'].initial=Productos[x].precio_venta
+		ListForms[x].fields['nombre_producto'].initial=P[x].nombre_producto
+		ListForms[x].fields['precio_venta'].initial=P[x].precio_venta
+		ListForms[x].fields['utilidad_producto'].initial=P[x].utilidad_producto
+		ListForms[x].fields['peso_producto'].initial=P[x].peso_producto
+		ListForms[x].fields['precio_costo'].initial=P[x].precio_costo
+	#p=Producto()
+	if request.method == 'POST':
+		for x in range(0,len(P)):
+			if ListForms[x].is_valid():
+				datosProd=ListForms[x].cleaned_data
+				P[x].nombre_producto=datosProd.get("nombre_producto")
+				P[x].precio_venta=datosProd.get("precio_venta")
+				P[x].peso_producto=datosProd.get("peso_producto")
+				P[x].precio_costo=datosProd.get("precio_costo")
+				P[x].utilidad_producto=datosProd.get("utilidad_producto")
+				if P[x].save() != True:
+					ListForms[x].fields['peso_producto'].initial=P[x].peso_producto
+					return redirect(IngresarRendimiento)
 
 	a=Animal.objects.all().order_by('-fecha')[:2]
 	lt=LoteAnimal.objects.latest('fecha')
@@ -115,10 +132,40 @@ def IngresarRendimiento(request):
 				return redirect(ExportarRendimiento)
 	context={
 	'fr':fr,'lt':lt,'ct':CostoTotal,'ListForms':ListForms,
-	'Productos':Productos,
+	'P':P,
 	}
 	return render(request,"IngresarRendimiento.html",context)
 
 def ExportarRendimiento(request):
 
 	return render(request,"ExportarRendimiento.html",context)
+
+def RegistrarUsuario(request):
+	fu= UsuarioForm(request.POST or None, request.FILES or None)
+	if request.method == 'POST':
+		if fu.is_valid():
+			datosU= fu.cleaned_data
+			User=Usuario()
+			User.cedula=datosU.get("cedula")
+			User.nombres=datosU.get("nombres")
+			User.apellidos=datosU.get("apellidos")
+			User.correo=datosU.get("correo")
+			User.password=datosU.get("password")
+			if User.save() != True:
+				return redirect(Login)
+	context={'fu':fu,}
+	return render(request,"Registro.html",context)
+
+def Login(request):
+	userLogin=UsuarioLoginForm(request.POST or None, request.FILES or None)
+	if request.method == 'POST':
+		if userLogin.is_valid():
+			datosLogin=userLogin.cleaned_data
+			user=Usuario.objects.all()
+			for x in range(0,len(user)):
+				if user[x].correo==datosLogin.get("correo") and user[x].password==datosLogin.get("password"):
+					return redirect(inicioAdmin)
+				else:
+					return redirect(Login)
+	context={'userLogin':userLogin,}
+	return render(request,"Login.html",context)

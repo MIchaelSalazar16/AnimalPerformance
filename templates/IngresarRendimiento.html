@@ -1,63 +1,69 @@
-  {% extends "master.html" %}
-  {% block contenido %}
-      <div class="form-group">
-     <form action="" method="post" enctype="multipart/form-data">
-       {% csrf_token %}
-       <table class="table table-striped table-bordered table-hover">
-        <thead>
-            <tr class="row">
-              <th class="col-md-3">Peso Lote KG:</th>
-              <th class="col-md-3">{{lt.peso_lote}}</th>
-              <th class="col-md-3">Fecha:</th>
-              <th class="col-md-3">{{lt.fecha}}</th>
-            </tr>
-            <tr class="row">
-              <th class="col-md-3">Precio por KG</th>
-              <th class="col-md-3">{{lt.precio_costo}}</th>
-              <th class="col-md-6"><h3>{{lt.nombre_proveedor}}</h3></th>
-            </tr>
-            <tr class="row">
-              <th class="col-md-3">Total de costo:</th>
-              <th class="col-md-9">{{ct}}</th>
-            </tr>
-            <tr class="row">
-              <th class="col-md-12"><p align="center">LOTE DE CERDOS</p></th>
-            </tr>
-             <tr class="row">
-              <th class="col-md-3"><p align="center">PRODUCTO</p></th>
-              <th class="col-md-3"><p align="center">PESO (KG)</p></th>
-              <th class="col-md-2"><p align="center">PRECIO DE COSTO ($)</p></th>
-              <th class="col-md-2"><p align="center">PRECIO DE VENTA ($)</p></th>
-              <th class="col-md-2"><p align="center">UTILIDAD POR PRODUCTO</p></th>
-            </tr>
-        </thead>
-        <tbody>
+{% extends "master.html" %}
+{% block contenido %}
+    <div class="form-group">
+      <form action="" method="post" enctype="multipart/form-data">
+     {% csrf_token %}
+     <table class="table">
+      <thead>
+          <tr class="row">
+            <th class="col-md-3">Peso Lote KG:</th>
+            <td class="col-md-3">{{lt.peso_lote}}</td>
+            <th class="col-md-3">Fecha:</th>
+            <td class="col-md-3">{{lt.fecha}}</td>
+          </tr>
+          <tr class="row">
+            <th class="col-md-3">Precio por KG</th>
+            <td class="col-md-3">{{lt.precio_costo}}</td>
+            <th class="col-md-3">Proveedor:</th>
+            <td class="col-md-3">{{lt.nombre_proveedor}}</td>
+          </tr>
+          <tr class="row">
+            <th class="col-md-3">Total de costo:</th>
+            <td class="col-md-9">{{ct}}</td>
+          </tr>
+          <tr class="row">
+            <th class="col-md-12"><p align="center">LOTE DE CERDOS</p></th>
+          </tr>
+           <tr class="row">
+            <th class="col-md-3"><p align="center">PRODUCTO</p></th>
+            <th class="col-md-2"><p align="center">PESO (KG)</p></th>
+            <th class="col-md-2"><p align="center">PRECIO DE COSTO ($)</p></th>
+            <th class="col-md-2"><p align="center">PRECIO DE VENTA ($)</p></th>
+            <th class="col-md-2"><p align="center">UTILIDAD POR PRODUCTO</p></th>
+          </tr>
+      </thead>
+      <tbody>
+          {%for ListForms in ListForms%}
+              <tr class="row">
+                <td class="col-md-3">{{ListForms.nombre_producto}}</td>
+                <td class="col-md-2"><p align="center">{{ListForms.peso_producto}}</p></td>
+                <td class="col-md-2"><p align="center">{{ListForms.precio_costo}}</p></td>
+                <td class="col-md-2"><p align="center">{{ListForms.precio_venta}}</p></td>
+                <td class="col-md-2"><p align="center">{{ListForms.utilidad_producto}}</p></td>
+              </tr>
+          {% endfor %}
+          <tr>
+              <td class="col-md-3"></td>
+              <th class="col-md-2">Rendimiento Neto:</th>
+              <td class="col-md-2"></td>
+              <td class="col-md-2"></td>
+              <td class="col-md-2"></td>
+          </tr>
+      </tbody>
+      </table>
 
-            {%for ListForms in ListForms %}
-                <tr class="row">
-                  <td class="col-md-3">{{ListForms.nombre_producto | lower}}</td>
-                  <td class="col-md-3">{{ListForms.peso_producto}}</td>
-                  <td class="col-md-2">{{Productos.precio_costo}}</td>
-                  <td class="col-md-2">{{ListForms.precio_venta}}</td>
-                  <td class="col-md-2">{{ListForms.utilidad_producto}}</td>
-                </tr>
-            {% endfor %}
-
-        </tbody>
-        </table>
-
-       <a href="/AnimalPerformance/ingresarLt">
-          <button type="submit" class="btn btn-info" aria-label="Left Align">
-            <h5><p>GUARDAR<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></p></h5>
-          </button>
-        </a>
-
-      <a href="/AnimalPerformance/ingresarR">
+     <a href="/AnimalPerformance/ingresarLt">
         <button type="submit" class="btn btn-info" aria-label="Left Align">
-          <h5><p>SIGUIENTE<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></p></h5>
+          <h5><p>GUARDAR<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></p></h5>
         </button>
       </a>
 
-    </form>
-  </div>
-  {% endblock %}
+    <a href="/AnimalPerformance/ingresarR">
+      <button type="submit" class="btn btn-info" aria-label="Left Align">
+        <h5><p>SIGUIENTE<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></p></h5>
+      </button>
+    </a>
+
+  </form>
+</div>
+{% endblock %}

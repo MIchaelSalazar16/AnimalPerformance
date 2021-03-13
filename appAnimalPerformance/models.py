@@ -59,7 +59,7 @@ class Usuario(models.Model):
     cedula=  models.CharField(max_length=10)
     nombres=  models.CharField(max_length=30)
     apellidos=  models.CharField(max_length=30)
-    correo=  models.CharField(max_length=30)
+    correo=  models.EmailField(max_length=30)
     password=  models.CharField(max_length=30)
     def __str__(self):
         return self.idUsuario
