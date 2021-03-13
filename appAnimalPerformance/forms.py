@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from .models import Rendimiento,LoteAnimal,Animal,Producto,Usuario
+from .models import Rendimiento,LoteAnimal,Animal,Producto
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
@@ -26,21 +26,10 @@ class ProductoForm2(ModelForm):
         nombre_producto= forms.CharField(widget=forms.TextInput(attrs={ 'readonly':'readonly'}))
         precio_venta= forms.CharField(widget=forms.TextInput(attrs={ 'readonly':'readonly'}))
 
-class UsuarioForm(ModelForm):
-    class Meta:
-        model = Usuario
-        fields = ['idUsuario','cedula','nombres','apellidos','correo','password']
-        widgets = {
-        'password': forms.PasswordInput(),
-        }
-
-class UsuarioLoginForm(ModelForm):
-    class Meta:
-        model = Usuario
-        fields = ['correo','password']
-        widgets = {
-        'password': forms.PasswordInput(),
-        }
+# class UserCreationForm(ModelForm):
+#     class Meta:
+#         model= User
+#         fields=['username','email','password']
 
 class RendimientoForm(ModelForm):
     class Meta:

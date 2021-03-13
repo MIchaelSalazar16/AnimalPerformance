@@ -1,0 +1,20 @@
+{% extends "master.html" %}
+{% block contenido %}
+  {% csrf_token %}
+     <form method="POST">
+       {% csrf_token %}
+       <div class="row">
+         <div class="col-md-2">Nombre de Usuario:</div>
+         <div class="col-md-2">{{form.username}}</div>
+       </div>
+       <div class="row">
+         <div class="col-md-2">Contraseña:</div>
+         <div class="col-md-2">{{form.password}}</div>
+       </div>
+       <a href="/AnimalPerformance/registro"> Registrar usuario </a> <br> <br>
+       <button type="submit" class="btn btn-info" aria-label="Left Align">
+         <h5><p>Ingresar<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></p></h5>
+       </button>
+     </form>
+     <hr/>
+{% endblock %}

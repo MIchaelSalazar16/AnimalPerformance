@@ -29,7 +29,7 @@
             <th class="col-md-2"><p align="center">PESO (KG)</p></th>
             <th class="col-md-2"><p align="center">PRECIO DE COSTO ($)</p></th>
             <th class="col-md-2"><p align="center">PRECIO DE VENTA ($)</p></th>
-            <th class="col-md-2"><p align="center">UTILIDAD POR PRODUCTO</p></th>
+            <th class="col-md-3"><p align="center">UTILIDAD POR PRODUCTO</p></th>
           </tr>
       </thead>
       <tbody>
@@ -39,15 +39,15 @@
                 <td class="col-md-2"><p align="center">{{ListForms.peso_producto}}</p></td>
                 <td class="col-md-2"><p align="center">{{ListForms.precio_costo}}</p></td>
                 <td class="col-md-2"><p align="center">{{ListForms.precio_venta}}</p></td>
-                <td class="col-md-2"><p align="center">{{ListForms.utilidad_producto}}</p></td>
+                <td class="col-md-3"><p align="center">{{ListForms.utilidad_producto}}</p></td>
               </tr>
           {% endfor %}
-          <tr>
+          <tr class="row">
+              <th class="col-md-3">Rendimiento Neto:</th>
+              <td class="col-md-2"><h5>{{RN}}</h5></td>
+              <td class="col-md-2"></td>
+              <td class="col-md-2"></td>
               <td class="col-md-3"></td>
-              <th class="col-md-2">Rendimiento Neto:</th>
-              <td class="col-md-2"></td>
-              <td class="col-md-2"></td>
-              <td class="col-md-2"></td>
           </tr>
       </tbody>
       </table>

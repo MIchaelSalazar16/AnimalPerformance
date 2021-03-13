@@ -1,6 +1,7 @@
 from django.db import models
 from django import forms
 from django.utils import timezone
+from django.contrib.auth.models import User
 
 class LoteAnimal(models.Model):
     idLoteAnimal= models.AutoField(primary_key=True)
@@ -54,12 +55,10 @@ class Rendimiento(models.Model):
     def __str__(self):
         return self.idRendimiento
 
-class Usuario(models.Model):
-    idUsuario= models.AutoField(primary_key=True)
-    cedula=  models.CharField(max_length=10)
-    nombres=  models.CharField(max_length=30)
-    apellidos=  models.CharField(max_length=30)
-    correo=  models.EmailField(max_length=30)
-    password=  models.CharField(max_length=30)
-    def __str__(self):
-        return self.idUsuario
+# class Usuario(models.Model):
+#     idUsuario= models.AutoField(primary_key=True)
+#     username= models.CharField(max_length=50,default="")
+#     correo=  models.EmailField(max_length=30,default="")
+#     password=  models.CharField(max_length=30,null=False)
+#     def __str__(self):
+#         return self.idUsuario

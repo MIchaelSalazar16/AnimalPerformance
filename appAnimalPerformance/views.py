@@ -1,14 +1,63 @@
 from django.shortcuts import redirect,render
-from .models import Animal,Producto,Rendimiento,LoteAnimal,Usuario
-from .forms import AnimalForm,LoteAnimalForm,ProductoForm,RendimientoForm,UsuarioForm, ProductoForm2 , UsuarioLoginForm
+from .models import Animal,Producto,Rendimiento,LoteAnimal
+from .forms import AnimalForm,LoteAnimalForm,ProductoForm,RendimientoForm,ProductoForm2
 from django.core.files.uploadedfile import SimpleUploadedFile
 import json as simplejson
 from django.http import HttpResponse,HttpResponseRedirect
 from django.core import serializers
 from django.utils import timezone
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import logout as do_logout
+from django.contrib.auth import authenticate
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import login as do_login
+from django.contrib.auth.models import User
 
 
 # Create your views here.
+def welcome(request):
+	if request.user.is_authenticated:
+		return render(request, "welcome.html")
+	else:
+		return redirect('/login')
+
+
+def register(request):
+	form = UserCreationForm(request.POST or None, request.FILES or None)
+	user=User()
+	if request.method == "POST":
+		if form.is_valid():
+			#Limpieza de la lista que guarda el formulario
+			datos= form.cleaned_data
+			#Para registrar a los animales que entran
+			user.username=datos.get("username")
+			user.password=datos.get("password1")
+			if user.save() != True:
+				return redirect(register)
+			else:
+				# do_login(request, user)
+				return redirect(login)
+
+	return render(request, "registro.html", {'form': form})
+
+def login(request):
+	form = AuthenticationForm(request.POST or None, request.FILES or None)
+	user=User()
+	if request.method == "POST":
+		if form.is_valid():
+			u = form.cleaned_data['username']
+			p = form.cleaned_data['password']
+			user = authenticate(username=u, password=p)
+			if user is not None:
+				do_login(request, user)
+				return redirect(welcome)
+	return render(request, "login.html", {'form': form})
+
+def logout(request):
+	# Finalizamos la sesión
+	do_logout(request)
+	return redirect('/')
+
 def inicioAdmin(request):
 	lt=LoteAnimal.objects.all()
 	context={
@@ -83,10 +132,23 @@ def IngresarProducto(request):
 	return render(request,"IngresarProducto.html",context)
 
 def IngresarRendimiento(request):
-	ListForms=[]
+	a=Animal.objects.all().order_by('-fecha')[:2]
+	lt=LoteAnimal.objects.latest('fecha') #trae el último lote ingresado
+	CostoTotal=lt.precio_costo*lt.peso_lote #Total del costo del lote
+	ListForms=[] #lista para guardar todos los formularios
+	MargenUTR=0 #Margen de utilidad en todo el rendimiento
+	MargenUTPKG=[] #Lista para guardar el margen $ de utilidad por KG en cada producto
+	PCP=[] #Lista para guardar el precio de costo por producto
+	TCP=[] #Lista que guarda el total de costo por producto segun el peso
+	UPP=[] #Lista para guaradar las utilidades $ por producto
+	RN=0 #Rendimiento neto
+	TotalVP=0 #T
+	TotalCos=0 #Suma TOTAL del total del costo por producto
+	TVP=[] #Lista que guarda total de la venta por producto
+	PPP=[] #Lista que alamacena porcentaje de peso por producto en referecia al peso del lote
 	# Creo la instancia de todos los productos de la base
 	P=Producto.objects.all()
-	# recorremos la lsita de productos para crear una lista alterna que luego vamos a utilizar
+	# recorremos la lsita de productos para crear una lista alterna
 	for x in range(0,len(P)):
 		ListForms.append(str(x))
 	# For para recorrer nuevamente la lista de productos e inicializar los furmularios
@@ -97,7 +159,45 @@ def IngresarRendimiento(request):
 		ListForms[x].fields['utilidad_producto'].initial=P[x].utilidad_producto
 		ListForms[x].fields['peso_producto'].initial=P[x].peso_producto
 		ListForms[x].fields['precio_costo'].initial=P[x].precio_costo
-	#p=Producto()
+	#Calula el rendimiento neto y el porcentaje que equivale el peso de cada producto en referecia al peso del lote
+	for x in range(0,len(P)):
+		RN+=float(P[int(x)].peso_producto)
+		TVP.append(round((float(P[int(x)].peso_producto)*float(P[int(x)].precio_venta)),2))
+		PPP.append(float(P[int(x)].peso_producto)/CostoTotal)
+	#Total de venta de todos los productos
+	for x in range(0,len(TVP)):
+		TotalVP+=round(TVP[int(x)],2)
+	#Calcula margen de utilidad del rendimiento
+	MargenUTR=round((((CostoTotal*100/TotalVP)-100)*(-1)),2)
+	#calcula margen de utilidad por KG en cada producto
+	for x in range(0,len(P)):
+		MargenUTPKG.append(round(((float(P[int(x)].precio_venta)*MargenUTR)/100),2))
+	#Calcula el precio de costo por producto
+	range(0,len(MargenUTPKG))
+	for x in range(0,len(P)):
+		PCP.append(round(float(P[int(x)].precio_venta)-MargenUTPKG[x],2))
+	#Calcula el costo total por producto segun el peso.
+	range(0,len(PCP))
+	for x in range(0,len(P)):
+		TCP.append(round((float(P[int(x)].peso_producto)*PCP[x]),2))
+	#Calcula la utilidad neta $ por producto y la suma de los totales en costo total por producto
+	range(0,len(TVP)) #Preparamos las listas para poder iterar
+	range(0,len(TCP))
+	for x in range(0,len(P)):
+		TCP.append(round(TVP[x]-TCP[x],2))
+		TotalCos+=round(TCP[x],2)
+	#Pasamos los precios de costo calculados al formulario de rendimiento
+	range(0,len(PCP))#Preparamos las listas para poder recorrerlas
+	range(0,len(TCP))
+	for x in range(0,len(P)):
+		#newData=ListForms[x].cleaned_data
+		ListForms[x]=ProductoForm2(request.POST or None,request.FILES or None)
+		ListForms[x].fields['nombre_producto'].initial=P[x].nombre_producto
+		ListForms[x].fields['precio_venta'].initial=P[x].precio_venta
+		ListForms[x].fields['utilidad_producto'].initial=round(TCP[x],2)
+		ListForms[x].fields['peso_producto'].initial=P[x].peso_producto
+		ListForms[x].fields['precio_costo'].initial=PCP[x]
+
 	if request.method == 'POST':
 		for x in range(0,len(P)):
 			if ListForms[x].is_valid():
@@ -111,9 +211,7 @@ def IngresarRendimiento(request):
 					ListForms[x].fields['peso_producto'].initial=P[x].peso_producto
 					return redirect(IngresarRendimiento)
 
-	a=Animal.objects.all().order_by('-fecha')[:2]
-	lt=LoteAnimal.objects.latest('fecha')
-	CostoTotal=lt.precio_costo*lt.peso_lote
+
 	fr= RendimientoForm(request.POST or None, request.FILES or None)
 	#Declaración de variables de las clases
 	r=Rendimiento()
@@ -132,40 +230,10 @@ def IngresarRendimiento(request):
 				return redirect(ExportarRendimiento)
 	context={
 	'fr':fr,'lt':lt,'ct':CostoTotal,'ListForms':ListForms,
-	'P':P,
+	'P':P,'RN':RN,'ct2':TotalCos,
 	}
 	return render(request,"IngresarRendimiento.html",context)
 
 def ExportarRendimiento(request):
 
 	return render(request,"ExportarRendimiento.html",context)
-
-def RegistrarUsuario(request):
-	fu= UsuarioForm(request.POST or None, request.FILES or None)
-	if request.method == 'POST':
-		if fu.is_valid():
-			datosU= fu.cleaned_data
-			User=Usuario()
-			User.cedula=datosU.get("cedula")
-			User.nombres=datosU.get("nombres")
-			User.apellidos=datosU.get("apellidos")
-			User.correo=datosU.get("correo")
-			User.password=datosU.get("password")
-			if User.save() != True:
-				return redirect(Login)
-	context={'fu':fu,}
-	return render(request,"Registro.html",context)
-
-def Login(request):
-	userLogin=UsuarioLoginForm(request.POST or None, request.FILES or None)
-	if request.method == 'POST':
-		if userLogin.is_valid():
-			datosLogin=userLogin.cleaned_data
-			user=Usuario.objects.all()
-			for x in range(0,len(user)):
-				if user[x].correo==datosLogin.get("correo") and user[x].password==datosLogin.get("password"):
-					return redirect(inicioAdmin)
-				else:
-					return redirect(Login)
-	context={'userLogin':userLogin,}
-	return render(request,"Login.html",context)

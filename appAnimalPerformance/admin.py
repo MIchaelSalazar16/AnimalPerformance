@@ -3,7 +3,7 @@ from .models import Rendimiento
 from .models import LoteAnimal
 from .models import Animal
 from .models import Producto
-from .models import Usuario
+from django.contrib.auth.models import User
 
 
 class AdminAnimal(admin.ModelAdmin):
@@ -28,15 +28,12 @@ class AdminLoteAnimal(admin.ModelAdmin):
 admin.site.register(LoteAnimal,AdminLoteAnimal)
 
 class AdminUsuario(admin.ModelAdmin):
-	list_display=["idUsuario", "cedula", "nombres", "apellidos", "correo", "password"]
-	list_editable=["cedula", "nombres", "apellidos", "correo", "password"]
-	list_filter=["nombres","apellidos"]
-	search_fields=["nombres","apellidos"]
-
+	list_display=["idUsuario", "username","email", "password1"]
+	list_editable=["username","email", "password1"]
+	list_filter=["username","email"]
+	search_fields=["username","email"]
 	class Meta:
-		model= Usuario
-
-admin.site.register(Usuario,AdminUsuario)
+		model= User
 
 class AdminProducto(admin.ModelAdmin):
 	list_display=["idProducto","nombre_producto","peso_producto","utilidad_producto","precio_costo","precio_venta"]
@@ -46,7 +43,6 @@ class AdminProducto(admin.ModelAdmin):
 
 	class Meta:
 		model= Producto
-
 admin.site.register(Producto,AdminProducto)
 
 class AdminRendimiento(admin.ModelAdmin):
