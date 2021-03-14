@@ -2,8 +2,8 @@ from django.conf.urls import url
 from django.contrib import admin
 from django.urls import path
 from appAnimalPerformance.views import inicioAdmin,IngresarRendimiento,IngresarAnimal,IngresarLote,IngresarProducto
-from appAnimalPerformance.views import NumAnimales, welcome,login,logout,register
-
+from appAnimalPerformance.views import NumAnimales, welcome,login,logout,register, ListarLotes,ListarProductos
+from appAnimalPerformance.views import ListarAnimales, ListarRendimiento
 
 urlpatterns=[
 	path('', inicioAdmin),
@@ -15,6 +15,10 @@ urlpatterns=[
 	#path('na/',NumAnimales),
 	path('registro/',register),
 	path('login/',login),
-	path('registro/',welcome),
+	path('welcome/',welcome),
 	path('login/',logout),
+	path('listarAnimales/',ListarAnimales),
+	path('listarLotes/',ListarLotes),
+	path('listarProductos/',ListarProductos),
+	path('listarRendimientos/',ListarRendimiento),
 ]

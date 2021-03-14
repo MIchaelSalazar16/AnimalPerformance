@@ -1,16 +1,24 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>master</title>
-  <link rel="stylesheet" href="/static/css/bootstrap.css">
-  {#Cargamos bootstrap#}
-  {%load bootstrap4%}
-  {#CSS bootstrap#}
-  {%bootstrap_css%}
+  <title>ANIMAL PERFORMANCE</title>
+  <link rel="stylesheet" href="{% static '/css/bootstrap.min.css'%}">
+  <script src="{% static 'js/jquery-1.9.1.min.js' %}"></script>
+  <script src="{% static 'js/bootstrap.min.js' %}"></script>
+  <style media="screen">
+  .bodyN{
+    overflow-x: hidden;
+    color: #111;
+    background:#C8FBAE;
+    -ms-overflow-style: scrollbar;
+    -webkit-font-smoothing: antialiased
+  }
+  </style>
 </head>
-<body class="container">
+<body class="container bodyN">
   {% include "header.html"%}
   {%block contenido %}
   {% endblock %}

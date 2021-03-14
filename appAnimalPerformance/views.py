@@ -247,6 +247,33 @@ def IngresarRendimiento(request):
 	}
 	return render(request,"IngresarRendimiento.html",context)
 
+
 def ExportarRendimiento(request):
 
 	return render(request,"ExportarRendimiento.html",context)
+
+def ListarAnimales(request):
+	a= Animal.objects.all()
+	context={'a':a,}
+	return render(request,"listarAnimales.html",context)
+
+def ListarProductos(request):
+	p= Producto.objects.all()
+	context={
+    'p':p,
+    }
+	return render(request,"listarProductos.html",context)
+
+def ListarLotes(request):
+	lt= LoteAnimal.objects.all()
+	context={
+    'lt':lt,
+    }
+	return render(request,"listarLotes.html",context)
+
+def ListarRendimiento(request):
+	r= Rendimiento.objects.all()
+	context={
+    'r':r,
+    }
+	return render(request,"listarRendimientos.html",context)

@@ -1,0 +1,30 @@
+{% extends "master.html" %}
+{% block contenido %}
+<div class="container">
+  <table class ="table table-striped">
+    <tr class="row">
+      <th class="col-md-3">PROVEEDOR</th>
+      <th class="col-md-3">PRECIO DE COSTO</th>
+      <th class="col-md-3">PESO DEL LOTE</th>
+    </tr>
+    {%for lt in lt %}
+    <tr class="row">
+      <td class="col-md-3">{{lt.nombre_proveedor}}</td>
+      <td class="col-md-3">{{lt.precio_costo}}</td>
+      <td class="col-md-3">{{lt.peso_lote}}</td>
+      <td>
+        <a href="">
+          <button type="button" class="btn btn-success" aria-label="Left Align" value="Modificar">
+          </button>
+        </a>
+        |
+        <a href="">
+          <button type="button" class="btn btn-success" aria-label="Left Align" value="Eliminar">
+          </button>
+        </a>
+      </td>
+    </tr>
+    {%endfor%}
+  </table>
+</div>
+{% endblock %}

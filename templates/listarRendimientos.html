@@ -1,0 +1,37 @@
+{% extends "master.html" %}
+{% block contenido %}
+<div class="container">
+  <table class ="table table-striped">
+    <tr class="row">
+      <th class="col-md-2">TOTAL DE COSTO</th>
+      <th class="col-md-2">TOTAL DE LA VENTA</th>
+      <th class="col-md-2">MARGEN DE UTILIDAD</th>
+      <th class="col-md-2">RENDIMIENTO NETO</th>
+      <th class="col-md-2">MERMA POR DESHIDRATACIÓN</th>
+      <th class="col-md-2">PORCENTAJE DE PESO NETO</th>
+    </tr>
+    {%for r in r %}
+    <tr class="row">
+      <td class="col-md-2">{{r.total_costo}}</td>
+      <td class="col-md-2">{{r.total_venta}}</td>
+      <td class="col-md-2">{{r.margen_utilidad}}</td>
+      <td class="col-md-2">{{r.rendimiento_neto}}</td>
+      <td class="col-md-2">{{r.merma_deshidratacion}}</td>
+      <td class="col-md-2">{{r.porcentaje_peso_neto}}</td>
+      <td>
+        <a href="">
+          <button type="button" class="btn btn-success" aria-label="Left Align" value="Modificar">
+          </button>
+        </a>
+        |
+        <a href="">
+          <button type="button" class="btn btn-success" aria-label="Left Align" value="Eliminar">
+          </button>
+        </a>
+      </td>
+    </tr>
+    {%endfor%}
+  </table>
+</div>
+</div>
+{% endblock %}

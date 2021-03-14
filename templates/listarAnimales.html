@@ -1,0 +1,28 @@
+{% extends "master.html" %}
+{% block contenido %}
+<div class="container">
+    <table class ="table table-striped">
+      <tr class="row">
+        <th class="col-md-3">TIPO</th>
+        <th class="col-md-3">PESO</th>
+      </tr>
+      {%for a in a %}
+      <tr class="row">
+        <td class="col-md-3">{{a.nombre_animal}}</td>
+        <td class="col-md-3">{{a.peso_animal}}</td>
+        <td>
+          <a href="">
+            <button type="button" class="btn btn-success" aria-label="Left Align" value="Modificar">
+            </button>
+          </a>
+          |
+          <a href="">
+            <button type="button" class="btn btn-success" aria-label="Left Align" value="Eliminar">
+            </button>
+          </a>
+        </td>
+      </tr>
+      {%endfor%}
+    </table>
+  </div>
+{% endblock %}
