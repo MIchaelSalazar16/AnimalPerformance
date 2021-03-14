@@ -1,27 +1,31 @@
 {% extends "master.html" %}
+{% load static %}
 {% block contenido %}
 <div class="container">
   <table class ="table table-striped">
     <tr class="row">
       <th class="col-md-3">NOMBRE</th>
       <th class="col-md-2">PRECIO DE COSTO</th>
-      <th class="col-md-3">PRECIO DE VENTA</th>
+      <th class="col-md-2">PRECIO DE VENTA</th>
       <th class="col-md-2">UTILIDAD</th>
+      <th class="col-md-3"></th>
     </tr>
     {%for p in p %}
     <tr class="row">
       <td class="col-md-3">{{p.nombre_producto}}</td>
       <td class="col-md-2">{{p.precio_costo}}</td>
-      <td class="col-md-3">{{p.precio_venta}}</td>
+      <td class="col-md-2">{{p.precio_venta}}</td>
       <td class="col-md-2">{{p.utilidad_producto}}</td>
-      <td>
+      <td class="col-md-3">
         <a href="">
-          <button type="button" class="btn btn-success" aria-label="Left Align" value="Modificar">
+          <button type="button" class="btn" value="Modificar">
+            <img src="{% static 'images/edit.png' %}" alt="" width="25" height="25">
           </button>
         </a>
         |
         <a href="">
-          <button type="button" class="btn btn-success" aria-label="Left Align" value="Eliminar">
+          <button type="button" class="btn" value="Eliminar">
+            <img src="{% static 'images/trash-bin.png' %}" alt=""  width="25" height="25">
           </button>
         </a>
       </td>

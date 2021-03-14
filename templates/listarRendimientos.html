@@ -1,4 +1,5 @@
 {% extends "master.html" %}
+{% load static %}
 {% block contenido %}
 <div class="container">
   <table class ="table table-striped">
@@ -8,7 +9,7 @@
       <th class="col-md-2">MARGEN DE UTILIDAD</th>
       <th class="col-md-2">RENDIMIENTO NETO</th>
       <th class="col-md-2">MERMA POR DESHIDRATACIÓN</th>
-      <th class="col-md-2">PORCENTAJE DE PESO NETO</th>
+      <th class="col-md-2"></th>
     </tr>
     {%for r in r %}
     <tr class="row">
@@ -17,15 +18,16 @@
       <td class="col-md-2">{{r.margen_utilidad}}</td>
       <td class="col-md-2">{{r.rendimiento_neto}}</td>
       <td class="col-md-2">{{r.merma_deshidratacion}}</td>
-      <td class="col-md-2">{{r.porcentaje_peso_neto}}</td>
-      <td>
+      <td class="col-md-2">
         <a href="">
-          <button type="button" class="btn btn-success" aria-label="Left Align" value="Modificar">
+          <button type="button" class="btn" value="Modificar">
+            <img src="{% static 'images/edit.png' %}" alt="" width="25" height="25">
           </button>
         </a>
         |
         <a href="">
-          <button type="button" class="btn btn-success" aria-label="Left Align" value="Eliminar">
+          <button type="button" class="btn" value="Eliminar">
+            <img src="{% static 'images/trash-bin.png' %}" alt=""  width="25" height="25">
           </button>
         </a>
       </td>
