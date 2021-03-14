@@ -134,7 +134,8 @@ def IngresarProducto(request):
 def IngresarRendimiento(request):
 	a=Animal.objects.all().order_by('-fecha')[:2]
 	lt=LoteAnimal.objects.latest('fecha') #trae el último lote ingresado
-	CostoTotal=lt.precio_costo*lt.peso_lote #Total del costo del lote
+	PesoLote=lt.peso_lote
+	CostoTotal=lt.precio_costo*PesoLote #Total del costo del lote
 	ListForms=[] #lista para guardar todos los formularios
 	MargenUTR=0 #Margen de utilidad en todo el rendimiento
 	MargenUTPKG=[] #Lista para guardar el margen $ de utilidad por KG en cada producto
@@ -143,25 +144,16 @@ def IngresarRendimiento(request):
 	UPP=[] #Lista para guaradar las utilidades $ por producto
 	RN=0 #Rendimiento neto
 	TotalVP=0 #T
+	MermaDES=0
 	TotalCos=0 #Suma TOTAL del total del costo por producto
 	TVP=[] #Lista que guarda total de la venta por producto
 	PPP=[] #Lista que alamacena porcentaje de peso por producto en referecia al peso del lote
 	# Creo la instancia de todos los productos de la base
 	P=Producto.objects.all()
-	# recorremos la lsita de productos para crear una lista alterna
-	for x in range(0,len(P)):
-		ListForms.append(str(x))
-	# For para recorrer nuevamente la lista de productos e inicializar los furmularios
-	for x in range(0,len(P)):
-		ListForms[x]=ProductoForm2(request.POST or None,request.FILES or None)
-		ListForms[x].fields['nombre_producto'].initial=P[x].nombre_producto
-		ListForms[x].fields['precio_venta'].initial=P[x].precio_venta
-		ListForms[x].fields['utilidad_producto'].initial=P[x].utilidad_producto
-		ListForms[x].fields['peso_producto'].initial=P[x].peso_producto
-		ListForms[x].fields['precio_costo'].initial=P[x].precio_costo
+	#TODOS LOS CALCULOS DE LA APP SE ENCUENTRAN EN ESTA SECCIÓN
 	#Calula el rendimiento neto y el porcentaje que equivale el peso de cada producto en referecia al peso del lote
 	for x in range(0,len(P)):
-		RN+=float(P[int(x)].peso_producto)
+		RN=round(RN,2)+float(P[int(x)].peso_producto)
 		TVP.append(round((float(P[int(x)].peso_producto)*float(P[int(x)].precio_venta)),2))
 		PPP.append(float(P[int(x)].peso_producto)/CostoTotal)
 	#Total de venta de todos los productos
@@ -186,32 +178,53 @@ def IngresarRendimiento(request):
 	for x in range(0,len(P)):
 		TCP.append(round(TVP[x]-TCP[x],2))
 		TotalCos+=round(TCP[x],2)
-	#Pasamos los precios de costo calculados al formulario de rendimiento
-	range(0,len(PCP))#Preparamos las listas para poder recorrerlas
-	range(0,len(TCP))
-	for x in range(0,len(P)):
-		#newData=ListForms[x].cleaned_data
+	MermaDES=round((PesoLote-RN),2)
+	#FIN DE LOS CALCULOS
+	# recorremos la lsita de productos para crear una lista alterna para alamacenar formualrios
+	P1=Producto.objects.all()
+	for x in range(0,len(P1)):
+		ListForms.append(int(x))
+	range(0,len(ListForms))
+	# if request.method == 'GET':
+	for x in range(0,len(P1)):
 		ListForms[x]=ProductoForm2(request.POST or None,request.FILES or None)
-		ListForms[x].fields['nombre_producto'].initial=P[x].nombre_producto
-		ListForms[x].fields['precio_venta'].initial=P[x].precio_venta
+		ListForms[x].fields['nombre_producto'].initial=P1[x].nombre_producto
+		ListForms[x].fields['precio_venta'].initial=P1[x].precio_venta
+		ListForms[x].fields['utilidad_producto'].initial=P1[x].utilidad_producto
+		ListForms[x].fields['peso_producto'].initial=0
+		ListForms[x].fields['precio_costo'].initial=0
+	# elif request.method == 'GET':
+	P2=Producto.objects.all()
+	range(0,len(PCP))#Preparamos las listas para poder recorrerlas
+	range(0,len(TCP))#Preparamos las listas para poder recorrerlas
+	ListForms.clear()
+	for x in range(0,len(P2)):
+		ListForms.append(int(x))
+	range(0,len(ListForms))
+	for x in range(0,len(P2)):
+		#Pasamos los precios de costo calculados al formulario de rendimiento
+		ListForms[x]=ProductoForm2(request.POST or None,request.FILES or None)
+		ListForms[x].fields['nombre_producto'].initial=P2[x].nombre_producto
+		ListForms[x].fields['precio_venta'].initial=P2[x].precio_venta
 		ListForms[x].fields['utilidad_producto'].initial=round(TCP[x],2)
-		ListForms[x].fields['peso_producto'].initial=P[x].peso_producto
+		ListForms[x].fields['peso_producto'].initial=P2[x].peso_producto
 		ListForms[x].fields['precio_costo'].initial=PCP[x]
-
-	if request.method == 'POST':
-		for x in range(0,len(P)):
-			if ListForms[x].is_valid():
-				datosProd=ListForms[x].cleaned_data
-				P[x].nombre_producto=datosProd.get("nombre_producto")
-				P[x].precio_venta=datosProd.get("precio_venta")
-				P[x].peso_producto=datosProd.get("peso_producto")
-				P[x].precio_costo=datosProd.get("precio_costo")
-				P[x].utilidad_producto=datosProd.get("utilidad_producto")
-				if P[x].save() != True:
-					ListForms[x].fields['peso_producto'].initial=P[x].peso_producto
-					return redirect(IngresarRendimiento)
-
-
+			# FormAux=ProductoForm2(request.POST or None,request.FILES or None)
+			# ProdAux=Producto.objects.get(idProducto=P[x].idProducto)
+			# FormAux.fields['nombre_producto'].initial=ProdAux.nombre_producto
+			# FormAux.fields['precio_venta'].initial=ProdAux.precio_venta
+			# FormAux.fields['utilidad_producto'].initial=ProdAux.utilidad_producto
+			# FormAux.fields['peso_producto'].initial=0
+			# FormAux.fields['precio_costo'].initial=0
+			# if FormAux.is_valid():
+			# 	datosP= FormAux.cleaned_data
+			# 	ProdAux.nombre_producto=datosP.get("nombre_producto")
+			# 	ProdAux.precio_venta=datosP.get("precio_venta")
+			# 	ProdAux.utilidad_producto=datosP.get("utilidad_producto")
+			# 	ProdAux.peso_producto=datosP.get("peso_producto")
+			# 	ProdAux.precio_costo=datosP.get("precio_costo")
+			# 	if ProdAux.save() != True:
+			# 		return redirect(IngresarRendimiento)
 	fr= RendimientoForm(request.POST or None, request.FILES or None)
 	#Declaración de variables de las clases
 	r=Rendimiento()
@@ -230,7 +243,7 @@ def IngresarRendimiento(request):
 				return redirect(ExportarRendimiento)
 	context={
 	'fr':fr,'lt':lt,'ct':CostoTotal,'ListForms':ListForms,
-	'P':P,'RN':RN,'ct2':TotalCos,
+	'P':P,'RN':RN,'ct2':TotalCos,'MD':MermaDES
 	}
 	return render(request,"IngresarRendimiento.html",context)
 
