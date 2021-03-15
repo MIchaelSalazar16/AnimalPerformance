@@ -5,7 +5,7 @@
        {% csrf_token %}
        <table class="table table-striped table-bordered table-hover">
         <thead>
-           
+
             <tr>
               <th>Proveedor</th>
               <th>Peso del Lote KG</th>
@@ -20,12 +20,7 @@
           </tr>
         </tbody>
         </table>
-        {% for a in a%}
-       
-          <h4>{{a.peso_animal}}</h4><br>
-       
-        {% endfor %}
-          
+
        <a href="/AnimalPerformance/ingresarLt">
           <button type="submit" class="btn btn-info" aria-label="Left Align">
             <h5><p>GUARDAR<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></p></h5>

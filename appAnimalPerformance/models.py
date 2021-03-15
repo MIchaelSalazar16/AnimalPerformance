@@ -34,6 +34,10 @@ class Producto(models.Model):
     precio_costo=  models.FloatField(default=0,null=True)
     precio_venta=  models.FloatField(null=False)
     utilidad_producto=  models.FloatField(default=0)
+    porcentaje_peso_producto=  models.FloatField(default=0,null=True)
+    total_costo_producto=  models.FloatField(default=0,null=True)
+    total_venta_producto=  models.FloatField(default=0,null=True)
+    utilidad_producto_xKG=  models.FloatField(default=0,null=True)
     unidad= models.CharField(max_length=10,default='KG',choices=listUnidades,null=False)
     fecha=models.DateTimeField(auto_now_add=True,null=True)
     def __str__(self):
@@ -47,10 +51,6 @@ class Rendimiento(models.Model):
     rendimiento_neto=  models.FloatField(default=0,null=True)
     merma_deshidratacion=  models.FloatField(default=0,null=True)
     porcentaje_peso_neto=  models.FloatField(default=0,null=True)
-    porcentaje_peso_producto=  models.FloatField(default=0,null=True)
-    total_costo_producto=  models.FloatField(default=0,null=True)
-    total_venta_producto=  models.FloatField(default=0,null=True)
-    margen_utilidad_producto=  models.FloatField(default=0,null=True)
     fecha=models.DateTimeField(auto_now_add=True,null=True)
     def __str__(self):
         return self.idRendimiento

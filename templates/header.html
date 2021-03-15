@@ -9,44 +9,49 @@
   <script src="{% static 'js/bootstrap.min.js' %}"></script>
 </head>
 <body>
-  <div align="center" class="navbar navbar-expand-lg row">
-      <ul class="navbar-nav mr-auto" style="text-align:center;">
-        <li role="presentation" class="col-md-2">
-          <a href="/AnimalPerformance">
-            <button type="button" class="btn btn-success" aria-label="Left Align">
-              INICIO
-            </button>
-          </a>
-        </li>
-        <li role="presentation" class="col-md-2">
-          <a href="/AnimalPerformance/listarLotes">
-            <button type="button" class="btn btn-success">
-              LOTES <span class="glyphicon glyphicon-th"></span>
-            </button>
-          </a>
-        </li>
-        <li role="presentation" class="col-md-2">
-          <a href="/AnimalPerformance/listarAnimales">
-            <button type="button" class="btn btn-success">
-              ANIMALES <span class="glyphicon glyphicon-blackboard"></span>
-            </button>
-          </a>
-        </li>
-        <li role="presentation" class="col-md-3">
-          <a href="/AnimalPerformance/listarProductos">
-            <button type="button" class="btn btn-success">
-              PRODUCTOS <span class="glyphicon glyphicon-equalizer"></span>
-            </button>
-          </a>
-        </li>
-        <li role="presentation" class="col-md-2">
-          <a href="/AnimalPerformance/listarRendimientos">
-            <button type="button" class="btn btn-success">
-              RENDIMIENTOS<span class="glyphicon glyphicon-equalizer"></span>
-            </button>
-          </a>
-        </li>
-      </ul>
+  <div class="row justify-content-end text-danger">
+    <a href="/AnimalPerformance/logout">Cerra Sesión</a>
   </div>
+  <div align="center" class="navbar navbar-expand-lg justify-content-end">
+
+    <ul class="navbar-nav mr-auto" style="text-align:center;">
+      <li role="presentation" class="col-m-2">
+        <a href="/AnimalPerformance">
+          <button type="button" class="btn btn-success" aria-label="Left Align">
+            INICIO
+          </button>
+        </a>
+      </li>
+      <li role="presentation" class="col-md-2">
+        <a href="/AnimalPerformance/listarLotes">
+          <button type="button" class="btn btn-success">
+            LOTES <span class="glyphicon glyphicon-th"></span>
+          </button>
+        </a>
+      </li>
+      <li role="presentation" class="col-md-3">
+        <a href="/AnimalPerformance/listarAnimales">
+          <button type="button" class="btn btn-success">
+            ANIMALES <span class="glyphicon glyphicon-blackboard"></span>
+          </button>
+        </a>
+      </li>
+      <li role="presentation" class="col-md-3">
+        <a href="/AnimalPerformance/listarProductos">
+          <button type="button" class="btn btn-success">
+            PRODUCTOS <span class="glyphicon glyphicon-equalizer"></span>
+          </button>
+        </a>
+      </li>
+      <li role="presentation" class="col-md-2">
+        <a href="/AnimalPerformance/listarRendimientos">
+          <button type="button" class="btn btn-success">
+            RENDIMIENTOS<span class="glyphicon glyphicon-equalizer"></span>
+          </button>
+        </a>
+      </li>
+    </ul>
+  </div>
+
 </body>
 </html>

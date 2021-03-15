@@ -47,8 +47,7 @@ admin.site.register(Producto,AdminProducto)
 
 class AdminRendimiento(admin.ModelAdmin):
 	list_display=["idRendimiento","total_costo","total_venta","margen_utilidad",
-                "rendimiento_neto","merma_deshidratacion","porcentaje_peso_neto",
-                "porcentaje_peso_producto","total_costo_producto","total_venta_producto","margen_utilidad_producto"]
+                "rendimiento_neto","merma_deshidratacion","porcentaje_peso_neto"]
 	list_editable=["total_costo","total_venta","margen_utilidad",
                 "rendimiento_neto","merma_deshidratacion","porcentaje_peso_neto"]
 	list_filter=["total_costo"]

@@ -19,7 +19,7 @@
       <td class="col-md-2">{{r.rendimiento_neto}}</td>
       <td class="col-md-2">{{r.merma_deshidratacion}}</td>
       <td class="col-md-2">
-        <a href="">
+        <a href="/AnimalPerformance/modificarR?idRendimiento={{r.idRendimiento}}">
           <button type="button" class="btn" value="Modificar">
             <img src="{% static 'images/edit.png' %}" alt="" width="25" height="25">
           </button>
@@ -34,6 +34,11 @@
     </tr>
     {%endfor%}
   </table>
+  <a href="/AnimalPerformance/ingresarR">
+    <button type="button" class="btn btn-success" aria-label="Left Align" value="Agregar">
+      <p><img src="{% static 'images/add-button.png' %}" alt="" width="25" height="25">AGREGAR</p>
+    </button>
+  </a>
 </div>
 </div>
 {% endblock %}

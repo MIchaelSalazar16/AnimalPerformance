@@ -13,57 +13,41 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login as do_login
 from django.contrib.auth.models import User
 
-
-# Create your views here.
-def welcome(request):
+def inicioAdmin(request):
 	if request.user.is_authenticated:
-		return render(request, "welcome.html")
+		return render(request, "InicioAdmin.html")
 	else:
-		return redirect('/login')
-
+		return redirect('/AnimalPerformance/login')
 
 def register(request):
-	form = UserCreationForm(request.POST or None, request.FILES or None)
-	user=User()
+	form = UserCreationForm()
 	if request.method == "POST":
+		form = UserCreationForm(data=request.POST)
 		if form.is_valid():
-			#Limpieza de la lista que guarda el formulario
-			datos= form.cleaned_data
-			#Para registrar a los animales que entran
-			user.username=datos.get("username")
-			user.password=datos.get("password1")
-			if user.save() != True:
-				return redirect(register)
+			user=form.save()
+			if user is not None:
+				do_login(request, user)
+				return redirect('/AnimalPerformance/')
 			else:
-				# do_login(request, user)
-				return redirect(login)
-
+				return redirect('/AnimalPerformance/login')
 	return render(request, "registro.html", {'form': form})
 
 def login(request):
-	form = AuthenticationForm(request.POST or None, request.FILES or None)
-	user=User()
+	form = AuthenticationForm()
 	if request.method == "POST":
+		form = AuthenticationForm(data=request.POST)
 		if form.is_valid():
 			u = form.cleaned_data['username']
 			p = form.cleaned_data['password']
 			user = authenticate(username=u, password=p)
 			if user is not None:
 				do_login(request, user)
-				return redirect(welcome)
+				return redirect('AnimalPerformance/')
 	return render(request, "login.html", {'form': form})
 
 def logout(request):
-	# Finalizamos la sesión
 	do_logout(request)
 	return redirect('/')
-
-def inicioAdmin(request):
-	lt=LoteAnimal.objects.all()
-	context={
-	'lt':lt,
-	}
-	return render(request,"InicioAdmin.html",context)
 
 def NumAnimales(request):
 	lt=LoteAnimal.objects.all()
@@ -251,29 +235,137 @@ def IngresarRendimiento(request):
 def ExportarRendimiento(request):
 
 	return render(request,"ExportarRendimiento.html",context)
-
+#LISTAR ENTIDADES########################################################################
 def ListarAnimales(request):
-	a= Animal.objects.all()
-	context={'a':a,}
-	return render(request,"listarAnimales.html",context)
+	if request.user.is_authenticated:
+		a= Animal.objects.all()
+		context={'a':a,}
+		return render(request,"listarAnimales.html",context)
+	else:
+		return redirect('/AnimalPerformance/login')
 
 def ListarProductos(request):
-	p= Producto.objects.all()
-	context={
-    'p':p,
-    }
-	return render(request,"listarProductos.html",context)
+	if request.user.is_authenticated:
+		p= Producto.objects.all()
+		context={
+	    'p':p,
+	    }
+		return render(request,"listarProductos.html",context)
+	else:
+		return redirect('/AnimalPerformance/login')
 
 def ListarLotes(request):
-	lt= LoteAnimal.objects.all()
-	context={
-    'lt':lt,
-    }
-	return render(request,"listarLotes.html",context)
+	if request.user.is_authenticated:
+		lt= LoteAnimal.objects.all()
+		context={
+	    'lt':lt,
+	    }
+		return render(request,"listarLotes.html",context)
+	else:
+		return redirect('/AnimalPerformance/login')
 
 def ListarRendimiento(request):
-	r= Rendimiento.objects.all()
+	if request.user.is_authenticated:
+		r= Rendimiento.objects.all()
+		context={
+	    'r':r,
+	    }
+		return render(request,"listarRendimientos.html",context)
+	else:
+		return redirect('/AnimalPerformance/login')
+
+#MODIFICAR ENTIDADES######################################################################
+def modificarRendimiento(request):
+	fr = RendimientoForm(request.POST or None,request.FILES or None)
+	r = Rendimiento.objects.get(idRendimiento=request.GET['idRendimiento'])
+	fr.fields["total_costo"].initial=r.total_costo
+	fr.fields["total_venta"].initial=r.total_venta
+	fr.fields["margen_utilidad"].initial=r.margen_utilidad
+	fr.fields["rendimiento_neto"].initial=r.rendimiento_neto
+	fr.fields["merma_deshidratacion"].initial=r.merma_deshidratacion
+	fr.fields["porcentaje_peso_neto"].initial=r.porcentaje_peso_neto
+	if request.method == 'POST':
+		if fr.is_valid():
+			datos= fr.cleaned_data
+			r.total_costo=datos.get("total_costo")
+			r.total_venta=datos.get("total_ventatotal_venta")
+			r.margen_utilidad=datos.get("margen_utilidad")
+			r.rendimiento_neto=datos.get("rendimiento_neto")
+			r.merma_deshidratacion=datos.get("merma_deshidratacion")
+			r.porcentaje_peso_neto=datos.get("porcentaje_peso_neto")
+			if r.save() != True:
+				return redirect(ListarRendimiento)
 	context={
+	'fr':fr,
     'r':r,
     }
-	return render(request,"listarRendimientos.html",context)
+	return render(request,"modificarRendimiento.html",context)
+def modificarAnimal(request):
+	fa= AnimalForm(request.POST or None,request.FILES or None)
+	a = Animal.objects.get(idAnimal=request.GET['idAnimal'])
+	fa.fields["nombre_animal"].initial=a.nombre_animal
+	fa.fields["peso_animal"].initial=a.peso_animal
+	if request.method == 'POST':
+		if fa.is_valid():
+			datos= fa.cleaned_data
+			a.nombre_animal=datos.get("nombre_animal")
+			a.peso_animal=datos.get("peso_animal")
+			if a.save() != True:
+				return redirect(ListarAnimales)
+	context={
+	'fa':fa,
+    'a':a,
+    }
+	return render(request,"modificarAnimal.html",context)
+def modificarProducto(request):
+	fp= ProductoForm(request.POST or None,request.FILES or None)
+	p = Producto.objects.get(idProducto=request.GET['idProducto'])
+	fp.fields["nombre_producto"].initial=p.nombre_producto
+	fp.fields["peso_producto"].initial=p.peso_producto
+	fp.fields["precio_costo"].initial=p.precio_costo
+	fp.fields["precio_venta"].initial=p.precio_venta
+	fp.fields["utilidad_producto"].initial=p.utilidad_producto
+	fp.fields["porcentaje_peso_producto"].initial=p.porcentaje_peso_producto
+	fp.fields["total_costo_producto"].initial=p.total_costo_producto
+	fp.fields["total_venta_producto"].initial=p.total_venta_producto
+	fp.fields["utilidad_producto_xKG"].initial=p.utilidad_producto_xKG
+	fp.fields["unidad"].initial=p.unidad
+	if request.method == 'POST':
+		if fp.is_valid():
+			datos= fp.cleaned_data
+			p.nombre_producto=datos.get("nombre_producto")
+			p.peso_producto=datos.get("peso_producto")
+			p.precio_costo=datos.get("precio_costo")
+			p.precio_venta=datos.get("precio_venta")
+			p.utilidad_producto=datos.get("utilidad_producto")
+			p.porcentaje_peso_producto=datos.get("porcentaje_peso_producto")
+			p.total_costo_producto=datos.get("total_costo_producto")
+			p.total_venta_producto=datos.get("total_venta_producto")
+			p.utilidad_producto_xKG=datos.get("utilidad_producto_xKG")
+			p.unidad=datos.get("unidad")
+			if p.save() != True:
+				return redirect(ListarProductos)
+	context={
+	'fp':fp,
+    'p':p,
+    }
+	return render(request,"modificarProducto.html",context)
+def modificarLote(request):
+	flt= LoteAnimalForm(request.POST or None,request.FILES or None)
+	lt = LoteAnimal.objects.get(idLoteAnimal=request.GET['idLoteAnimal'])
+	flt.fields["peso_lote"].initial=lt.peso_lote
+	flt.fields["precio_costo"].initial=lt.precio_costo
+	flt.fields["nombre_proveedor"].initial=lt.nombre_proveedor
+	if request.method == 'POST':
+		if flt.is_valid():
+			datos= flt.cleaned_data
+			lt.peso_lote=datos.get("peso_lote")
+			lt.precio_costo=datos.get("precio_costo")
+			lt.nombre_proveedor=datos.get("nombre_proveedor")
+			if a.save() != True:
+				return redirect(ListarLotes)
+	context={
+	'flt':flt,
+    'lt':lt,
+    }
+	return render(request,"modificarLote.html",context)

@@ -15,7 +15,7 @@
       <td class="col-md-3">{{lt.precio_costo}}</td>
       <td class="col-md-3">{{lt.peso_lote}}</td>
       <td class="col-md-3">
-        <a href="">
+        <a href="/AnimalPerformance/modificarLt?idLoteAnimal={{lt.idLoteAnimal}}">
           <button type="button" class="btn" value="Modificar">
             <img src="{% static 'images/edit.png' %}" alt="" width="25" height="25">
           </button>
@@ -30,5 +30,10 @@
     </tr>
     {%endfor%}
   </table>
+  <a href="/AnimalPerformance/ingresarLt">
+    <button type="button" class="btn btn-success" aria-label="Left Align" value="Agregar">
+      <p><img src="{% static 'images/add-button.png' %}" alt="" width="25" height="25">AGREGAR</p>
+    </button>
+  </a>
 </div>
 {% endblock %}
