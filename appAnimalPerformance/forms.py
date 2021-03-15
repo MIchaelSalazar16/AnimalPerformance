@@ -23,7 +23,8 @@ class ProductoForm2(ModelForm):
     class Meta:
         model = Producto
         fields = ['idProducto','peso_producto','precio_costo','nombre_producto','precio_venta','utilidad_producto',
-                  'porcentaje_peso_producto','total_costo_producto','total_venta_producto','utilidad_producto_xKG']
+                  'porcentaje_peso_producto','total_costo_producto','total_venta_producto','utilidad_producto_xKG'
+                  ,'unidad']
         # nombre_producto= forms.CharField(widget=forms.TextInput(attrs={ 'readonly':'readonly'}))
         # precio_venta= forms.CharField(widget=forms.TextInput(attrs={ 'readonly':'readonly'}))
 

@@ -3,42 +3,57 @@
 <form action="" method="post" enctype="multipart/form-data">
   {% csrf_token %}
   <table class="table table-striped table-bordered table-hover">
-   <thead>
-       <tr>
-         <th>Nombre:</th>
-         <th>Peso Producto:</th>
-         <th>Precio Costo:</th>
-         <th>Precio Venta:</th>
-         <th>Utilidad Producto:</th>
-         <th>% Peso Producto:</th>
-         <th>Costo Producto:</th>
-         <th>Venta Producto:</th>
-         <th>Utilidad Producto:</th>
-         <th>Unidad:</th>
-       </tr>
-   </thead>
-   <tbody>
-     <tr>
-       <td>{{fr.nombre_producto}}</td>
-       <td>{{fr.peso_producto}}</td>
-       <td>{{fr.precio_costo}}</td>
-       <td>{{fr.precio_venta}}</td>
-       <td>{{fr.utilidad_producto}}</td>
-       <td>{{fr.porcentaje_peso_producto}}</td>
-       <td>{{fr.total_costo_producto}}</td>
-       <td>{{fr.total_venta_producto}}</td>
-       <td>{{fr.utilidad_producto_xKG}}</td>
-       <td>{{fr.unidad}}</td>
-     </tr>
-   </tbody>
-   </table>
+
+    <tbody>
+      <tr>
+        <th>Nombre:</th>
+        <td>{{fp.nombre_producto}}</td>
+      </tr>
+      <tr>
+        <th>Peso Producto:</th>
+        <td>{{fp.peso_producto}}</td>
+      </tr>
+      <tr>
+        <th>Precio Costo:</th>
+        <td>{{fp.precio_costo}}</td>
+      </tr>
+      <tr>
+        <th>Precio Venta:</th>
+        <td>{{fp.precio_venta}}</td>
+      </tr>
+      <tr>
+        <th>Utilidad Producto:</th>
+        <td>{{fp.utilidad_producto}}</td>
+      </tr>
+      <tr>
+        <th>% Peso Producto:</th>
+        <td>{{fp.porcentaje_peso_producto}}</td>
+      </tr>
+      <tr>
+        <th>Costo Producto:</th>
+        <td>{{fp.total_costo_producto}}</td>
+      </tr>
+      <tr>
+        <th>Venta Producto:</th>
+        <td>{{fp.total_venta_producto}}</td>
+      </tr>
+      <tr>
+        <th>Utilidad Producto:</th>
+        <td>{{fp.utilidad_producto_xKG}}</td>
+      </tr>
+      <tr>
+        <th>Unidad:</th>
+        <td>{{fp.unidad}}</td>
+      </tr>
+    </tbody>
+  </table>
   <a href="/AnimalPerformance/listarP">
-     <input type="submit" name="" value="Guardar" class="btn btn-success">
+    <input type="submit" name="" value="Guardar" class="btn btn-success">
   </a>
- |
- <a href="/AnimalPerformance/listarP">
+  |
+  <a href="/AnimalPerformance/listarP">
     <input type="submit" name="" value="Regresar" class="btn btn-success">
- </a>
+  </a>
 
 </form>
 {% endblock %}
