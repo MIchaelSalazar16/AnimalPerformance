@@ -3,7 +3,7 @@ from .models import Animal,Producto,Rendimiento,LoteAnimal
 from .forms import AnimalForm,LoteAnimalForm,ProductoForm,RendimientoForm,ProductoForm2
 from django.core.files.uploadedfile import SimpleUploadedFile
 import json as simplejson
-from django.http import HttpResponse,HttpResponseRedirect, HttpRequest
+from django.http import HttpResponse,HttpResponseRedirect
 from django.core import serializers
 from django.utils import timezone
 from django.contrib.auth.forms import UserCreationForm
@@ -12,7 +12,6 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login as do_login
 from django.contrib.auth.models import User
-from django.forms import modelformset_factory
 
 def inicioAdmin(request):
 	if request.user.is_authenticated:
@@ -98,10 +97,8 @@ def IngresarProducto(request):
 	p=Producto()
 	if request.method == 'POST':
 		if fp.is_valid() :
-			#print(fp)
 			#Limpieza de la lista que guarda el formulario
 			datosP= fp.cleaned_data
-			#print(datosP)
 			#Para ingresar el producto con sus campos calculados en la tabla a la base
 			p.nombre_producto=datosP.get("nombre_producto")
 			p.precio_venta=datosP.get("precio_venta")
@@ -114,22 +111,12 @@ def IngresarProducto(request):
 	return render(request,"IngresarProducto.html",context)
 
 def IngresarRendimiento(request):
-	# Creo la instancia de todos los productos de la base
-	P=Producto.objects.all()
+	ProdAux=Producto()
+	FormAux=ProductoForm2(request.POST or None)
 	a=Animal.objects.all().order_by('-fecha')[:2]
 	lt=LoteAnimal.objects.latest('fecha') #trae el último lote ingresado
 	PesoLote=lt.peso_lote
 	CostoTotal=lt.precio_costo*PesoLote #Total del costo del lote
-	#CARGAR EL MODELO DE DATOS DE LOS PRODUTCOS DEL CERDO
-	ProdFormset= modelformset_factory(Producto, form=ProductoForm2, extra=0)
-	formProd= ProdFormset(request.POST or None)
-	if request.method == 'POST':
-		print("entra1")
-		for aux in formProd:
-			data= aux.cleaned_data
-			print(data)
-
-	#DECLARACION DE VARIABLES
 	ListForms=[] #lista para guardar todos los formularios
 	MargenUTR=0 #Margen de utilidad en todo el rendimiento
 	MargenUTPKG=[] #Lista para guardar el margen $ de utilidad por KG en cada producto
@@ -142,7 +129,8 @@ def IngresarRendimiento(request):
 	TotalCos=0 #Suma TOTAL del total del costo por producto
 	TVP=[] #Lista que guarda total de la venta por producto
 	PPP=[] #Lista que alamacena porcentaje de peso por producto en referecia al peso del lote
-
+	# Creo la instancia de todos los productos de la base
+	P=Producto.objects.all()
 	#TODOS LOS CALCULOS DE LA APP SE ENCUENTRAN EN ESTA SECCIÓN
 	#Calula el total de venta por producto y el porcentaje que equivale el peso de cada producto en referecia al peso del lote
 	for x in range(0,len(P)):
@@ -177,35 +165,47 @@ def IngresarRendimiento(request):
 	for x in range(0,len(P)):
 		RN=round(RN,2)+float(P[int(x)].peso_producto)
 	#FIN DE LOS CALCULOS
+	#ListForms.clear()
+	for x in range(0,len(P)):
+		ListForms.append(ProductoForm2(request.POST or None))
 	range(0,len(PCP))#Preparamos las listas para poder recorrerlas
 	range(0,len(TCP))#Preparamos las listas para poder recorrerlas
+	#range(0,len(ListForms))
+	for x in range(0,len(P)):
+		ProdAux=Producto.objects.get(idProducto=P[x].idProducto)
+		ListForms[x].fields['nombre_producto'].initial=P[x].nombre_producto
+		ListForms[x].fields['precio_venta'].initial=P[x].precio_venta
+		ListForms[x].fields['precio_costo'].initial=P[x].precio_costo
+		ListForms[x].fields['utilidad_producto'].initial=round(TCP[x],2)
+		ListForms[x].fields['peso_producto'].initial=P[x].peso_producto
+		ListForms[x].fields['precio_costo'].initial=PCP[x]
 
 	fr= RendimientoForm(request.POST or None)
 	r=Rendimiento()
-	# fr.fields["total_costo"].initial=TotalCos
-	# fr.fields["total_venta"].initial=round(TotalVP,2)
-	# fr.fields["margen_utilidad"].initial=MargenUTR
-	# fr.fields["rendimiento_neto"].initial=RN
-	# fr.fields["merma_deshidratacion"].initial=round(PesoLote-RN,2)
-	# fr.fields["porcentaje_peso_neto"].initial=round((RN*100)/PesoLote,2)
-	# if request.method == 'POST':
-	# 	ListForms.clear()
-	# 	if fr.is_valid():
-	# 		datosR= fr.cleaned_data
-	# 		r.total_costo=datosR.get("total_costo")
-	# 		r.total_venta=datosR.get("total_venta")
-	# 		r.margen_utilidad=datosR.get("margen_utilidad")
-	# 		r.rendimiento_neto=datosR.get("rendimiento_neto")
-	# 		r.merma_deshidratacion=datosR.get("merma_deshidratacion")
-	# 		r.porcentaje_peso_neto=datosR.get("porcentaje_peso_neto")
-	# 		if r.save() != True:
-	# 			return redirect(IngresarRendimiento)
-	# 		else:
-	# 			return redirect('AnimalPerformance/listarR')
+	fr.fields["total_costo"].initial=TotalCos
+	fr.fields["total_venta"].initial=round(TotalVP,2)
+	fr.fields["margen_utilidad"].initial=MargenUTR
+	fr.fields["rendimiento_neto"].initial=RN
+	fr.fields["merma_deshidratacion"].initial=round(PesoLote-RN,2)
+	fr.fields["porcentaje_peso_neto"].initial=round((RN*100)/PesoLote,2)
+	if request.method == 'POST':
+		ListForms.clear()
+		if fr.is_valid():
+			datosR= fr.cleaned_data
+			r.total_costo=datosR.get("total_costo")
+			r.total_venta=datosR.get("total_venta")
+			r.margen_utilidad=datosR.get("margen_utilidad")
+			r.rendimiento_neto=datosR.get("rendimiento_neto")
+			r.merma_deshidratacion=datosR.get("merma_deshidratacion")
+			r.porcentaje_peso_neto=datosR.get("porcentaje_peso_neto")
+			if r.save() != True:
+				return redirect(IngresarRendimiento)
+			else:
+				return redirect('AnimalPerformance/listarR')
 	context={
 	'fr':fr,'lt':lt,'ct':CostoTotal,'LF':ListForms,
-	'P':P,'RN':RN,'ct2':TotalCos,'MD':MermaDES,
-	'formProd':formProd,
+	'P':P,'RN':RN,'ct2':TotalCos,'MD':MermaDES,'ProdAux':ProdAux,
+	'FormAux':FormAux,
 	}
 	return render(request,"IngresarRendimiento.html",context)
 
