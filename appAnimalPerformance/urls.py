@@ -16,7 +16,7 @@ urlpatterns=[
 	#path('na/',NumAnimales),
 	path('registro/',register),
 	path('login/',login),
-	path('login/',logout),
+	path('logout/',logout),
 	path('listarA/',ListarAnimales),
 	path('listarLt/',ListarLotes),
 	path('listarP/',ListarProductos),

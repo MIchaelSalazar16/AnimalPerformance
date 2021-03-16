@@ -1,42 +1,39 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Registro</title>
-  <link rel="stylesheet" href="/static/css/bootstrap.css">
-</head>
-<body>
-  {% extends "master.html" %}
-  {% block contenido %}
-  <form action="" method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    <table class="table">
 
-     <tbody>
-        <tr class="row">
-         <td class="col-md-3">Usuario:</td>
-         <td class="col-md-3">{{form.username}}</td>
-         <td class="col-md-6"><li>El usuario puede estar compuesto por caracteres(@/_-.), letras y números</li></td>
-        </tr>
-         <tr class="row">
-         <td class="col-md-3">Clave:</td>
-         <td class="col-md-3">{{form.password1}}</td>
-         <td class="col-md-6"><li>La clave debe tener mínimo 8 caracteres entre(Una mayuscula, números y un carácter[@-_.])</li></td>
-        </tr>
-        <tr class="row">
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <title>Iniciar Sesión</title>
+  <link rel="stylesheet" href="  {% static  '/css/bootstrap.css'%}">
+</head>
+<body class="container m-0 row justify-content-center">
+  <form method="POST" class="col-auto">
+    {% csrf_token %}
+    <div class="card row justify-content-around" style="width: 25rem; padding:40px;" >
+      <div class="card-body">
+        tr class="row">
+        <td class="col-md-3">Usuario:</td>
+        <td class="col-md-3">{{form.username}}</td>
+        <td class="col-md-6">El usuario puede estar compuesto por caracteres(@/_-.), letras y números</td>
+      </tr>
+      <tr class="row">
+        <td class="col-md-3">Clave:</td>
+        <td class="col-md-3">{{form.password1}}</td>
+        <td class="col-md-6">La clave debe tener mínimo 8 caracteres entre(Una mayuscula, números y un carácter[@-_.])</td>
+      </tr>
+      <tr class="row">
         <td class="col-md-3">Confirme su clave:</td>
         <td class="col-md-3">{{form.password2}}</td>
-        <td class="col-md-6"><li>Esta clave debe coincidir con la anterior</li></td>
-       </tr>
-     </tbody>
-     </table>
-     <button type="submit" class="btn btn-success" aria-label="Left Align">
-       <h5><p>REGISTRAR</p></h5>
-     </button>
-
-
- </form>
-
-  {% endblock %}
+        <td class="col-md-6">Esta clave debe coincidir con la anterior</td>
+      </tr>
+      <hr>
+      <a href="/AnimalPerformance/registro" class="alert alert-success"> Registrar usuario</a> <br> <hr>
+      <button type="submit" class="btn btn-success" aria-label="Left Align">
+        <h5><p>REGISTRAR</p></h5>
+      </button>
+    </div>
+  </div>
+</form>
+</body>
+</html>

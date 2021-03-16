@@ -48,7 +48,7 @@ def login(request):
 
 def logout(request):
 	do_logout(request)
-	return redirect('/')
+	return redirect('/AnimalPerformance/login')
 
 def NumAnimales(request):
 	lt=LoteAnimal.objects.all()

@@ -1,20 +1,33 @@
-{% extends "master.html" %}
-{% block contenido %}
-  {% csrf_token %}
-     <form method="POST">
-       {% csrf_token %}
-       <div class="row">
-         <div class="col-md-2">Nombre de Usuario:</div>
-         <div class="col-md-2">{{form.username}}</div>
-       </div>
-       <div class="row">
-         <div class="col-md-2">Contraseña:</div>
-         <div class="col-md-2">{{form.password}}</div>
-       </div>
-       <li><a href="/AnimalPerformance/registro"> Registrar usuario!!</a> <br> <br></li>
-       <button type="submit" class="btn btn-success" aria-label="Left Align">
-         <h5><p>Ingresar</p></h5>
-       </button>
-     </form>
-     <hr/>
-{% endblock %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Iniciar Sesión</title>
+    <link rel="stylesheet" href="  {% static  '/css/bootstrap.css'%}">
+  </head>
+  <body class="container m-0 row justify-content-center">
+    <form method="POST" class="col-auto">
+      {% csrf_token %}
+      <div class="card row justify-content-around" style="width: 25rem; padding:40px;" >
+        <div class="card-body">
+          <div class="row">
+            <div class="card-title">Nombre de Usuario:</div>
+            <div class="">{{form.username}}</div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="card-title">Contraseña:</div>
+            <div class="">{{form.password}}</div>
+          </div>
+          <hr>
+
+          <a href="/AnimalPerformance/registro" class="alert alert-success"> Registrar usuario</a> <br> <hr>
+          <button type="submit" class="btn btn-success" aria-label="Left Align">
+            <h5><p>INGRESAR</p></h5>
+          </button>
+        </div>
+        </div>
+    </form>
+  </body>
+</html>
