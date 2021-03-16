@@ -121,14 +121,15 @@ def IngresarRendimiento(request):
 	PesoLote=lt.peso_lote
 	CostoTotal=lt.precio_costo*PesoLote #Total del costo del lote
 	#CARGAR EL MODELO DE DATOS DE LOS PRODUTCOS DEL CERDO
+	ProdAux=Producto.objects.filter().values()
 	ProdFormset= modelformset_factory(Producto, form=ProductoForm2, extra=0)
 	formProd= ProdFormset(request.POST or None)
+	#query= Producto.objects.filter(idProducto=1)
 	if request.method == 'POST':
 		print("entra1")
-		for aux in formProd:
-			data= aux.cleaned_data
-			print(data)
 
+		for aux in formProd:
+			print(aux)
 	#DECLARACION DE VARIABLES
 	ListForms=[] #lista para guardar todos los formularios
 	MargenUTR=0 #Margen de utilidad en todo el rendimiento
