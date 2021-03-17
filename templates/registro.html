@@ -7,33 +7,46 @@
   <title>Iniciar Sesión</title>
   <link rel="stylesheet" href="  {% static  '/css/bootstrap.css'%}">
 </head>
-<body class="container m-0 row justify-content-center">
-  <form method="POST" class="col-auto">
+<body class="m-0 row justify-content-center">
+  <form method="POST" class="col-auto" style="padding-top:30px;">
     {% csrf_token %}
-    <div class="card row justify-content-around" style="width: 25rem; padding:40px;" >
-      <div class="card-body">
-        tr class="row">
-        <td class="col-md-3">Usuario:</td>
-        <td class="col-md-3">{{form.username}}</td>
-        <td class="col-md-6">El usuario puede estar compuesto por caracteres(@/_-.), letras y números</td>
-      </tr>
-      <tr class="row">
-        <td class="col-md-3">Clave:</td>
-        <td class="col-md-3">{{form.password1}}</td>
-        <td class="col-md-6">La clave debe tener mínimo 8 caracteres entre(Una mayuscula, números y un carácter[@-_.])</td>
-      </tr>
-      <tr class="row">
-        <td class="col-md-3">Confirme su clave:</td>
-        <td class="col-md-3">{{form.password2}}</td>
-        <td class="col-md-6">Esta clave debe coincidir con la anterior</td>
-      </tr>
-      <hr>
-      <a href="/AnimalPerformance/registro" class="alert alert-success"> Registrar usuario</a> <br> <hr>
-      <button type="submit" class="btn btn-success" aria-label="Left Align">
-        <h5><p>REGISTRAR</p></h5>
-      </button>
+    <div class="card" style="width: 40rem;">
+      <div class="card-body" style="padding:40px;">
+        <tr class="row">
+          <td class="float-right"><a href="/AnimalPerformance/login" class="btn btn-success">
+            <img src="{% static '/images/atras.png'%}" alt="" width="30" height="30"> LOGIN
+          </a></td>
+        </tr> <hr>
+        <div class="row">
+          <div class="col-md-3"><strong>Usuario:</strong></div>
+          <div class="col-md-3">{{form.username}}</div>
+          <div class="alert alert-light" role="alert">
+            El usuario puede estar compuesto por caracteres(@/_-.), letras y números
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-3"><strong>Clave:</strong></div>
+          <div class="col-md-3">{{form.password1}}</div>
+          <div class="alert alert-light" role="alert">
+            La clave debe tener mínimo 8 caracteres, mínimo debe contener una mayuscula, un número y un carácter especial(@/_-.)
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-3"><strong>Confirme su clave:</strong></div>
+          <div class="col-md-3">{{form.password2}}</div>
+          <div class="alert alert-light" role="alert">
+            Esta clave debe coincidir con la anterior
+          </div>
+        </div>
+
+        <hr>
+        <button type="submit" class="btn btn-success" aria-label="Left Align">
+          <h5><p>REGISTRAR</p></h5>
+        </button>
+      </div>
     </div>
-  </div>
-</form>
+  </form>
 </body>
 </html>

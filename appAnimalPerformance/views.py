@@ -16,7 +16,7 @@ from django.forms import modelformset_factory
 
 def inicioAdmin(request):
 	if request.user.is_authenticated:
-		return render(request, "InicioAdmin.html")
+		return render(request, "InicioAdmin.html",{})
 	else:
 		return redirect('/AnimalPerformance/login')
 
@@ -28,9 +28,9 @@ def register(request):
 			user=form.save()
 			if user is not None:
 				do_login(request, user)
-				return redirect('/AnimalPerformance/')
+				return redirect(inicioAdmin)
 			else:
-				return redirect('/AnimalPerformance/login')
+				return redirect(login)
 	return render(request, "registro.html", {'form': form})
 
 def login(request):
@@ -43,19 +43,12 @@ def login(request):
 			user = authenticate(username=u, password=p)
 			if user is not None:
 				do_login(request, user)
-				return redirect('AnimalPerformance/')
+				return redirect(inicioAdmin)
 	return render(request, "login.html", {'form': form})
 
 def logout(request):
 	do_logout(request)
 	return redirect('/AnimalPerformance/login')
-
-def NumAnimales(request):
-	lt=LoteAnimal.objects.all()
-	context={
-	'lt':lt,
-	}
-	return render(request,"NumAnimales.html",context)
 
 def IngresarAnimal(request):
 	fa=AnimalForm(request.POST or None, request.FILES or None)

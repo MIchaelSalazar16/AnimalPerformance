@@ -2,7 +2,7 @@ from django.conf.urls import url
 from django.contrib import admin
 from django.urls import path
 from appAnimalPerformance.views import inicioAdmin,IngresarRendimiento,IngresarAnimal,IngresarLote,IngresarProducto
-from appAnimalPerformance.views import NumAnimales, login,logout,register, ListarLotes,ListarProductos
+from appAnimalPerformance.views import  login,logout,register, ListarLotes,ListarProductos
 from appAnimalPerformance.views import ListarAnimales, ListarRendimiento, modificarLote, modificarAnimal
 from appAnimalPerformance.views import modificarProducto, modificarRendimiento
 

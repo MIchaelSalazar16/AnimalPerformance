@@ -5,53 +5,61 @@
   <meta charset="UTF-8">
   <title>Header</title>
   <link rel="stylesheet" href="{% static 'css/bootstrap.min.css'%}">
-  <script src="{% static 'js/jquery-1.9.1.min.js' %}"></script>
-  <script src="{% static 'js/bootstrap.min.js' %}"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 </head>
 <body>
-  <div class="row justify-content-end text-danger">
-    <a href="/AnimalPerformance/logout">Cerra Sesión</a>
-  </div>
-  <div align="center" class="navbar navbar-expand-lg justify-content-end">
-
-    <ul class="navbar-nav mr-auto" style="text-align:center;">
-      <li role="presentation" class="col-m-2">
-        <a href="/AnimalPerformance">
-          <button type="button" class="btn btn-success" aria-label="Left Align">
-            INICIO
-          </button>
-        </a>
-      </li>
-      <li role="presentation" class="col-md-2">
-        <a href="/AnimalPerformance/listarLt">
-          <button type="button" class="btn btn-success">
-            LOTES <span class="glyphicon glyphicon-th"></span>
-          </button>
-        </a>
-      </li>
-      <li role="presentation" class="col-md-3">
-        <a href="/AnimalPerformance/listarA">
-          <button type="button" class="btn btn-success">
-            ANIMALES <span class="glyphicon glyphicon-blackboard"></span>
-          </button>
-        </a>
-      </li>
-      <li role="presentation" class="col-md-3">
-        <a href="/AnimalPerformance/listarP">
-          <button type="button" class="btn btn-success">
-            PRODUCTOS <span class="glyphicon glyphicon-equalizer"></span>
-          </button>
-        </a>
-      </li>
-      <li role="presentation" class="col-md-2">
-        <a href="/AnimalPerformance/listarR">
-          <button type="button" class="btn btn-success">
-            RENDIMIENTOS<span class="glyphicon glyphicon-equalizer"></span>
-          </button>
-        </a>
-      </li>
-    </ul>
-  </div>
-
+  <nav class="navbar navbar-expand bg-success flex-column flex-md-row bd-navbar">
+    <a href="/AnimalPerformance">
+      <button type="button" class="btn btn-success" aria-label="Left Align">
+        INICIO
+      </button>
+    </a>
+    <div class="collapse  navbar-collapse flex-column flex-md-row bd-navbar" id="navbarSupportedContent">
+      <ul class="navbar-nav">
+        {% if user.is_authenticated %}
+        <li role="presentation" >
+          <a href="/AnimalPerformance/listarLt">
+            <button type="button" class="btn btn-success">
+              LOTES
+            </button>
+          </a>
+        </li>
+        <li role="presentation" >
+          <a href="/AnimalPerformance/listarA">
+            <button type="button" class="btn btn-success">
+              ANIMALES
+            </button>
+          </a>
+        </li>
+        <li role="presentation" >
+          <a href="/AnimalPerformance/listarP">
+            <button type="button" class="btn btn-success">
+              PRODUCTOS
+            </button>
+          </a>
+        </li>
+        <li role="presentation" >
+          <a href="/AnimalPerformance/listarR">
+            <button type="button" class="btn btn-success">
+              RENDIMIENTOS
+            </button>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <a href="/AnimalPerformance/listarR">
+      <button type="button" class="btn btn-success d-lg-inline-block mb-2 mb-md-0 ml-md-2 col ml-auto ">
+        <strong> {{ user.get_username }}</strong> SALIR
+      </button>
+    </a>
+    {% else %}
+    <a href="/AnimalPerformance/listarR">
+      <button type="button" class="btn btn-success">
+        <strong>{{ user.get_uername }}</strong> | LOGIN
+      </button>
+    </a>
+    {% endif %}
+  </nav>
 </body>
 </html>
