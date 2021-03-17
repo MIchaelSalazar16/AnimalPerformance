@@ -341,3 +341,23 @@ def modificarLote(request):
     'lt':lt,
     }
 	return render(request,"modificarLote.html",context)
+############_____ELIMINAR ENTIDADES______###############################################
+def eliminarAnimal(request):
+	animal = Animal.objects.get(idAnimal=request.GET['idAnimal'])
+	animal.delete()
+	return redirect(ListarAnimales)
+
+def eliminarLote(request):
+	lote = LoteAnimal.objects.get(idLoteAnimal=request.GET['idLoteAnimal'])
+	lote.delete()
+	return redirect(ListarLotes)
+
+def eliminarProducto(request):
+	producto = Producto.objects.get(idProducto=request.GET['idProducto'])
+	producto.delete()
+	return redirect(ListarProductos)
+
+def eliminarRendimiento(request):
+	rendimiento = Rendimiento.objects.get(idRendimiento=request.GET['idRendimiento'])
+	rendimiento.delete()
+	return redirect(ListarRendimiento)

@@ -4,16 +4,16 @@ from django.urls import path
 from appAnimalPerformance.views import inicioAdmin,IngresarRendimiento,IngresarAnimal,IngresarLote,IngresarProducto
 from appAnimalPerformance.views import  login,logout,register, ListarLotes,ListarProductos
 from appAnimalPerformance.views import ListarAnimales, ListarRendimiento, modificarLote, modificarAnimal
-from appAnimalPerformance.views import modificarProducto, modificarRendimiento
+from appAnimalPerformance.views import modificarProducto, modificarRendimiento , eliminarLote, eliminarRendimiento
+from appAnimalPerformance.views import eliminarAnimal, eliminarProducto
+
 
 urlpatterns=[
 	path('', inicioAdmin),
 	path('ingresarR/',IngresarRendimiento),
 	path('ingresarA/',IngresarAnimal),
-	#path('ingresarA/<int:na>',IngresarAnimal),
 	path('ingresarLt/',IngresarLote),
 	path('ingresarP/',IngresarProducto),
-	#path('na/',NumAnimales),
 	path('registro/',register),
 	path('login/',login),
 	path('logout/',logout),
@@ -25,4 +25,8 @@ urlpatterns=[
 	path('modificarLt/',modificarLote),
 	path('modificarP/',modificarProducto),
 	path('modificarR/',modificarRendimiento),
+	path('eliminarA/',eliminarAnimal),
+	path('eliminarLt/',eliminarLote),
+	path('eliminarP/',eliminarProducto),
+	path('eliminarR/',eliminarRendimiento),
 ]
