@@ -26,6 +26,7 @@
           <th class="col-md-12"><p align="center">LOTE DE CERDOS</p></th>
         </tr>
         <tr class="row">
+          <!-- <th class="col-md-1"><p align="center">CÓDIGO</p></th> -->
           <th class="col-md-3"><p align="center">PRODUCTO</p></th>
           <th class="col-md-1"><p align="center">PESO (KG)</p></th>
           <th class="col-md-1"><p align="center">UTILIDAD ($ x KG)</p></th>
@@ -41,8 +42,8 @@
         {{ formset.management_form }}
           {%for fp in formset%}
             <tr class="row">
-              {{fp}}
-              <!-- <td class="col-md-3">{{fp.nombre_producto}}</td>
+              <!-- {{fp}} -->
+              <td class="col-md-3">{{fp.idProducto}}{{fp.nombre_producto}}</td>
               <td class="col-md-1"><p align="center">{{fp.peso_producto}}</p></td>
               <td class="col-md-1"><p align="center">{{fp.utilidad_producto_xKG}}</p></td>
               <td class="col-md-1"><p align="center">{{fp.precio_costo}}</p></td>
@@ -50,7 +51,7 @@
               <td class="col-md-1"><p align="center">{{fp.porcentaje_peso_producto}}</p></td>
               <td class="col-md-1"><p align="center">{{fp.precio_venta}}</p></td>
               <td class="col-md-1"><p align="center">{{fp.utilidad_producto}}</p></td>
-              <td class="col-md-2"><p align="center">{{fp.total_venta_producto}}</p></td> -->
+              <td class="col-md-2"><p align="center">{{fp.total_venta_producto}}</p></td>
 
             </tr>
           {% endfor %}

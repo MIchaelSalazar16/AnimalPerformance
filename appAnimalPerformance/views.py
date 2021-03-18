@@ -111,93 +111,113 @@ def IngresarProducto(request):
 def IngresarRendimiento(request):
 	# Creo la instancia de todos los productos de la base
 	P=Producto.objects.all()
-	#a=Animal.objects.all().order_by('-fecha')[:2]
 	lt=LoteAnimal.objects.latest('fecha') #trae el último lote ingresado
 	PesoLote=lt.peso_lote
 	CostoTotal=lt.precio_costo*PesoLote #Total del costo del lote
+	#DECLARACION DE VARIABLES GLOBALES
+	ListForms=[] #lista para guardar todos los formularios
+	MargUtilGen=0 #Margen de utilidad en todo el rendimiento
+	ListUtilXprodXkg=[] #Lista para guardar el margen $ de utilidad por KG en cada producto
+	ListPrecioCostXprod=[] #Lista para guardar el precio de costo por producto
+	ListTotalCostoXprod=[] #Lista que guarda el total de costo por producto segun el peso
+	ListUtilXprod=[] #Lista para guaradar las utilidades $ por producto
+	RendNeto=0 #Rendimiento neto
+	VentaTotal=0 #Total de la venta segun el precio de venta al público producto
+	MermaDES=0 #Merma por deshidratación
+	TotalCos=0 #Suma TOTAL del total del costo por producto
+	ListTotalVentaProd=[] #Lista que guarda total de la venta por producto
+	ListPorcenPesoXProd=[] #Lista que alamacena porcentaje de peso por producto en referecia al peso del lote
+######################################################################################################################
+	#TODOS LOS CALCULOS DE LA APP SE ENCUENTRAN EN ESTA SECCIÓN
+	#Calula el total de venta por producto y el porcentaje que equivale el peso de cada producto en referecia al peso del lote
+	for x in range(0,len(P)):
+		ListTotalVentaProd.append(round((float(P[int(x)].peso_producto)*float(P[int(x)].precio_venta)),2))
+		ListPorcenPesoXProd.append(float(P[int(x)].peso_producto)/CostoTotal)
+	#Total de venta de todos los productos
+	for x in range(0,len(ListTotalVentaProd)):
+		VentaTotal+=round(ListTotalVentaProd[int(x)],2)
+	#Calcula margen de utilidad del rendimiento
+	if CostoTotal!=0 and VentaTotal!=0:
+		MargUtilGen=round((((CostoTotal*100/VentaTotal)-100)*(-1)),2)
+	#calcula margen de utilidad por KG en cada producto
+	for x in range(0,len(P)):
+		ListUtilXprodXkg.append(round(((float(P[int(x)].precio_venta)*MargUtilGen)/100),2))
+	#Calcula el precio de costo por producto
+	range(0,len(ListUtilXprodXkg))
+	for x in range(0,len(P)):
+		ListPrecioCostXprod.append(round(float(P[int(x)].precio_venta)-ListUtilXprodXkg[x],2))
+	#Calcula el costo total por producto segun el peso.
+	range(0,len(ListPrecioCostXprod))
+	for x in range(0,len(P)):
+		ListTotalCostoXprod.append(round((float(P[int(x)].peso_producto)*ListPrecioCostXprod[x]),2))
+	#Calcula la utilidad neta $ por producto y la suma de los totales en costo total por producto
+	#Preparamos las listas para poder iterar
+	range(0,len(ListTotalVentaProd))
+	range(0,len(ListTotalCostoXprod))
+	for x in range(0,len(P)):
+		ListUtilXprod.append(round(ListTotalVentaProd[x]-ListTotalCostoXprod[x],2))
+		TotalCos+=round(ListTotalCostoXprod[x],2)
+	#Merma por deshidratación
+	MermaDES=round((PesoLote-RendNeto),2)
+	#Rendimiento Neto
+	for x in range(0,len(P)):
+		RendNeto=round(RendNeto,2)+float(P[int(x)].peso_producto)
+
+	#FIN DE LOS CALCULOS
+#############################################################################################################
+	#Cargamos las listas de los cálculos en las respectivas columnas
+	for x in range(0,len(P)):
+		ListForms.append(ProductoForm2(request.POST or None))
+	#Preparamos las listas para poder recorrerlas
+	range(0,len(ListPrecioCostXprod))
+	range(0,len(ListTotalCostoXprod))
+	range(0,len(ListTotalVentaProd))
+	range(0,len(ListPorcenPesoXProd))
+	range(0,len(ListUtilXprodXkg))
+	range(0,len(ListUtilXprod))
+	for x in range(0,len(P)):
+		p=Producto(peso_producto=P[x].peso_producto,precio_costo=round(ListPrecioCostXprod[x],2),nombre_producto=P[x].nombre_producto,
+		precio_venta=P[x].precio_venta,utilidad_producto=round(ListUtilXprod[x],2),
+		porcentaje_peso_producto=round(ListPorcenPesoXProd[x],2),
+		total_costo_producto=round(ListTotalCostoXprod[x],2),
+		total_venta_producto=round(ListTotalVentaProd[x],2),
+		utilidad_producto_xKG=round(ListUtilXprodXkg[x],2))
+		if p.save() != True:
+			return redirect(IngresarRendimiento)
 	#CARGAR EL MODELO DE DATOS DE LOS PRODUTCOS DEL CERDO
 	ProdFormset= modelformset_factory(Producto, form=ProductoForm2, extra=0)
 	formset= ProdFormset(request.POST or None)
 	if request.method== 'POST':
+		print(formset.errors)
 		if formset.is_valid():
 			#print("Es valido")
 			formset.save()
-	#DECLARACION DE VARIABLES
-	ListForms=[] #lista para guardar todos los formularios
-	MargenUTR=0 #Margen de utilidad en todo el rendimiento
-	MargenUTPKG=[] #Lista para guardar el margen $ de utilidad por KG en cada producto
-	PCP=[] #Lista para guardar el precio de costo por producto
-	TCP=[] #Lista que guarda el total de costo por producto segun el peso
-	UPP=[] #Lista para guaradar las utilidades $ por producto
-	RN=0 #Rendimiento neto
-	TotalVP=0 #T
-	MermaDES=0
-	TotalCos=0 #Suma TOTAL del total del costo por producto
-	TVP=[] #Lista que guarda total de la venta por producto
-	PPP=[] #Lista que alamacena porcentaje de peso por producto en referecia al peso del lote
-
-	#TODOS LOS CALCULOS DE LA APP SE ENCUENTRAN EN ESTA SECCIÓN
-	#Calula el total de venta por producto y el porcentaje que equivale el peso de cada producto en referecia al peso del lote
-	for x in range(0,len(P)):
-		TVP.append(round((float(P[int(x)].peso_producto)*float(P[int(x)].precio_venta)),2))
-		PPP.append(float(P[int(x)].peso_producto)/CostoTotal)
-	#Total de venta de todos los productos
-	for x in range(0,len(TVP)):
-		TotalVP+=round(TVP[int(x)],2)
-	#Calcula margen de utilidad del rendimiento
-	if CostoTotal!=0 and TotalVP!=0:
-		MargenUTR=round((((CostoTotal*100/TotalVP)-100)*(-1)),2)
-	#calcula margen de utilidad por KG en cada producto
-	for x in range(0,len(P)):
-		MargenUTPKG.append(round(((float(P[int(x)].precio_venta)*MargenUTR)/100),2))
-	#Calcula el precio de costo por producto
-	range(0,len(MargenUTPKG))
-	for x in range(0,len(P)):
-		PCP.append(round(float(P[int(x)].precio_venta)-MargenUTPKG[x],2))
-	#Calcula el costo total por producto segun el peso.
-	range(0,len(PCP))
-	for x in range(0,len(P)):
-		TCP.append(round((float(P[int(x)].peso_producto)*PCP[x]),2))
-	#Calcula la utilidad neta $ por producto y la suma de los totales en costo total por producto
-	range(0,len(TVP)) #Preparamos las listas para poder iterar
-	range(0,len(TCP))
-	for x in range(0,len(P)):
-		TCP.append(round(TVP[x]-TCP[x],2))
-		TotalCos+=round(TCP[x],2)
-
-	MermaDES=round((PesoLote-RN),2)
-
-	for x in range(0,len(P)):
-		RN=round(RN,2)+float(P[int(x)].peso_producto)
-	#FIN DE LOS CALCULOS
-	range(0,len(PCP))#Preparamos las listas para poder recorrerlas
-	range(0,len(TCP))#Preparamos las listas para poder recorrerlas
 
 	fr= RendimientoForm(request.POST or None)
 	r=Rendimiento()
-	# fr.fields["total_costo"].initial=TotalCos
-	# fr.fields["total_venta"].initial=round(TotalVP,2)
-	# fr.fields["margen_utilidad"].initial=MargenUTR
-	# fr.fields["rendimiento_neto"].initial=RN
-	# fr.fields["merma_deshidratacion"].initial=round(PesoLote-RN,2)
-	# fr.fields["porcentaje_peso_neto"].initial=round((RN*100)/PesoLote,2)
-	# if request.method == 'POST':
-	# 	ListForms.clear()
-	# 	if fr.is_valid():
-	# 		datosR= fr.cleaned_data
-	# 		r.total_costo=datosR.get("total_costo")
-	# 		r.total_venta=datosR.get("total_venta")
-	# 		r.margen_utilidad=datosR.get("margen_utilidad")
-	# 		r.rendimiento_neto=datosR.get("rendimiento_neto")
-	# 		r.merma_deshidratacion=datosR.get("merma_deshidratacion")
-	# 		r.porcentaje_peso_neto=datosR.get("porcentaje_peso_neto")
-	# 		if r.save() != True:
-	# 			return redirect(IngresarRendimiento)
-	# 		else:
-	# 			return redirect('AnimalPerformance/listarR')
+	fr.fields["total_costo"].initial=TotalCos
+	fr.fields["total_venta"].initial=round(VentaTotal,2)
+	fr.fields["margen_utilidad"].initial=MargUtilGen
+	fr.fields["rendimiento_neto"].initial=RendNeto
+	fr.fields["merma_deshidratacion"].initial=round(PesoLote-RendNeto,2)
+	fr.fields["porcentaje_peso_neto"].initial=round((RendNeto*100)/PesoLote,2)
+	if request.method == 'POST':
+		ListForms.clear()
+		if fr.is_valid():
+			datosR= fr.cleaned_data
+			r.total_costo=datosR.get("total_costo")
+			r.total_venta=datosR.get("total_venta")
+			r.margen_utilidad=datosR.get("margen_utilidad")
+			r.rendimiento_neto=datosR.get("rendimiento_neto")
+			r.merma_deshidratacion=datosR.get("merma_deshidratacion")
+			r.porcentaje_peso_neto=datosR.get("porcentaje_peso_neto")
+			if r.save() != True:
+				return redirect(IngresarRendimiento)
+			else:
+				return redirect('AnimalPerformance/listarR')
 	context={
 	'fr':fr,'lt':lt,'ct':CostoTotal,'LF':ListForms,
-	'P':P,'RN':RN,'ct2':TotalCos,'MD':MermaDES,
+	'P':P,'RendNeto':RendNeto,'ct2':TotalCos,'MD':MermaDES,
 	'formset':formset,
 	}
 	return render(request,"IngresarRendimiento.html",context)
