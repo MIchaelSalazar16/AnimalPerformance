@@ -3,25 +3,33 @@
 <form action="" method="post" enctype="multipart/form-data">
   {% csrf_token %}
   <table class="table table-striped table-bordered table-hover">
-   <thead>
-       <tr>
-         <th>Costo Total:</th>
-         <th>Total Venta:</th>
-         <th>Margen de Utilidad:</th>
-         <th>Rendimiento Neto:</th>
-         <th>Merma por deshidratación:</th>
-         <th>% Peso neto:</th>
-       </tr>
-   </thead>
+
    <tbody>
      <tr>
+       <th>Costo Total:</th>
        <td>{{fr.total_costo}}</td>
-       <td>{{fr.total_venta}}</td>
+    </tr>
+    <tr>
+      <th>Total Venta:</th>
+      <td>{{fr.total_venta}}</td>
+    </tr>
+    <tr>
+      <th>Margen de Utilidad:</th>
        <td>{{fr.margen_utilidad}}</td>
+    </tr>
+    <tr>
+       <th>Rendimiento Neto:</th>
        <td>{{fr.rendimiento_neto}}</td>
+    </tr>
+    <tr>
+       <th>Merma por deshidratación:</th>
        <td>{{fr.merma_deshidratacion}}</td>
+    </tr>
+    <tr>
+       <th>% Peso neto:</th>
        <td>{{fr.porcentaje_peso_neto}}</td>
-     </tr>
+    </tr>
+       
    </tbody>
    </table>
   <a href="/AnimalPerformance/listarR">

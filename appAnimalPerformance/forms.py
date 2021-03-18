@@ -4,6 +4,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
+
 class AnimalForm(ModelForm):
     class Meta:
         model = Animal
@@ -22,9 +23,8 @@ class ProductoForm(ModelForm):
 class ProductoForm2(ModelForm):
     class Meta:
         model = Producto
-        fields = ['idProducto','peso_producto','precio_costo','nombre_producto','precio_venta','utilidad_producto',
-                  'porcentaje_peso_producto','total_costo_producto','total_venta_producto','utilidad_producto_xKG'
-                  ,'unidad']
+        fields = ['peso_producto','precio_costo','nombre_producto','precio_venta','utilidad_producto',
+                  'porcentaje_peso_producto','total_costo_producto','total_venta_producto','utilidad_producto_xKG']
         # nombre_producto= forms.CharField(widget=forms.TextInput(attrs={ 'readonly':'readonly'}))
         # precio_venta= forms.CharField(widget=forms.TextInput(attrs={ 'readonly':'readonly'}))
 

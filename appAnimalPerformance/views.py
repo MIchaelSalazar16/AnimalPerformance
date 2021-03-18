@@ -1,6 +1,6 @@
 from django.shortcuts import redirect,render
 from .models import Animal,Producto,Rendimiento,LoteAnimal
-from .forms import AnimalForm,LoteAnimalForm,ProductoForm,RendimientoForm,ProductoForm2
+from .forms import AnimalForm,LoteAnimalForm,ProductoForm,RendimientoForm ,ProductoForm2
 from django.core.files.uploadedfile import SimpleUploadedFile
 import json as simplejson
 from django.http import HttpResponse,HttpResponseRedirect, HttpRequest
@@ -13,6 +13,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login as do_login
 from django.contrib.auth.models import User
 from django.forms import modelformset_factory
+
 
 def inicioAdmin(request):
 	if request.user.is_authenticated:
@@ -95,6 +96,7 @@ def IngresarProducto(request):
 			#Limpieza de la lista que guarda el formulario
 			datosP= fp.cleaned_data
 			#print(datosP)
+			#print(datosP)
 			#Para ingresar el producto con sus campos calculados en la tabla a la base
 			p.nombre_producto=datosP.get("nombre_producto")
 			p.precio_venta=datosP.get("precio_venta")
@@ -109,20 +111,17 @@ def IngresarProducto(request):
 def IngresarRendimiento(request):
 	# Creo la instancia de todos los productos de la base
 	P=Producto.objects.all()
-	a=Animal.objects.all().order_by('-fecha')[:2]
+	#a=Animal.objects.all().order_by('-fecha')[:2]
 	lt=LoteAnimal.objects.latest('fecha') #trae el último lote ingresado
 	PesoLote=lt.peso_lote
 	CostoTotal=lt.precio_costo*PesoLote #Total del costo del lote
 	#CARGAR EL MODELO DE DATOS DE LOS PRODUTCOS DEL CERDO
-	ProdAux=Producto.objects.filter().values()
 	ProdFormset= modelformset_factory(Producto, form=ProductoForm2, extra=0)
-	formProd= ProdFormset(request.POST or None)
-	#query= Producto.objects.filter(idProducto=1)
-	if request.method == 'POST':
-		print("entra1")
-
-		for aux in formProd:
-			print(aux)
+	formset= ProdFormset(request.POST or None)
+	if request.method== 'POST':
+		if formset.is_valid():
+			#print("Es valido")
+			formset.save()
 	#DECLARACION DE VARIABLES
 	ListForms=[] #lista para guardar todos los formularios
 	MargenUTR=0 #Margen de utilidad en todo el rendimiento
@@ -199,7 +198,7 @@ def IngresarRendimiento(request):
 	context={
 	'fr':fr,'lt':lt,'ct':CostoTotal,'LF':ListForms,
 	'P':P,'RN':RN,'ct2':TotalCos,'MD':MermaDES,
-	'formProd':formProd,
+	'formset':formset,
 	}
 	return render(request,"IngresarRendimiento.html",context)
 
@@ -260,7 +259,7 @@ def modificarRendimiento(request):
 		if fr.is_valid():
 			datos= fr.cleaned_data
 			r.total_costo=datos.get("total_costo")
-			r.total_venta=datos.get("total_ventatotal_venta")
+			r.total_venta=datos.get("total_venta")
 			r.margen_utilidad=datos.get("margen_utilidad")
 			r.rendimiento_neto=datos.get("rendimiento_neto")
 			r.merma_deshidratacion=datos.get("merma_deshidratacion")

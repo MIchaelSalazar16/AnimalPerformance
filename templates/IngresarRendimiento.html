@@ -4,8 +4,8 @@
 <div class="form-group">
   <form action="" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
-    <table class="table">
-      <thead>
+    <table class="table table-borderless table-striped">
+      <thead class="table-striped">
         <tr class="row">
           <th class="col-md-3">Peso Lote KG:</th>
           <td class="col-md-3">{{lt.peso_lote}}</td>
@@ -27,54 +27,57 @@
         </tr>
         <tr class="row">
           <th class="col-md-3"><p align="center">PRODUCTO</p></th>
-          <th class="col-md-2"><p align="center">PESO (KG)</p></th>
-          <th class="col-md-2"><p align="center">PRECIO DE COSTO ($)</p></th>
-          <th class="col-md-2"><p align="center">PRECIO DE VENTA ($)</p></th>
-          <th class="col-md-3"><p align="center">UTILIDAD POR PRODUCTO</p></th>
+          <th class="col-md-1"><p align="center">PESO (KG)</p></th>
+          <th class="col-md-1"><p align="center">UTILIDAD ($ x KG)</p></th>
+          <th class="col-md-1"><p align="center">PRECIO DE COSTO ($)</p></th>
+          <th class="col-md-1"><p align="center">TOTAL COSTO ($)</p></th>
+          <th class="col-md-1"><p align="center">PESO (%)</p></th>
+          <th class="col-md-1"><p align="center">PRECIO DE VENTA ($)</p></th>
+          <th class="col-md-1"><p align="center">UTILIDAD POR PRODUCTO</p></th>
+          <th class="col-md-2"><p align="center">TOTAL VENTA ($)</p></th>
         </tr>
       </thead>
-      <tbody>
-        {{formProd.management_form}}
-        {%for fp in formProd%}
-          <tr class="row">
-            <td class="col-md-3">{{fp.nombre_producto}}</td>
-            <td class="col-md-2"><p align="center">{{fp.peso_producto}}</p></td>
-            <td class="col-md-2"><p align="center">{{fp.precio_costo}}</p></td>
-            <td class="col-md-2"><p align="center">{{fp.precio_venta}}</p></td>
-            <td class="col-md-3"><p align="center">{{fp.utilidad_producto}}</p></td>
-          </tr>
-        {% endfor %}
-          <tr class="row">
-          <th class="col-md-3">Rendimiento Neto KG:</th>
-          <td class="col-md-3">{{fr.rendimiento_neto}}</td>
-          <th class="col-md-3">Total de Venta $$:</th>
-          <td class="col-md-2">{{fr.total_venta}}</td>
+      <tbody >
+        {{ formset.management_form }}
+          {%for fp in formset%}
+            <tr class="row">
+              {{fp}}
+              <!-- <td class="col-md-3">{{fp.nombre_producto}}</td>
+              <td class="col-md-1"><p align="center">{{fp.peso_producto}}</p></td>
+              <td class="col-md-1"><p align="center">{{fp.utilidad_producto_xKG}}</p></td>
+              <td class="col-md-1"><p align="center">{{fp.precio_costo}}</p></td>
+              <td class="col-md-1"><p align="center">{{fp.total_costo_producto}}</p></td>
+              <td class="col-md-1"><p align="center">{{fp.porcentaje_peso_producto}}</p></td>
+              <td class="col-md-1"><p align="center">{{fp.precio_venta}}</p></td>
+              <td class="col-md-1"><p align="center">{{fp.utilidad_producto}}</p></td>
+              <td class="col-md-2"><p align="center">{{fp.total_venta_producto}}</p></td> -->
 
-        </tr>
-        <tr class="row">
-          <th class="col-md-3">Merma por deshidratación KG:</th>
-          <td class="col-md-3">{{fr.merma_deshidratacion}}</td>
-          <th class="col-md-3">Total del costo $$:</th>
-          <td class="col-md-2">{{fr.total_costo}}</td>
-        </tr>
-        <tr class="row">
-          <th class="col-md-3">Margen de Utilidad %:</th>
-          <td class="col-md-3">{{fr.margen_utilidad}}</td>
-          <th class="col-md-3">Porcentaje Peso Neto %:</th>
-          <td class="col-md-2">{{fr.porcentaje_peso_neto}}</td>
-        </tr>
+            </tr>
+          {% endfor %}
+              <tr class="row">
+              <th class="col-md-3">Rendimiento Neto KG:</th>
+              <td class="col-md-3">{{fr.rendimiento_neto}}</td>
+              <th class="col-md-3">Total de Venta $$:</th>
+              <td class="col-md-2">{{fr.total_venta}}</td>
+
+            </tr>
+            <tr class="row">
+              <th class="col-md-3">Merma por deshidratación KG:</th>
+              <td class="col-md-3">{{fr.merma_deshidratacion}}</td>
+              <th class="col-md-3">Total del costo $$:</th>
+              <td class="col-md-2">{{fr.total_costo}}</td>
+            </tr>
+            <tr class="row">
+              <th class="col-md-3">Margen de Utilidad %:</th>
+              <td class="col-md-3">{{fr.margen_utilidad}}</td>
+              <th class="col-md-3">Porcentaje Peso Neto %:</th>
+              <td class="col-md-2">{{fr.porcentaje_peso_neto}}</td>
+            </tr>
       </tbody>
     </table>
     <button type="submit" class="btn btn-success" aria-label="Left Align">
       <h5><p>GUARDAR</p></h5>
     </button>
-
-    <!-- <a href="/AnimalPerformance/ingresarR">
-    <button type="submit" class="btn btn-info" aria-label="Left Align">
-    <h5><p>SIGUIENTE<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></p></h5>
-  </button>
-</a> -->
-
 
 </form>
 </div>
