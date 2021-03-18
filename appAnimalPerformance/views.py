@@ -166,8 +166,7 @@ def IngresarRendimiento(request):
 	#FIN DE LOS CALCULOS
 #############################################################################################################
 	#Cargamos las listas de los cálculos en las respectivas columnas
-	for x in range(0,len(P)):
-		ListForms.append(ProductoForm2(request.POST or None))
+
 	#Preparamos las listas para poder recorrerlas
 	range(0,len(ListPrecioCostXprod))
 	range(0,len(ListTotalCostoXprod))
@@ -175,46 +174,35 @@ def IngresarRendimiento(request):
 	range(0,len(ListPorcenPesoXProd))
 	range(0,len(ListUtilXprodXkg))
 	range(0,len(ListUtilXprod))
-	for x in range(0,len(P)):
-		p=Producto(peso_producto=P[x].peso_producto,precio_costo=round(ListPrecioCostXprod[x],2),nombre_producto=P[x].nombre_producto,
-		precio_venta=P[x].precio_venta,utilidad_producto=round(ListUtilXprod[x],2),
-		porcentaje_peso_producto=round(ListPorcenPesoXProd[x],2),
-		total_costo_producto=round(ListTotalCostoXprod[x],2),
-		total_venta_producto=round(ListTotalVentaProd[x],2),
-		utilidad_producto_xKG=round(ListUtilXprodXkg[x],2))
-		if p.save() != True:
-			return redirect(IngresarRendimiento)
 	#CARGAR EL MODELO DE DATOS DE LOS PRODUTCOS DEL CERDO
 	ProdFormset= modelformset_factory(Producto, form=ProductoForm2, extra=0)
 	formset= ProdFormset(request.POST or None)
 	if request.method== 'POST':
-		print(formset.errors)
 		if formset.is_valid():
-			#print("Es valido")
 			formset.save()
 
 	fr= RendimientoForm(request.POST or None)
 	r=Rendimiento()
-	fr.fields["total_costo"].initial=TotalCos
-	fr.fields["total_venta"].initial=round(VentaTotal,2)
-	fr.fields["margen_utilidad"].initial=MargUtilGen
-	fr.fields["rendimiento_neto"].initial=RendNeto
-	fr.fields["merma_deshidratacion"].initial=round(PesoLote-RendNeto,2)
-	fr.fields["porcentaje_peso_neto"].initial=round((RendNeto*100)/PesoLote,2)
-	if request.method == 'POST':
-		ListForms.clear()
-		if fr.is_valid():
-			datosR= fr.cleaned_data
-			r.total_costo=datosR.get("total_costo")
-			r.total_venta=datosR.get("total_venta")
-			r.margen_utilidad=datosR.get("margen_utilidad")
-			r.rendimiento_neto=datosR.get("rendimiento_neto")
-			r.merma_deshidratacion=datosR.get("merma_deshidratacion")
-			r.porcentaje_peso_neto=datosR.get("porcentaje_peso_neto")
-			if r.save() != True:
-				return redirect(IngresarRendimiento)
-			else:
-				return redirect('AnimalPerformance/listarR')
+	# fr.fields["total_costo"].initial=TotalCos
+	# fr.fields["total_venta"].initial=round(VentaTotal,2)
+	# fr.fields["margen_utilidad"].initial=MargUtilGen
+	# fr.fields["rendimiento_neto"].initial=RendNeto
+	# fr.fields["merma_deshidratacion"].initial=round(PesoLote-RendNeto,2)
+	# fr.fields["porcentaje_peso_neto"].initial=round((RendNeto*100)/PesoLote,2)
+	# if request.method == 'POST':
+	# 	ListForms.clear()
+	# 	if fr.is_valid():
+	# 		datosR= fr.cleaned_data
+	# 		r.total_costo=datosR.get("total_costo")
+	# 		r.total_venta=datosR.get("total_venta")
+	# 		r.margen_utilidad=datosR.get("margen_utilidad")
+	# 		r.rendimiento_neto=datosR.get("rendimiento_neto")
+	# 		r.merma_deshidratacion=datosR.get("merma_deshidratacion")
+	# 		r.porcentaje_peso_neto=datosR.get("porcentaje_peso_neto")
+	# 		if r.save() != True:
+	# 			return redirect(IngresarRendimiento)
+	# 		else:
+	# 			return redirect('AnimalPerformance/listarR')
 	context={
 	'fr':fr,'lt':lt,'ct':CostoTotal,'LF':ListForms,
 	'P':P,'RendNeto':RendNeto,'ct2':TotalCos,'MD':MermaDES,

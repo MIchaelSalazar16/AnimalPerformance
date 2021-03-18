@@ -165,6 +165,15 @@ def IngresarRendimiento(request):
 	for x in range(0,len(P)):
 		RN=round(RN,2)+float(P[int(x)].peso_producto)
 	#FIN DE LOS CALCULOS
+	# for x in range(0,len(P)):
+		# p=Producto(peso_producto=P[x].peso_producto,precio_costo=round(ListPrecioCostXprod[x],2),nombre_producto=P[x].nombre_producto,
+		# precio_venta=P[x].precio_venta,utilidad_producto=round(ListUtilXprod[x],2),
+		# porcentaje_peso_producto=round(ListPorcenPesoXProd[x],2),
+		# total_costo_producto=round(ListTotalCostoXprod[x],2),
+		# total_venta_producto=round(ListTotalVentaProd[x],2),
+		# utilidad_producto_xKG=round(ListUtilXprodXkg[x],2))
+		# if p.save() != True:
+		# 	return redirect(IngresarRendimiento)
 	#ListForms.clear()
 	for x in range(0,len(P)):
 		ListForms.append(ProductoForm2(request.POST or None))

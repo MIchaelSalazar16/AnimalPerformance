@@ -21,12 +21,20 @@ class ProductoForm(ModelForm):
         fields = ['idProducto','nombre_producto','precio_venta','unidad']
 
 class ProductoForm2(ModelForm):
+    nombre_producto=forms.CharField(widget=forms.TextInput(attrs={ 'readonly':'readonly','class':'border-0','size':'25'}))
+    peso_producto=forms.CharField(widget=forms.TextInput(attrs={'size':'2'}))
+    precio_venta=forms.CharField(widget=forms.NumberInput(attrs={ 'readonly':'readonly','class':'border-0','size':'2'}))
+    precio_costo=forms.CharField(widget=forms.NumberInput(attrs={ 'readonly':'readonly','class':'border-0','size':'2'}))
+    utilidad_producto=forms.CharField(widget=forms.NumberInput(attrs={ 'readonly':'readonly','class':'border-0','size':'2'}))
+    porcentaje_peso_producto=forms.CharField(widget=forms.NumberInput(attrs={ 'readonly':'readonly','class':'border-0','size':'2'}))
+    total_costo_producto=forms.CharField(widget=forms.NumberInput(attrs={ 'readonly':'readonly','class':'border-0','size':'2'}))
+    total_venta_producto=forms.CharField(widget=forms.NumberInput(attrs={ 'readonly':'readonly','class':'border-0','size':'2'}))
+    utilidad_producto_xKG=forms.CharField(widget=forms.NumberInput(attrs={ 'readonly':'readonly','class':'border-0','size':'2'}))
     class Meta:
         model = Producto
         fields = ['peso_producto','precio_costo','nombre_producto','precio_venta','utilidad_producto',
                   'porcentaje_peso_producto','total_costo_producto','total_venta_producto','utilidad_producto_xKG']
-        # nombre_producto= forms.CharField(widget=forms.TextInput(attrs={ 'readonly':'readonly'}))
-        # precio_venta= forms.CharField(widget=forms.TextInput(attrs={ 'readonly':'readonly'}))
+
 
 class RendimientoForm(ModelForm):
     class Meta:
