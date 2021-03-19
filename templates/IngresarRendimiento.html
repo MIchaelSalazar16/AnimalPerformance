@@ -39,45 +39,30 @@
         </tr>
       </thead>
       <tbody >
+
         {{ formset.management_form }}
-          {%for fp in formset%}
-            <tr class="row">
-              <!-- {{fp}} -->
-              <td class="col-md-3">{{fp.idProducto}}{{fp.nombre_producto}}</td>
-              <td class="col-md-1"><p align="center">{{fp.peso_producto}}</p></td>
-              <td class="col-md-1"><p align="center">{{fp.utilidad_producto_xKG}}</p></td>
-              <td class="col-md-1"><p align="center">{{fp.precio_costo}}</p></td>
-              <td class="col-md-1"><p align="center">{{fp.total_costo_producto}}</p></td>
-              <td class="col-md-1"><p align="center">{{fp.porcentaje_peso_producto}}</p></td>
-              <td class="col-md-1"><p align="center">{{fp.precio_venta}}</p></td>
-              <td class="col-md-1"><p align="center">{{fp.utilidad_producto}}</p></td>
-              <td class="col-md-2"><p align="center">{{fp.total_venta_producto}}</p></td>
-            </tr>
-          {% endfor %}
-              <tr class="row">
-              <th class="col-md-3">Rendimiento Neto KG:</th>
-              <td class="col-md-3">{{fr.rendimiento_neto}}</td>
-              <th class="col-md-3">Total de Venta $$:</th>
-              <td class="col-md-2">{{fr.total_venta}}</td>
-            </tr>
-            <tr class="row">
-              <th class="col-md-3">Merma por deshidratación KG:</th>
-              <td class="col-md-3">{{fr.merma_deshidratacion}}</td>
-              <th class="col-md-3">Total del costo $$:</th>
-              <td class="col-md-2">{{fr.total_costo}}</td>
-            </tr>
-            <tr class="row">
-              <th class="col-md-3">Margen de Utilidad %:</th>
-              <td class="col-md-3">{{fr.margen_utilidad}}</td>
-              <th class="col-md-3">Porcentaje Peso Neto %:</th>
-              <td class="col-md-2">{{fr.porcentaje_peso_neto}}</td>
-            </tr>
+        {%for fp in formset%}
+        <tr class="row">
+          <td class="col-md-3">{{fp.idProducto}}{{fp.nombre_producto}}</td>
+          <td class="col-md-1"><p align="center">{{fp.peso_producto}}</p></td>
+          <td class="col-md-1"><p align="center">{{fp.utilidad_producto_xKG}}</p></td>
+          <td class="col-md-1"><p align="center">{{fp.precio_costo}}</p></td>
+          <td class="col-md-1"><p align="center">{{fp.total_costo_producto}}</p></td>
+          <td class="col-md-1"><p align="center">{{fp.porcentaje_peso_producto}}</p></td>
+          <td class="col-md-1"><p align="center">{{fp.precio_venta}}</p></td>
+          <td class="col-md-1"><p align="center">{{fp.utilidad_producto}}</p></td>
+          <td class="col-md-2"><p align="center">{{fp.total_venta_producto}}</p></td>
+        </tr>
+        {% endfor %}
       </tbody>
     </table>
-    <button type="submit" class="btn btn-success" aria-label="Left Align">
-      <h5><p>GUARDAR</p></h5>
-    </button>
+    <a href="/AnimalPerformance/calculaR">
+      <button type="submit" class="btn btn-success" aria-label="Left Align">
+        <h5><p>GUARDAR</p></h5>
+      </button>
+    </a>
 
-</form>
+
+  </form>
 </div>
 {% endblock %}

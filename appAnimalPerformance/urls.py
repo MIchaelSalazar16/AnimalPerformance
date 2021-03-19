@@ -5,7 +5,7 @@ from appAnimalPerformance.views import inicioAdmin,IngresarRendimiento,IngresarA
 from appAnimalPerformance.views import  login,logout,register, ListarLotes,ListarProductos
 from appAnimalPerformance.views import ListarAnimales, ListarRendimiento, modificarLote, modificarAnimal
 from appAnimalPerformance.views import modificarProducto, modificarRendimiento , eliminarLote, eliminarRendimiento
-from appAnimalPerformance.views import eliminarAnimal, eliminarProducto
+from appAnimalPerformance.views import eliminarAnimal, eliminarProducto , CalculaRendimiento
 
 
 urlpatterns=[
@@ -29,4 +29,5 @@ urlpatterns=[
 	path('eliminarLt/',eliminarLote),
 	path('eliminarP/',eliminarProducto),
 	path('eliminarR/',eliminarRendimiento),
+	path('calculaR/',CalculaRendimiento),
 ]

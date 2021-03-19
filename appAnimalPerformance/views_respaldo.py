@@ -175,6 +175,24 @@ def IngresarRendimiento(request):
 		# if p.save() != True:
 		# 	return redirect(IngresarRendimiento)
 	#ListForms.clear()
+#############################################################################################
+{{ formset.management_form }}
+{%for fp in formset%}
+<tr class="row">
+<!-- {{fp}} -->
+<td class="col-md-3">{{fp.idProducto}}{{fp.nombre_producto}}</td>
+<td class="col-md-1"><p align="center">{{fp.peso_producto}}</p></td>
+<td class="col-md-1"><p align="center">{{fp.utilidad_producto_xKG}}</p></td>
+<td class="col-md-1"><p align="center">{{fp.precio_costo}}</p></td>
+<td class="col-md-1"><p align="center">{{fp.total_costo_producto}}</p></td>
+<td class="col-md-1"><p align="center">{{fp.porcentaje_peso_producto}}</p></td>
+<td class="col-md-1"><p align="center">{{fp.precio_venta}}</p></td>
+<td class="col-md-1"><p align="center">{{fp.utilidad_producto}}</p></td>
+<td class="col-md-2"><p align="center">{{fp.total_venta_producto}}</p></td>
+</tr>
+{% endfor %}
+
+###########################################################################################
 	for x in range(0,len(P)):
 		ListForms.append(ProductoForm2(request.POST or None))
 	range(0,len(PCP))#Preparamos las listas para poder recorrerlas

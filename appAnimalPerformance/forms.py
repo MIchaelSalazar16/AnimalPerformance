@@ -23,13 +23,13 @@ class ProductoForm(ModelForm):
 class ProductoForm2(ModelForm):
     nombre_producto=forms.CharField(widget=forms.TextInput(attrs={ 'readonly':'readonly','class':'border-0','size':'25'}))
     peso_producto=forms.CharField(widget=forms.TextInput(attrs={'size':'2'}))
-    precio_venta=forms.CharField(widget=forms.NumberInput(attrs={ 'readonly':'readonly','class':'border-0','size':'2'}))
-    precio_costo=forms.CharField(widget=forms.NumberInput(attrs={ 'readonly':'readonly','class':'border-0','size':'2'}))
-    utilidad_producto=forms.CharField(widget=forms.NumberInput(attrs={ 'readonly':'readonly','class':'border-0','size':'2'}))
-    porcentaje_peso_producto=forms.CharField(widget=forms.NumberInput(attrs={ 'readonly':'readonly','class':'border-0','size':'2'}))
-    total_costo_producto=forms.CharField(widget=forms.NumberInput(attrs={ 'readonly':'readonly','class':'border-0','size':'2'}))
-    total_venta_producto=forms.CharField(widget=forms.NumberInput(attrs={ 'readonly':'readonly','class':'border-0','size':'2'}))
-    utilidad_producto_xKG=forms.CharField(widget=forms.NumberInput(attrs={ 'readonly':'readonly','class':'border-0','size':'2'}))
+    precio_venta=forms.CharField(widget=forms.NumberInput(attrs={ 'readonly':'readonly','class':'border-0 text-danger','size':'1'}))
+    precio_costo=forms.CharField(widget=forms.NumberInput(attrs={ 'readonly':'readonly','class':'border-0','size':'1'}))
+    utilidad_producto=forms.CharField(widget=forms.NumberInput(attrs={ 'readonly':'readonly','class':'border-0','size':'1'}))
+    porcentaje_peso_producto=forms.CharField(widget=forms.NumberInput(attrs={ 'readonly':'readonly','class':'border-0','size':'1'}))
+    total_costo_producto=forms.CharField(widget=forms.NumberInput(attrs={ 'readonly':'readonly','class':'border-0','size':'1'}))
+    total_venta_producto=forms.CharField(widget=forms.NumberInput(attrs={ 'readonly':'readonly','class':'border-0','size':'1'}))
+    utilidad_producto_xKG=forms.CharField(widget=forms.NumberInput(attrs={ 'readonly':'readonly','class':'border-0','size':'1'}))
     class Meta:
         model = Producto
         fields = ['peso_producto','precio_costo','nombre_producto','precio_venta','utilidad_producto',
