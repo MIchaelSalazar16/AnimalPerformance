@@ -44,21 +44,25 @@
         {%for fp in formset%}
         <tr class="row">
           <td class="col-md-3">{{fp.idProducto}}{{fp.nombre_producto}}</td>
-          <td class="col-md-1"><p align="center">{{fp.peso_producto}}</p></td>
-          <td class="col-md-1"><p align="center">{{fp.utilidad_producto_xKG}}</p></td>
-          <td class="col-md-1"><p align="center">{{fp.precio_costo}}</p></td>
-          <td class="col-md-1"><p align="center">{{fp.total_costo_producto}}</p></td>
-          <td class="col-md-1"><p align="center">{{fp.porcentaje_peso_producto}}</p></td>
-          <td class="col-md-1"><p align="center">{{fp.precio_venta}}</p></td>
-          <td class="col-md-1"><p align="center">{{fp.utilidad_producto}}</p></td>
-          <td class="col-md-2"><p align="center">{{fp.total_venta_producto}}</p></td>
+          <td class="col-md-1">{{fp.peso_producto}}</td>
+          <td class="col-md-1">{{fp.utilidad_producto_xKG}}</td>
+          <td class="col-md-1">{{fp.precio_costo}}</td>
+          <td class="col-md-1">{{fp.total_costo_producto}}</td>
+          <td class="col-md-1">{{fp.porcentaje_peso_producto}}</td>
+          <td class="col-md-1">{{fp.precio_venta}}</td>
+          <td class="col-md-1">{{fp.utilidad_producto}}</td>
+          <td class="col-md-2">{{fp.total_venta_producto}}</td>
         </tr>
         {% endfor %}
       </tbody>
     </table>
-    <a href="/AnimalPerformance/calculaR">
       <button type="submit" class="btn btn-success" aria-label="Left Align">
-        <h5><p>SIGUIENTE</p></h5>
+        AGREGAR
+      </button>
+    |
+    <a href="/AnimalPerformance/calculaR">
+      <button type="button" class="btn btn-success" aria-label="Left Align">
+        SIGUIENTE
       </button>
     </a>
 
