@@ -191,7 +191,26 @@ def IngresarRendimiento(request):
 <td class="col-md-2"><p align="center">{{fp.total_venta_producto}}</p></td>
 </tr>
 {% endfor %}
-
+############################################################################################
+if request.method== 'POST':
+	for x in range(0,len(P)):
+		print(ListForms[x])
+		print(len(ListForms))
+		ProdAux=Producto.objects.get(idProducto=P[x].idProducto)
+		print(ProdAux.idProducto)
+		if ListForms[x].is_valid():
+			data=ListForms[x].cleaned_data
+			ProdAux.nombre_producto=data.get("nombre_producto")
+			ProdAux.utilidad_producto_xKG=data.get("utilidad_producto_xKG")
+			ProdAux.peso_producto=data.get("peso_producto")
+			ProdAux.precio_costo=data.get("precio_costo")
+			ProdAux.total_costo_producto=data.get("total_costo_producto")
+			ProdAux.porcentaje_peso_producto=data.get("porcentaje_peso_producto")
+			ProdAux.precio_venta=data.get("precio_venta")
+			ProdAux.utilidad_producto=data.get("utilidad_producto")
+			ProdAux.total_venta_producto=data.get("total_venta_producto")
+			if ProdAux.save() !=True:
+				return redirect(CalculaRendimiento)
 ###########################################################################################
 	for x in range(0,len(P)):
 		ListForms.append(ProductoForm2(request.POST or None))

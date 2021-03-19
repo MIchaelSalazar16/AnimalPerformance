@@ -32,7 +32,7 @@ class Producto(models.Model):
     nombre_producto=  models.CharField(max_length=100)
     peso_producto=  models.FloatField(default=0,null=True)
     precio_costo=  models.FloatField(default=0,null=True)
-    precio_venta=  models.FloatField(null=False)
+    precio_venta=  models.FloatField(null=True)
     utilidad_producto=  models.FloatField(default=0)
     porcentaje_peso_producto=  models.FloatField(default=0,null=True)
     total_costo_producto=  models.FloatField(default=0,null=True)
