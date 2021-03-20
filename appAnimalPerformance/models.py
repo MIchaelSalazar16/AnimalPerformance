@@ -60,11 +60,3 @@ class Producto(models.Model):
     fecha=models.DateTimeField(auto_now_add=True,null=True)
     def __str__(self):
         return self.nombre_producto
-
-# class Usuario(models.Model):
-#     idUsuario= models.AutoField(primary_key=True)
-#     username= models.CharField(max_length=50,default="")
-#     correo=  models.EmailField(max_length=30,default="")
-#     password=  models.CharField(max_length=30,null=False)
-#     def __str__(self):
-#         return self.idUsuario

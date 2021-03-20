@@ -59,7 +59,7 @@ def IngresarAnimal(request):
 			if fa.is_valid():
 				#Limpieza de la lista que guarda el formulario
 				datosA= fa.cleaned_data
-				#Para registrar a los animales que entran
+				a.lote=datosA.get("lote")
 				a.nombre_animal=datosA.get("nombre_animal")
 				a.peso_animal=datosA.get("peso_animal")
 				if a.save() != True:
@@ -361,11 +361,13 @@ def modificarAnimal(request):
 	if request.user.is_authenticated:
 		fa= AnimalForm(request.POST or None,request.FILES or None)
 		a = Animal.objects.get(idAnimal=request.GET['idAnimal'])
+		fa.fields["lote"].initial=a.lote
 		fa.fields["nombre_animal"].initial=a.nombre_animal
 		fa.fields["peso_animal"].initial=a.peso_animal
 		if request.method == 'POST':
 			if fa.is_valid():
 				datos= fa.cleaned_data
+				a.lote=datos.get("lote")
 				a.nombre_animal=datos.get("nombre_animal")
 				a.peso_animal=datos.get("peso_animal")
 				if a.save() != True:

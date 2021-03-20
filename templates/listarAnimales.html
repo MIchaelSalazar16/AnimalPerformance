@@ -4,12 +4,14 @@
 <div class="container">
   <table class ="table table-striped">
     <tr class="row">
-      <th class="col-md-3">TIPO</th>
+      <th class="col-md-3">ANIMAL</th>
+      <th class="col-md-3">LOTE</th>
       <th class="col-md-3">PESO</th>
     </tr>
     {%for a in a %}
     <tr class="row">
       <td class="col-md-3">{{a.nombre_animal}}</td>
+      <td class="col-md-3">{{a.lote}}</td>
       <td class="col-md-3">{{a.peso_animal}}</td>
       <td>
         <a href="/AnimalPerformance/modificarA?idAnimal={{a.idAnimal}}">
@@ -24,12 +26,13 @@
           </button>
         </a>
       </td>
+
     </tr>
     {%endfor%}
   </table>
   <a href="/AnimalPerformance/ingresarA">
     <button type="button" class="btn btn-success" aria-label="Left Align" value="Agregar">
-      <p><img src="{% static 'images/add-button.png' %}" alt="" width="25" height="25"> AGREGAR</p>
+    <img src="{% static 'images/add-button.png' %}" alt="" width="25" height="25"> AGREGAR
     </button>
   </a>
 </div>

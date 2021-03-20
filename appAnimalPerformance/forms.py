@@ -8,7 +8,7 @@ from django.contrib.auth.forms import UserCreationForm
 class AnimalForm(ModelForm):
     class Meta:
         model = Animal
-        fields = ['idAnimal','nombre_animal','peso_animal']
+        fields = ['idAnimal','lote','nombre_animal','peso_animal']
 
 class LoteAnimalForm(ModelForm):
     class Meta:

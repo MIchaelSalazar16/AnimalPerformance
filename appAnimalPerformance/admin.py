@@ -7,14 +7,13 @@ from django.contrib.auth.models import User
 
 
 class AdminAnimal(admin.ModelAdmin):
-	list_display=["idAnimal","nombre_animal","peso_animal"]
+	list_display=["idAnimal","lote","nombre_animal","peso_animal"]
 	list_editable=[ "nombre_animal","peso_animal"]
 	list_filter=[ "nombre_animal","peso_animal"]
 	search_fields=[ "nombre_animal","peso_animal"]
 
 	class Meta:
 		model= Animal
-
 admin.site.register(Animal,AdminAnimal)
 
 class AdminLoteAnimal(admin.ModelAdmin):
@@ -24,23 +23,13 @@ class AdminLoteAnimal(admin.ModelAdmin):
 	search_fields=["nombre_proveedor"]
 	class Meta:
 		model= LoteAnimal
-
 admin.site.register(LoteAnimal,AdminLoteAnimal)
-
-class AdminUsuario(admin.ModelAdmin):
-	list_display=["idUsuario", "username","email", "password1"]
-	list_editable=["username","email", "password1"]
-	list_filter=["username","email"]
-	search_fields=["username","email"]
-	class Meta:
-		model= User
 
 class AdminProducto(admin.ModelAdmin):
 	list_display=["idProducto","nombre_producto","peso_producto","utilidad_producto","precio_costo","precio_venta"]
 	list_editable=["nombre_producto","peso_producto","utilidad_producto","precio_costo","precio_venta"]
 	list_filter=["nombre_producto"]
 	search_fields=["nombre_producto"]
-
 	class Meta:
 		model= Producto
 admin.site.register(Producto,AdminProducto)
@@ -52,8 +41,6 @@ class AdminRendimiento(admin.ModelAdmin):
                 "rendimiento_neto","merma_deshidratacion","porcentaje_peso_neto"]
 	list_filter=["total_costo"]
 	search_fields=["total_costo"]
-
 	class Meta:
 		model= Rendimiento
-
 admin.site.register(Rendimiento,AdminRendimiento)
