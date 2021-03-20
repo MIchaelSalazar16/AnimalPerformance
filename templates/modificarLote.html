@@ -5,14 +5,16 @@
   <table class="table table-striped table-bordered table-hover">
    <thead>
        <tr>
-         <th>Proveedor:</th>
-         <th>Peso KG:</th>
-         <th>Precio Costo:</th>
+         <th>PROVVEDOR:</th>
+         <th>NOMBRE DEL LOTE:</th>
+         <th>PESO KG:</th>
+         <th>PRECIO DE COSTO $$:</th>
        </tr>
    </thead>
    <tbody>
      <tr>
        <td>{{flt.nombre_proveedor}}</td>
+       <td>{{flt.nombre_lote}}</td>
        <td>{{flt.peso_lote}}</td>
        <td>{{flt.precio_costo}}</td>
      </tr>
@@ -21,10 +23,10 @@
   <a href="/AnimalPerformance/listarLt">
      <input type="submit" name="" value="Guardar" class="btn btn-success">
   </a>
- |
- <a href="/AnimalPerformance/listarLt">
-    <input type="submit" name="" value="Regresar" class="btn btn-success">
- </a>
+  <hr>
+   <a href="/AnimalPerformance/listarLt" class="float-right">
+      <input type="" name="" value="Regresar" class="btn btn-success">
+   </a>
 </form>
 {% endblock %}
 

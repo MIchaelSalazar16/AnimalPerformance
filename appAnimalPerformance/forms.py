@@ -13,7 +13,7 @@ class AnimalForm(ModelForm):
 class LoteAnimalForm(ModelForm):
     class Meta:
         model = LoteAnimal
-        fields = ['idLoteAnimal','peso_lote','precio_costo','nombre_proveedor']
+        fields = ['idLoteAnimal','nombre_lote','peso_lote','precio_costo','nombre_proveedor']
 
 class ProductoForm(ModelForm):
     class Meta:

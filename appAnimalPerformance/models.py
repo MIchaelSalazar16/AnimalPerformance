@@ -5,23 +5,39 @@ from django.contrib.auth.models import User
 
 class LoteAnimal(models.Model):
     idLoteAnimal= models.AutoField(primary_key=True)
-    peso_lote=  models.FloatField(default=0)
-    precio_costo= models.FloatField(default=0)
+    nombre_lote=models.CharField(max_length=50,default='')
+    peso_lote=  models.DecimalField(max_digits=5,decimal_places=2,blank=False,default=0)
+    precio_costo= models.DecimalField(max_digits=5,decimal_places=3,blank=False,default=0)
     nombre_proveedor=models.CharField(max_length=50)
     fecha=models.DateTimeField(auto_now_add=True,null=True)
     def __str__(self):
-        return self.idLoteAnimal
+        return self.nombre_lote
 
 class Animal(models.Model):
     listaNombAnimal=(
     ('CERDO','CERDO'),
     )
     idAnimal= models.AutoField(primary_key=True)
+    lote=models.ForeignKey(LoteAnimal,on_delete=models.CASCADE,default='')
     nombre_animal=  models.CharField(max_length=100,choices=listaNombAnimal, default="")
-    peso_animal=  models.FloatField(null=False)
+    peso_animal=  models.DecimalField(max_digits=5,decimal_places=3,blank=False,default=0)
     fecha=models.DateTimeField(auto_now_add=True,null=True)
     def __str__(self):
-        return self.idAnimal
+        return self.nombre_animal
+
+class Rendimiento(models.Model):
+    idRendimiento= models.AutoField(primary_key=True)
+    lote=models.ForeignKey(LoteAnimal,on_delete=models.CASCADE,default='')
+    nombre_rendimiento=models.CharField(max_length=50,default='')
+    total_costo=  models.DecimalField(max_digits=5,decimal_places=3,blank=False,default=0,null=True)
+    total_venta=  models.DecimalField(max_digits=5,decimal_places=3,blank=False,default=0,null=True)
+    margen_utilidad=  models.DecimalField(max_digits=5,decimal_places=3,blank=False,default=0,null=True)
+    rendimiento_neto=  models.DecimalField(max_digits=5,decimal_places=3,blank=False,default=0,null=True)
+    merma_deshidratacion=  models.DecimalField(max_digits=5,decimal_places=3,blank=False,default=0,null=True)
+    porcentaje_peso_neto=  models.DecimalField(max_digits=5,decimal_places=3,blank=False,default=0,null=True)
+    fecha=models.DateTimeField(auto_now_add=True,null=True)
+    def __str__(self):
+        return self.nombre_rendimiento
 
 class Producto(models.Model):
     listUnidades=(
@@ -30,30 +46,20 @@ class Producto(models.Model):
     )
     idProducto= models.AutoField(primary_key=True)
     nombre_producto=  models.CharField(max_length=100)
-    peso_producto=  models.FloatField(default=0,null=True)
-    precio_costo=  models.FloatField(default=0,null=True)
-    precio_venta=  models.FloatField(null=True)
-    utilidad_producto=  models.FloatField(default=0)
-    porcentaje_peso_producto=  models.FloatField(default=0,null=True)
-    total_costo_producto=  models.FloatField(default=0,null=True)
-    total_venta_producto=  models.FloatField(default=0,null=True)
-    utilidad_producto_xKG=  models.FloatField(default=0,null=True)
+    animal=models.ForeignKey(Animal,on_delete=models.CASCADE,default='')
+    rendimiento=models.ForeignKey(Rendimiento,on_delete=models.CASCADE,default='')
+    peso_producto=  models.DecimalField(max_digits=5,decimal_places=3,blank=False,default=0,null=True)
+    precio_costo=  models.DecimalField(max_digits=5,decimal_places=3,blank=False,default=0,null=True)
+    precio_venta=  models.DecimalField(max_digits=5,decimal_places=3,blank=False,default=0,null=True)
+    utilidad_producto=  models.DecimalField(max_digits=5,decimal_places=3,blank=False,default=0)
+    porcentaje_peso_producto=  models.DecimalField(max_digits=5,decimal_places=3,blank=False,default=0,null=True)
+    total_costo_producto=  models.DecimalField(max_digits=5,decimal_places=3,blank=False,default=0,null=True)
+    total_venta_producto=  models.DecimalField(max_digits=5,decimal_places=3,blank=False,default=0,null=True)
+    utilidad_producto_xKG=  models.DecimalField(max_digits=5,decimal_places=3,blank=False,default=0,null=True)
     unidad= models.CharField(max_length=10,default='KG',choices=listUnidades,null=False)
     fecha=models.DateTimeField(auto_now_add=True,null=True)
     def __str__(self):
-        return self.idProducto
-
-class Rendimiento(models.Model):
-    idRendimiento= models.AutoField(primary_key=True)
-    total_costo=  models.FloatField(default=0,null=True)
-    total_venta=  models.FloatField(default=0,null=True)
-    margen_utilidad=  models.FloatField(default=0,null=True)
-    rendimiento_neto=  models.FloatField(default=0,null=True)
-    merma_deshidratacion=  models.FloatField(default=0,null=True)
-    porcentaje_peso_neto=  models.FloatField(default=0,null=True)
-    fecha=models.DateTimeField(auto_now_add=True,null=True)
-    def __str__(self):
-        return self.idRendimiento
+        return self.nombre_producto
 
 # class Usuario(models.Model):
 #     idUsuario= models.AutoField(primary_key=True)

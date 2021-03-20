@@ -5,16 +5,18 @@
   <table class ="table table-striped">
     <tr class="row">
       <th class="col-md-3">PROVEEDOR</th>
-      <th class="col-md-3">PRECIO DE COSTO</th>
-      <th class="col-md-3">PESO DEL LOTE</th>
-      <td class="col-md-3"></td>
+      <th class="col-md-3">NOMBRE LOTE</th>
+      <th class="col-md-2">PRECIO DE COSTO</th>
+      <th class="col-md-2">PESO DEL LOTE</th>
+      <th class="col-md-2">MODIFICAR/ELIMINAR</th>
     </tr>
     {%for lt in lt %}
     <tr class="row">
       <td class="col-md-3">{{lt.nombre_proveedor}}</td>
-      <td class="col-md-3">{{lt.precio_costo}}</td>
-      <td class="col-md-3">{{lt.peso_lote}}</td>
-      <td class="col-md-3">
+      <td class="col-md-3">{{lt.nombre_lote}}</td>
+      <td class="col-md-2">{{lt.precio_costo}}</td>
+      <td class="col-md-2">{{lt.peso_lote}}</td>
+      <td class="col-md-2">
         <a href="/AnimalPerformance/modificarLt?idLoteAnimal={{lt.idLoteAnimal}}">
           <button type="button" class="btn" value="Modificar">
             <img src="{% static 'images/edit.png' %}" alt="" width="25" height="25">
@@ -26,9 +28,12 @@
             <img src="{% static 'images/trash-bin.png' %}" alt=""  width="25" height="25">
           </button>
         </a>
+          <hr>
       </td>
+
     </tr>
     {%endfor%}
+
   </table>
   <a href="/AnimalPerformance/ingresarLt">
     <button type="button" class="btn btn-success" aria-label="Left Align" value="Agregar">

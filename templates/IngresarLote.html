@@ -7,30 +7,28 @@
         <thead>
 
             <tr>
-              <th>Proveedor</th>
-              <th>Peso del Lote KG</th>
-              <th>Precio de costo KG</th>
+              <th>PROVEEDOR</th>
+              <th>NOMBRE DE LOTE</th>
+              <th>PESO DEL LOTE KG</th>
+              <th>PRECIO DE COSTO $$</th>
             </tr>
         </thead>
         <tbody>
           <tr>
             <td>{{flt.nombre_proveedor}}</td>
+            <td>{{flt.nombre_lote}}</td>
             <td>{{flt.peso_lote}}</td>
             <td>{{flt.precio_costo}}</td>
           </tr>
         </tbody>
         </table>
-
-         <button type="submit" class="btn btn-success" aria-label="Left Align">
-           GUARDAR
-         </button>
-         
-      <!-- | -->
-      <!-- <a href="/AnimalPerformance/ingresarR/">
-        <button type="submit" class="btn btn-success" aria-label="Left Align">
-          SIGUIENTE
-        </button>
-      </a> -->
+        <a href="/AnimalPerformance/listarLt">
+           <input type="submit" name="" value="Guardar" class="btn btn-success">
+        </a>
+        <hr>
+         <a href="/AnimalPerformance/listarLt" class="float-right">
+            <input type="" name="" value="Regresar" class="btn btn-success">
+         </a>
 
     </form>
   </div>
