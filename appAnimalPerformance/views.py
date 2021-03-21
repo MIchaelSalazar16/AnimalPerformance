@@ -149,13 +149,13 @@ def RegistrarPesos(request):
 			if request.method== 'POST':
 				if formset.is_valid():
 					formset.save()
-					return redirect(CalculaRendimiento_2)
+					return redirect(CalculaRendimiento)
 		else:
 			return redirect(ListarLotes)
 		context={
 		'formset':formset,'lt':lt,'ct':CostoTotal,
 		}
-		return render(request,"CalculaRendimiento_1.html",context)
+		return render(request,"RegistrarPesos.html",context)
 	else:
 		return redirect(login)
 
