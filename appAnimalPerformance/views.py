@@ -1,6 +1,6 @@
 from django.shortcuts import redirect,render
 from .models import Animal,Producto,Rendimiento,LoteAnimal
-from .forms import AnimalForm,LoteAnimalForm,ProductoForm,RendimientoForm ,ProductoForm2
+from .forms import AnimalForm,LoteAnimalForm,ProductoForm,RendimientoForm ,ProductoForm2 ,ProductoForm3
 from django.core.files.uploadedfile import SimpleUploadedFile
 import json as simplejson
 from django.http import HttpResponse,HttpResponseRedirect, HttpRequest
@@ -12,7 +12,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login as do_login
 from django.contrib.auth.models import User
-from django.forms import modelformset_factory
+from django.forms import modelformset_factory , formset_factory
 
 
 def inicioAdmin(request):
@@ -135,25 +135,39 @@ def IngresarRendimiento(request):
 	else:
 		return redirect(login)
 
-def RegistrarPesos(request):
+def RegistrarPesos(request,idRendimiento):
 	if request.user.is_authenticated:
-		#lt=LoteAnimal.objects.latest('fecha') #trae el último lote ingresado
-		#print(lt.peso_lote)
-		if LoteAnimal.objects.values()!=True:
-			lt=LoteAnimal.objects.latest('fecha') #trae el último lote ingresado
-			PesoLote=lt.peso_lote
-			CostoTotal=lt.precio_costo*PesoLote #Total del costo del lote
-			#CARGAR EL MODELO DE DATOS DE LOS PRODUTCOS DEL CERDO
-			ProdFormset= modelformset_factory(Producto, form=ProductoForm2, extra=0)
+		mensaje="NO EXISTEN PRODUCTOS PARA ESTE RENDIMIENTO"
+		r=Rendimiento.objects.all()
+		rend = Rendimiento.objects.get(idRendimiento=idRendimiento)
+		if Producto.objects.filter(rendimiento_id=idRendimiento).exists()==True:
+			lt= rend.lote
+			Lt= LoteAnimal.objects.get(nombre_lote__exact=lt)
+			PesoLote=Lt.peso_lote
+			CostoTotal=round(Lt.precio_costo*PesoLote,2) #Total del costo del lote
+			queryset=Producto.objects.all().filter(rendimiento_id=idRendimiento)
+			print(queryset)
+			# ProdFormset= modelformset_factory(Producto, form=ProductoForm2,exclude=(
+			# 'porcentaje_peso_producto','total_costo_producto','total_venta_producto','utilidad_producto_xKG') ,extra=0)
+			ProdFormset= modelformset_factory(Producto, form=ProductoForm3 ,extra=0)
+			# ProdNew= formset_factory(form=ProductoForm3,extra=1)
 			formset= ProdFormset(request.POST or None)
+			#formsetNew= ProdNew(request.POST or None)
 			if request.method== 'POST':
+				print(formset.errors)
 				if formset.is_valid():
 					formset.save()
-					return redirect(CalculaRendimiento)
+					return redirect('/AnimalPerformance/registrarPesos/'+str(idRendimiento))
+				else:
+					print("NO VALIDA")
 		else:
-			return redirect(ListarLotes)
+			context={
+			'M':mensaje, 'r':r
+			}
+			return render(request,"listarRendimientos.html",context)
+
 		context={
-		'formset':formset,'lt':lt,'ct':CostoTotal,
+		'formset':formset,'lt':Lt,'ct':CostoTotal,'rend':rend
 		}
 		return render(request,"RegistrarPesos.html",context)
 	else:

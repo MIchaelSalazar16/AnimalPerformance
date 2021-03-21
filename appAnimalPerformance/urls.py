@@ -29,6 +29,8 @@ urlpatterns=[
 	path('eliminarLt/',eliminarLote),
 	path('eliminarP/',eliminarProducto),
 	path('eliminarR/',eliminarRendimiento),
-	path('registrarPesos/',RegistrarPesos),
-	path('calculaR_2/',CalculaRendimiento),
+	path('registrarPesos/',ListarRendimiento),
+	path('registrarPesos/<int:idRendimiento>',RegistrarPesos),
+	path('calculaR/<int:idRendimiento>',CalculaRendimiento),
+	path('calculaR/',ListarRendimiento),
 ]
