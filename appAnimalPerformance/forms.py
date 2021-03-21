@@ -22,7 +22,7 @@ class ProductoForm(ModelForm):
 
 class ProductoForm2(ModelForm):
     nombre_producto=forms.CharField(widget=forms.TextInput(attrs={ 'readonly':'readonly','class':'border-0','size':'25'}))
-    peso_producto=forms.FloatField(widget=forms.NumberInput(attrs={'style':'width: 5em', 'min':'0', 'max':'999.999'}))
+    peso_producto=forms.FloatField(widget=forms.NumberInput(attrs={'style':'width: 5em', 'min':'0', 'max':'9999.9999'}))
     precio_venta=forms.FloatField(widget=forms.NumberInput(attrs={ 'readonly':'readonly','class':'border-0 text-danger','style':'width: 5em'}))
     precio_costo=forms.FloatField(widget=forms.NumberInput(attrs={ 'readonly':'readonly','class':'border-0','style':'width: 5em'}))
     utilidad_producto=forms.FloatField(widget=forms.NumberInput(attrs={ 'readonly':'readonly','class':'border-0','style':'width: 5em'}))
@@ -37,23 +37,13 @@ class ProductoForm2(ModelForm):
 
 class ProductoForm3(ModelForm):
     nombre_producto=forms.CharField(widget=forms.TextInput(attrs={ 'readonly':'readonly','class':'border-0','size':'20'}))
-    peso_producto=forms.FloatField(widget=forms.NumberInput(attrs={'style':'width: 5em', 'min':'0', 'max':'999.999'}))
+    peso_producto=forms.FloatField(widget=forms.NumberInput(attrs={'style':'width: 5em', 'min':'0', 'max':'9999.9999'}))
     precio_venta=forms.FloatField(widget=forms.NumberInput(attrs={ 'readonly':'readonly','class':'border-0 text-danger','style':'width: 5em'}))
     precio_costo=forms.FloatField(widget=forms.NumberInput(attrs={ 'readonly':'readonly','class':'border-0','style':'width: 5em'}))
     utilidad_producto=forms.FloatField(widget=forms.NumberInput(attrs={ 'readonly':'readonly','class':'border-0','style':'width: 5em'}))
-    # rendimiento=forms.CharField(widget=forms.NumberInput(attrs={ 'readonly':'readonly','class':'border-0','style':'width: 5em'}))
     class Meta:
         model = Producto
         fields = ['peso_producto','precio_costo','nombre_producto','precio_venta','utilidad_producto']
-
-# class ProductoForm3(ModelForm):
-#     nombre_producto=forms.CharField(widget=forms.TextInput(attrs={'size':'25'}))
-#     peso_producto=forms.FloatField(widget=forms.NumberInput(attrs={'style':'width: 5em'}))
-#     precio_venta=forms.FloatField(widget=forms.NumberInput(attrs={'style':'width: 5em','class':'text-danger'}))
-#     class Meta:
-#         model = Producto
-#         fields = ['nombre_producto','peso_producto','precio_venta']
-
 
 class RendimientoForm(ModelForm):
     class Meta:
@@ -63,5 +53,5 @@ class RendimientoForm(ModelForm):
 class RendimientoForm2(ModelForm):
     class Meta:
         model = Rendimiento
-        fields = ['idRendimiento','lote','nombre_rendimiento','total_costo','total_venta','margen_utilidad',
-                    'rendimiento_neto','merma_deshidratacion','porcentaje_peso_neto']
+        fields = ['idRendimiento','total_costo','total_venta','margen_utilidad',
+                    'rendimiento_neto','merma_deshidratacion','porcentaje_peso_neto','porcent_merma_deshidratacion']

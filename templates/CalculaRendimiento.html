@@ -4,6 +4,9 @@
 <div class="form-group">
   <form action="" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
+    <a href="/AnimalPerformance/registrarPesos/{{rend.idRendimiento}}" class="float-left">
+       <input type="#" name="" value="Regresar" class="btn btn-danger">
+    </a>
     <table class="table table-borderless table-striped">
       <thead class="table-striped">
         <tr class="row">
@@ -26,7 +29,6 @@
           <th class="col-md-12"><p align="center">LOTE DE CERDOS</p></th>
         </tr>
         <tr class="row">
-          <!-- <th class="col-md-1"><p align="center">CÓDIGO</p></th> -->
           <th class="col-md-3"><p align="center">PRODUCTO</p></th>
           <th class="col-md-1"><p align="center">PESO (KG)</p></th>
           <th class="col-md-1"><p align="center">UTILIDAD ($ x KG)</p></th>
@@ -39,10 +41,13 @@
         </tr>
       </thead>
       <tbody >
-
-          {%for fp in LF%}
+        {{ formset.management_form }}
+          {%for fp in formset%}
             <tr class="row">
-              <td class="col-md-3">{{fp.idProducto}}{{fp.nombre_producto}}</td>
+              <td class="col-md-3">
+                {{fp.idProducto}}
+                {{fp.nombre_producto}}
+              </td>
               <td class="col-md-1"><p align="center">{{fp.peso_producto}}</p></td>
               <td class="col-md-1"><p align="center">{{fp.utilidad_producto_xKG}}</p></td>
               <td class="col-md-1"><p align="center">{{fp.precio_costo}}</p></td>
@@ -53,9 +58,12 @@
               <td class="col-md-2"><p align="center">{{fp.total_venta_producto}}</p></td>
             </tr>
           {% endfor %}
-              <tr class="row">
+            <tr class="row">
               <th class="col-md-3">Rendimiento Neto KG:</th>
-              <td class="col-md-3">{{fr.rendimiento_neto}}</td>
+              <td class="col-md-3">
+                {{fr.idRendimiento}}
+                {{fr.rendimiento_neto}}
+              </td>
               <th class="col-md-3">Total de Venta $$:</th>
               <td class="col-md-2">{{fr.total_venta}}</td>
             </tr>
@@ -71,17 +79,17 @@
               <th class="col-md-3">Porcentaje Peso Neto %:</th>
               <td class="col-md-2">{{fr.porcentaje_peso_neto}}</td>
             </tr>
+            <tr class="row">
+              <th class="col-md-3">Merma por deshidratación %:</th>
+              <td class="col-md-3">{{fr.porcent_merma_deshidratacion}}</td>
+            </tr>
       </tbody>
     </table>
-    <a href="/AnimalPerformance/ingresarR">
-      <button type="button" class="btn btn-success" aria-label="Left Align">
-      REGRESAR
+    <!-- <a href="/AnimalPerformance/registrarPesos/{{rend.idRendimiento}}" class="float-left"> -->
+      <button type="submit" class="btn btn-success" aria-label="Left Align" class="float-left">
+        GUARDAR
       </button>
-    </a>
-    |
-    <button type="submit" class="btn btn-success" aria-label="Left Align">
-      GUARDAR
-    </button>
+    <!-- </a> -->
 </form>
 </div>
 {% endblock %}

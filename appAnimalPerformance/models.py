@@ -35,6 +35,7 @@ class Rendimiento(models.Model):
     rendimiento_neto=  models.FloatField(blank=False,default=0)
     merma_deshidratacion=  models.FloatField(blank=False,default=0)
     porcentaje_peso_neto=  models.FloatField(blank=False,default=0)
+    porcent_merma_deshidratacion=  models.FloatField(blank=False,default=0)
     fecha=models.DateTimeField(auto_now_add=True,null=True)
     def __str__(self):
         return self.nombre_rendimiento

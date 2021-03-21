@@ -29,44 +29,26 @@
           <th class="col-md-12"><p align="center">LOTE DE CERDOS</p></th>
         </tr>
         <tr class="row">
-          <!-- <th class="col-md-1"><p align="center">CÓDIGO</p></th> -->
           <th class="col-md-3"><p align="center">PRODUCTO</p></th>
           <th class="col-md-3"><p align="center">PESO (KG)</p></th>
-          <!-- <th class="col-md-1"><p align="center">UTILIDAD ($ x KG)</p></th> -->
           <th class="col-md-2"><p align="center">PRECIO COSTO ($)</p></th>
-          <!-- <th class="col-md-1"><p align="center">TOTAL COSTO ($)</p></th> -->
-          <!-- <th class="col-md-1"><p align="center">PESO (%)</p></th> -->
           <th class="col-md-2"><p align="center">PRECIO VENTA ($)</p></th>
           <th class="col-md-2"><p align="center">UTILIDAD POR PRODUCTO</p></th>
-          <!-- <th class="col-md-2"><p align="center">RENDIMIENTO</p></th> -->
-          <!-- <th class="col-md-2"><p align="center">TOTAL VENTA ($)</p></th> -->
         </tr>
       </thead>
       <tbody >
-
         {{ formset.management_form }}
           {%for fp in formset%}
           <tr class="row">
-            <!-- <td class="col-md-0 invisible">
-              {{fp.total_costo_producto}}
-              {{fp.total_venta_producto}}
-              {{fp.porcentaje_peso_producto}}
-              {{fp.utilidad_producto_xKG}}
-            </td> -->
             <td class="col-md-3">
               {{fp.idProducto}}
-              {{fp.rendimiento}}
               {{fp.nombre_producto}}</td>
             <td class="col-md-3">{{fp.peso_producto}}</td>
-            <!-- <td class="col-md-1">{{fp.utilidad_producto_xKG}}</td> -->
             <td class="col-md-2">{{fp.precio_costo}}</td>
-            <!-- <td class="col-md-1">{{fp.total_costo_producto}}</td> -->
-            <!-- <td class="col-md-1">{{fp.porcentaje_peso_producto}}</td> -->
             <td class="col-md-2">{{fp.precio_venta}}</td>
             <td class="col-md-2">{{fp.utilidad_producto}}</td>
           </tr>
           {% endfor %}
-
       </tbody>
     </table>
     <a href="/AnimalPerformance/registrarPesos/{{rend.idRendimiento}}" class="float-left">
