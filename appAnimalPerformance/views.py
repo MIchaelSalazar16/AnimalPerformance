@@ -15,7 +15,6 @@ from django.contrib.auth import login as do_login
 from django.contrib.auth.models import User
 from django.forms import modelformset_factory , formset_factory
 
-
 def inicioAdmin(request):
 	if request.user.is_authenticated:
 		return render(request, "InicioAdmin.html",{})
@@ -196,6 +195,7 @@ def CalculaRendimiento(request,idRendimiento):
 		ListTotalCostoXprod=[] #Lista que guarda el total de costo por producto segun el peso
 		ListUtilXprod=[] #Lista para guaradar las utilidades $ por producto
 		RendNeto=0 #Rendimiento neto
+		PorcentMermaDes=0
 		VentaTotal=0 #Total de la venta segun el precio de venta al público producto
 		MermaDES=0 #Merma por deshidratación
 		TotalCos=0 #Suma TOTAL del total del costo por producto
@@ -232,11 +232,13 @@ def CalculaRendimiento(request,idRendimiento):
 		for x in range(0,len(P)):
 			ListUtilXprod.append(round(ListTotalVentaProd[x]-ListTotalCostoXprod[x],2))
 			TotalCos+=round(ListTotalCostoXprod[x],2)
-		#Merma por deshidratación
-		MermaDES=round((PesoLote-RendNeto),2)
 		#Rendimiento Neto
 		for x in range(0,len(P)):
 			RendNeto=round(RendNeto,2)+round(float(P[int(x)].peso_producto),2)
+		#Merma por deshidratación
+		MermaDES=round((PesoLote-RendNeto),2)
+		#PORCENTAJE MERMA POR DESHIDRATACIÓN
+		PorcentMermaDes=round(MermaDES*100/PesoLote)
 	############################################################################################################
 		#FIN DE LOS CALCULOS
 	#############################################################################################################
@@ -271,9 +273,10 @@ def CalculaRendimiento(request,idRendimiento):
 		fr.fields["rendimiento_neto"].initial=round(RendNeto)
 		fr.fields["merma_deshidratacion"].initial=round(PesoLote-RendNeto,2)
 		fr.fields["porcentaje_peso_neto"].initial=round((RendNeto*100)/PesoLote,2)
+		fr.fields["porcent_merma_deshidratacion"].initial=PorcentMermaDes
 		#GUARDAR EL RENDIMIENTO Y LOS FORMULARIOS DE PRODUCTO
 		if request.method== 'POST':
-			if formset.is_valid() and fr.is_valid():
+			if formset.is_valid() and fr.is_valid() and PorcentMermaDes<=7:
 				datosR= fr.cleaned_data
 				r.total_costo=datosR.get("total_costo")
 				r.total_venta=datosR.get("total_venta")
@@ -287,7 +290,13 @@ def CalculaRendimiento(request,idRendimiento):
 				else:
 					return redirect('/AnimalPerformance/registrarPesos/'+str(idRendimiento))
 			else:
-				print("NO VALIDA")
+				mensaje="EL PORCENTAJE DE MERMA POR DESHIDRATACIÓN NO PUEDE EXEDER EL 7%"
+				context={
+				'fr':fr,'lt':lt,'ct':CostoTotal,'formset':formset,
+				'P':P,'RendNeto':RendNeto,'ct2':TotalCos,'MD':MermaDES,
+				'rend':rend, 'M':mensaje
+				}
+				return render(request,"CalculaRendimiento.html",context)
 
 		context={
 		'fr':fr,'lt':lt,'ct':CostoTotal,'formset':formset,
