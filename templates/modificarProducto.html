@@ -3,46 +3,21 @@
 <form action="" method="post" enctype="multipart/form-data">
   {% csrf_token %}
   <table class="table table-striped table-bordered table-hover">
-
     <tbody>
       <tr>
-        <th>Nombre:</th>
+        <th>RENDIMIENTO:</th>
+        <td>{{fp.rendimiento}}</td>
+      </tr>
+      <tr>
+        <th>NOMBRE:</th>
         <td>{{fp.nombre_producto}}</td>
       </tr>
       <tr>
-        <th>Peso Producto:</th>
-        <td>{{fp.peso_producto}}</td>
-      </tr>
-      <tr>
-        <th>Precio Costo:</th>
-        <td>{{fp.precio_costo}}</td>
-      </tr>
-      <tr>
-        <th>Precio Venta:</th>
+        <th>PRECIO DE VENTA:</th>
         <td>{{fp.precio_venta}}</td>
       </tr>
       <tr>
-        <th>Utilidad Producto:</th>
-        <td>{{fp.utilidad_producto}}</td>
-      </tr>
-      <tr>
-        <th>% Peso Producto:</th>
-        <td>{{fp.porcentaje_peso_producto}}</td>
-      </tr>
-      <tr>
-        <th>Costo Producto:</th>
-        <td>{{fp.total_costo_producto}}</td>
-      </tr>
-      <tr>
-        <th>Venta Producto:</th>
-        <td>{{fp.total_venta_producto}}</td>
-      </tr>
-      <tr>
-        <th>Utilidad Producto:</th>
-        <td>{{fp.utilidad_producto_xKG}}</td>
-      </tr>
-      <tr>
-        <th>Unidad:</th>
+        <th>UNIDAD:</th>
         <td>{{fp.unidad}}</td>
       </tr>
     </tbody>

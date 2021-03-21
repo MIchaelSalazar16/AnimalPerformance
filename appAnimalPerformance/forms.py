@@ -18,7 +18,7 @@ class LoteAnimalForm(ModelForm):
 class ProductoForm(ModelForm):
     class Meta:
         model = Producto
-        fields = ['idProducto','nombre_producto','precio_venta','unidad']
+        fields = ['idProducto','rendimiento','nombre_producto','precio_venta','unidad']
 
 class ProductoForm2(ModelForm):
     nombre_producto=forms.CharField(widget=forms.TextInput(attrs={ 'readonly':'readonly','class':'border-0','size':'25'}))
@@ -39,5 +39,10 @@ class ProductoForm2(ModelForm):
 class RendimientoForm(ModelForm):
     class Meta:
         model = Rendimiento
-        fields = ['idRendimiento','total_costo','total_venta','margen_utilidad',
+        fields = ['idRendimiento','lote','nombre_rendimiento']
+
+class RendimientoForm2(ModelForm):
+    class Meta:
+        model = Rendimiento
+        fields = ['idRendimiento','lote','nombre_rendimiento','total_costo','total_venta','margen_utilidad',
                     'rendimiento_neto','merma_deshidratacion','porcentaje_peso_neto']

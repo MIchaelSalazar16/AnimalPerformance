@@ -4,21 +4,16 @@
 <div class="container">
   <table class ="table table-striped">
     <tr class="row">
-      <th class="col-md-2">TOTAL DE COSTO</th>
-      <th class="col-md-2">TOTAL DE LA VENTA</th>
-      <th class="col-md-2">MARGEN DE UTILIDAD</th>
-      <th class="col-md-2">RENDIMIENTO NETO</th>
-      <th class="col-md-2">MERMA POR DESHIDRATACIÓN</th>
-      <th class="col-md-2"></th>
+      <th class="col-md-3">LOTE</th>
+      <th class="col-md-3">NOMBRE DEL RENDIMIENTO</th>
+      <th class="col-md-3">MODIFICAR / ELIMINAR</th>
+      <th class="col-md-3">REGISTRAR COSTOS</th>
     </tr>
     {%for r in r %}
     <tr class="row">
-      <td class="col-md-2">{{r.total_costo}}</td>
-      <td class="col-md-2">{{r.total_venta}}</td>
-      <td class="col-md-2">{{r.margen_utilidad}}</td>
-      <td class="col-md-2">{{r.rendimiento_neto}}</td>
-      <td class="col-md-2">{{r.merma_deshidratacion}}</td>
-      <td class="col-md-2">
+      <td class="col-md-3">{{r.lote}}</td>
+      <td class="col-md-3">{{r.nombre_rendimiento}}</td>
+      <td class="col-md-3">
         <a href="/AnimalPerformance/modificarR?idRendimiento={{r.idRendimiento}}">
           <button type="button" class="btn" value="Modificar">
             <img src="{% static 'images/edit.png' %}" alt="" width="25" height="25">
@@ -28,6 +23,13 @@
         <a href="/AnimalPerformance/eliminarR?idRendimiento={{r.idRendimiento}}">
           <button type="button" class="btn" value="Eliminar">
             <img src="{% static 'images/trash-bin.png' %}" alt=""  width="25" height="25">
+          </button>
+        </a>
+      </td>
+      <td>
+        <a href="/AnimalPerformance/registrarPesos?idRendimiento={{r.idRendimiento}}">
+          <button type="button" class="btn btn-light" aria-label="Left Align">
+            <img src="{% static 'images/calculadora.png' %}" alt="" width="40" height="40">CALCULAR COSTOS
           </button>
         </a>
       </td>

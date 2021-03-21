@@ -101,12 +101,8 @@ def IngresarProducto(request):
 		p=Producto()
 		if request.method == 'POST':
 			if fp.is_valid() :
-				#print(fp)
-				#Limpieza de la lista que guarda el formulario
 				datosP= fp.cleaned_data
-				#print(datosP)
-				#print(datosP)
-				#Para ingresar el producto con sus campos calculados en la tabla a la base
+				p.rendimiento=datosP.get("rendimiento")
 				p.nombre_producto=datosP.get("nombre_producto")
 				p.precio_venta=datosP.get("precio_venta")
 				p.unidad=datosP.get("unidad")
@@ -121,6 +117,26 @@ def IngresarProducto(request):
 
 def IngresarRendimiento(request):
 	if request.user.is_authenticated:
+		fr= RendimientoForm(request.POST or None)
+		r=Rendimiento()
+		if request.method == 'POST':
+			if fr.is_valid():
+				datosR= fr.cleaned_data
+				r.lote=datosR.get("lote")
+				r.nombre_rendimiento=datosR.get("nombre_rendimiento")
+				if r.save() != True:
+					return redirect(IngresarRendimiento)
+				else:
+					return redirect('AnimalPerformance/listarR')
+		context={
+		'fr':fr
+		}
+		return render(request,"IngresarRendimiento.html",context)
+	else:
+		return redirect(login)
+
+def RegistrarPesos(request):
+	if request.user.is_authenticated:
 		#lt=LoteAnimal.objects.latest('fecha') #trae el último lote ingresado
 		#print(lt.peso_lote)
 		if LoteAnimal.objects.values()!=True:
@@ -133,13 +149,13 @@ def IngresarRendimiento(request):
 			if request.method== 'POST':
 				if formset.is_valid():
 					formset.save()
-					return redirect(CalculaRendimiento)
+					return redirect(CalculaRendimiento_2)
 		else:
 			return redirect(ListarLotes)
 		context={
 		'formset':formset,'lt':lt,'ct':CostoTotal,
 		}
-		return render(request,"IngresarRendimiento.html",context)
+		return render(request,"CalculaRendimiento_1.html",context)
 	else:
 		return redirect(login)
 
@@ -281,7 +297,7 @@ def CalculaRendimiento(request):
 		'P':P,'RendNeto':RendNeto,'ct2':TotalCos,'MD':MermaDES,
 		# 'formset':formset,
 		}
-		return render(request,"CalculaRendimiento.html",context)
+		return render(request,"CalculaRendimiento_2.html",context)
 	else:
 		return redirect(login)
 
@@ -333,26 +349,17 @@ def modificarRendimiento(request):
 	if request.user.is_authenticated:
 		fr = RendimientoForm(request.POST or None,request.FILES or None)
 		r = Rendimiento.objects.get(idRendimiento=request.GET['idRendimiento'])
-		fr.fields["total_costo"].initial=r.total_costo
-		fr.fields["total_venta"].initial=r.total_venta
-		fr.fields["margen_utilidad"].initial=r.margen_utilidad
-		fr.fields["rendimiento_neto"].initial=r.rendimiento_neto
-		fr.fields["merma_deshidratacion"].initial=r.merma_deshidratacion
-		fr.fields["porcentaje_peso_neto"].initial=r.porcentaje_peso_neto
+		fr.fields["lote"].initial=r.lote
+		fr.fields["nombre_rendimiento"].initial=r.nombre_rendimiento
 		if request.method == 'POST':
 			if fr.is_valid():
 				datos= fr.cleaned_data
-				r.total_costo=datos.get("total_costo")
-				r.total_venta=datos.get("total_venta")
-				r.margen_utilidad=datos.get("margen_utilidad")
-				r.rendimiento_neto=datos.get("rendimiento_neto")
-				r.merma_deshidratacion=datos.get("merma_deshidratacion")
-				r.porcentaje_peso_neto=datos.get("porcentaje_peso_neto")
+				r.lote=datos.get("lote")
+				r.nombre_rendimiento=datos.get("nombre_rendimiento")
 				if r.save() != True:
 					return redirect(ListarRendimiento)
 		context={
 		'fr':fr,
-	    'r':r,
 	    }
 		return render(request,"modificarRendimiento.html",context)
 	else:
@@ -379,32 +386,21 @@ def modificarAnimal(request):
 		return render(request,"modificarAnimal.html",context)
 	else:
 		return redirect(login)
+
 def modificarProducto(request):
 	if request.user.is_authenticated:
-		fp= ProductoForm2(request.POST or None,request.FILES or None)
+		fp= ProductoForm(request.POST or None,request.FILES or None)
 		p = Producto.objects.get(idProducto=request.GET['idProducto'])
 		fp.fields["nombre_producto"].initial=p.nombre_producto
-		fp.fields["peso_producto"].initial=p.peso_producto
-		fp.fields["precio_costo"].initial=p.precio_costo
+		fp.fields["rendimiento"].initial=p.rendimiento
 		fp.fields["precio_venta"].initial=p.precio_venta
-		fp.fields["utilidad_producto"].initial=p.utilidad_producto
-		fp.fields["porcentaje_peso_producto"].initial=p.porcentaje_peso_producto
-		fp.fields["total_costo_producto"].initial=p.total_costo_producto
-		fp.fields["total_venta_producto"].initial=p.total_venta_producto
-		fp.fields["utilidad_producto_xKG"].initial=p.utilidad_producto_xKG
 		fp.fields["unidad"].initial=p.unidad
 		if request.method == 'POST':
 			if fp.is_valid():
 				datos= fp.cleaned_data
 				p.nombre_producto=datos.get("nombre_producto")
-				p.peso_producto=datos.get("peso_producto")
-				p.precio_costo=datos.get("precio_costo")
+				p.rendimiento=datos.get("rendimiento")
 				p.precio_venta=datos.get("precio_venta")
-				p.utilidad_producto=datos.get("utilidad_producto")
-				p.porcentaje_peso_producto=datos.get("porcentaje_peso_producto")
-				p.total_costo_producto=datos.get("total_costo_producto")
-				p.total_venta_producto=datos.get("total_venta_producto")
-				p.utilidad_producto_xKG=datos.get("utilidad_producto_xKG")
 				p.unidad=datos.get("unidad")
 				if p.save() != True:
 					return redirect(ListarProductos)

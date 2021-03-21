@@ -1,32 +1,36 @@
 
-  {% extends "master.html" %}
-  {% block contenido %}
-    <div class="form-group">
-     <form action="" method="post" enctype="multipart/form-data">
-       {% csrf_token %}
-      <table class="table table-striped table-bordered table-hover">
-          <thead>
-              <tr>
-                <th>Nombre</th>
-                <th>Precio de venta</th>
-                <th>Unidades</th>
-              </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>{{fp.nombre_producto}}</td>
-              <td>{{fp.precio_venta}}</td>
-              <td>{{fp.unidad}}</td>
-            </tr>
-          </tbody>
-        </table>
-        <a href="/AnimalPerformance/listarP">
-           <input type="submit" name="" value="Guardar" class="btn btn-success">
-         </a>
-         <hr>
-          <a href="/AnimalPerformance/listarP" class="float-right">
-             <input type="" name="" value="Regresar" class="btn btn-success">
-          </a>
-     </form>
-  </div>
-  {% endblock %}
+{% extends "master.html" %}
+{% block contenido %}
+<div class="form-group">
+  <form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <table class="table table-striped table-bordered table-hover">
+      <tbody>
+        <tr>
+          <th>RENDIMIENTO:</th>
+          <td>{{fp.rendimiento}}</td>
+        </tr>
+        <tr>
+          <th>NOMBRE:</th>
+          <td>{{fp.nombre_producto}}</td>
+        </tr>
+        <tr>
+          <th>PRECIO DE VENTA:</th>
+          <td>{{fp.precio_venta}}</td>
+        </tr>
+        <tr>
+          <th>UNIDAD:</th>
+          <td>{{fp.unidad}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <a href="/AnimalPerformance/listarP">
+      <input type="submit" name="" value="Guardar" class="btn btn-success">
+    </a>
+    <hr>
+    <a href="/AnimalPerformance/listarP" class="float-right">
+      <input type="" name="" value="Regresar" class="btn btn-success">
+    </a>
+  </form>
+</div>
+{% endblock %}

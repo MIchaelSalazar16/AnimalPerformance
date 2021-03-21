@@ -1,80 +1,29 @@
 {% extends "master.html" %}
-{% load static %}
 {% block contenido %}
-<div class="form-group">
-  <form action="" method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    <table class="table table-borderless table-striped">
-      <thead class="table-striped">
-        <tr class="row">
-          <th class="col-md-3">Peso Lote KG:</th>
-          <td class="col-md-3">{{lt.peso_lote}}</td>
-          <th class="col-md-3">Fecha:</th>
-          <td class="col-md-3">{{lt.fecha}}</td>
-        </tr>
-        <tr class="row">
-          <th class="col-md-3">Precio por KG</th>
-          <td class="col-md-3">{{lt.precio_costo}}</td>
-          <th class="col-md-3">Proveedor:</th>
-          <td class="col-md-3">{{lt.nombre_proveedor}}</td>
-        </tr>
-        <tr class="row">
-          <th class="col-md-3">Total de costo:</th>
-          <td class="col-md-9">{{ct}}</td>
-        </tr>
-        <tr class="row">
-          <th class="col-md-12"><p align="center">LOTE DE CERDOS</p></th>
-        </tr>
-        <tr class="row">
-          <!-- <th class="col-md-1"><p align="center">CÓDIGO</p></th> -->
-          <th class="col-md-3"><p align="center">PRODUCTO</p></th>
-          <th class="col-md-1"><p align="center">PESO (KG)</p></th>
-          <th class="col-md-1"><p align="center">UTILIDAD ($ x KG)</p></th>
-          <th class="col-md-1"><p align="center">PRECIO DE COSTO ($)</p></th>
-          <th class="col-md-1"><p align="center">TOTAL COSTO ($)</p></th>
-          <th class="col-md-1"><p align="center">PESO (%)</p></th>
-          <th class="col-md-1"><p align="center">PRECIO DE VENTA ($)</p></th>
-          <th class="col-md-1"><p align="center">UTILIDAD POR PRODUCTO</p></th>
-          <th class="col-md-2"><p align="center">TOTAL VENTA ($)</p></th>
-        </tr>
-      </thead>
-      <tbody >
-
-        {{ formset.management_form }}
-        {%for fp in formset%}
-        <tr class="row">
-          <td class="col-md-3">{{fp.idProducto}}{{fp.nombre_producto}}</td>
-          <td class="col-md-1">{{fp.peso_producto}}</td>
-          <td class="col-md-1">{{fp.utilidad_producto_xKG}}</td>
-          <td class="col-md-1">{{fp.precio_costo}}</td>
-          <td class="col-md-1">{{fp.total_costo_producto}}</td>
-          <td class="col-md-1">{{fp.porcentaje_peso_producto}}</td>
-          <td class="col-md-1">{{fp.precio_venta}}</td>
-          <td class="col-md-1">{{fp.utilidad_producto}}</td>
-          <td class="col-md-2">{{fp.total_venta_producto}}</td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-    <a href="/AnimalPerformance/listarR" class="float-right">
-       <input type="submit" name="" value="Agregar" class="btn btn-success">
-    </a>
-      <hr>
-       <a href="/AnimalPerformance/listarR" class="float-right">
-          <input type="" name="" value="Regresar" class="btn btn-success">
+  <div class="form-group">
+   <form action="" method="post" enctype="multipart/form-data">
+     {% csrf_token %}
+    <table class="table table-striped table-bordered table-hover">
+        <thead>
+            <tr>
+              <th>LOTE</th>
+              <th>NOMBRE DEL RENDIMIENTO</th>
+            </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{fr.lote}}</td>
+            <td>{{fr.nombre_rendimiento}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <a href="/AnimalPerformance/listarR">
+         <input type="submit" name="" value="Guardar" class="btn btn-success">
        </a>
-
-
-  </form>
+       <hr>
+        <a href="/AnimalPerformance/listarR" class="float-right">
+           <input type="" name="" value="Regresar" class="btn btn-success">
+        </a>
+   </form>
 </div>
 {% endblock %}
-
-<!-- <tr><th><label for="id_peso_producto">Peso producto:</label></th><td><input type="text" name="peso_producto" value="5.0" size="2" required id="id_peso_producto"></td></tr>
-<tr><th><label for="id_precio_costo">Precio costo:</label></th><td><input type="number" name="precio_costo" value="2.05" readonly="readonly" class="border-0" size="1" required id="id_precio_costo"></td></tr>
-<tr><th><label for="id_nombre_producto">Nombre producto:</label></th><td><input type="text" name="nombre_producto" value="CERDO CALAVERA(UN)" readonly="readonly" class="border-0" size="25" required id="id_nombre_producto"></td></tr>
-<tr><th><label for="id_precio_venta">Precio venta:</label></th><td><input type="number" name="precio_venta" value="2.5" readonly="readonly" class="border-0 text-danger" size="1" required id="id_precio_venta"></td></tr>
-<tr><th><label for="id_utilidad_producto">Utilidad producto:</label></th><td><input type="number" name="utilidad_producto" value="2.25" readonly="readonly" class="border-0" size="1" required id="id_utilidad_producto"></td></tr>
-<tr><th><label for="id_porcentaje_peso_producto">Porcentaje peso producto:</label></th><td><input type="number" name="porcentaje_peso_producto" value="0.0" readonly="readonly" class="border-0" size="1" required id="id_porcentaje_peso_producto"></td></tr>
-<tr><th><label for="id_total_costo_producto">Total costo producto:</label></th><td><input type="number" name="total_costo_producto" value="10.25" readonly="readonly" class="border-0" size="1" required id="id_total_costo_producto"></td></tr>
-<tr><th><label for="id_total_venta_producto">Total venta producto:</label></th><td><input type="number" name="total_venta_producto" value="12.5" readonly="readonly" class="border-0" size="1" required id="id_total_venta_producto"></td></tr>
-<tr><th><label for="id_utilidad_producto_xKG">Utilidad producto xkg:</label></th><td><input type="number" name="utilidad_producto_xKG" value="0.45" readonly="readonly" class="border-0" size="1" required id="id_utilidad_producto_xKG"></td></tr> -->

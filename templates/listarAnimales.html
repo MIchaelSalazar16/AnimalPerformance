@@ -7,13 +7,14 @@
       <th class="col-md-3">ANIMAL</th>
       <th class="col-md-3">LOTE</th>
       <th class="col-md-3">PESO</th>
+      <th class="col-md-3">MODIFICAR / ELIMINAR</th>
     </tr>
     {%for a in a %}
     <tr class="row">
       <td class="col-md-3">{{a.nombre_animal}}</td>
       <td class="col-md-3">{{a.lote}}</td>
       <td class="col-md-3">{{a.peso_animal}}</td>
-      <td>
+      <td class="col-md-3">
         <a href="/AnimalPerformance/modificarA?idAnimal={{a.idAnimal}}">
           <button type="button" class="btn" aria-label="Left Align" value="Modificar">
             <img src="{% static 'images/edit.png' %}" alt="" width="25" height="25">

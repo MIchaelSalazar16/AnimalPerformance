@@ -4,19 +4,19 @@
 <div class="container">
   <table class ="table table-striped">
     <tr class="row">
+      <th class="col-md-3">RENDIMIENTO</th>
       <th class="col-md-3">NOMBRE</th>
-      <th class="col-md-2">PRECIO DE COSTO</th>
       <th class="col-md-2">PRECIO DE VENTA</th>
-      <th class="col-md-2">UTILIDAD</th>
-      <th class="col-md-3"></th>
+      <th class="col-md-2">UNIDAD</th>
+      <th class="col-md-2">MODIFICAR / ELIMINAR</th>
     </tr>
     {%for p in p %}
     <tr class="row">
+      <td class="col-md-3">{{p.rendimiento}}</td>
       <td class="col-md-3">{{p.nombre_producto}}</td>
-      <td class="col-md-2">{{p.precio_costo}}</td>
       <td class="col-md-2">{{p.precio_venta}}</td>
-      <td class="col-md-2">{{p.utilidad_producto}}</td>
-      <td class="col-md-3">
+      <td class="col-md-2">{{p.unidad}}</td>
+      <td class="col-md-2">
         <a href="/AnimalPerformance/modificarP?idProducto={{p.idProducto}}">
           <button type="button" class="btn" value="Modificar">
             <img src="{% static 'images/edit.png' %}" alt="" width="25" height="25">

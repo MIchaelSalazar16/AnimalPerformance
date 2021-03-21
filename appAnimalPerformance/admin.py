@@ -26,7 +26,7 @@ class AdminLoteAnimal(admin.ModelAdmin):
 admin.site.register(LoteAnimal,AdminLoteAnimal)
 
 class AdminProducto(admin.ModelAdmin):
-	list_display=["idProducto","nombre_producto","peso_producto","utilidad_producto","precio_costo","precio_venta"]
+	list_display=["idProducto","rendimiento","nombre_producto","peso_producto","utilidad_producto","precio_costo","precio_venta"]
 	list_editable=["nombre_producto","peso_producto","utilidad_producto","precio_costo","precio_venta"]
 	list_filter=["nombre_producto"]
 	search_fields=["nombre_producto"]
@@ -35,12 +35,12 @@ class AdminProducto(admin.ModelAdmin):
 admin.site.register(Producto,AdminProducto)
 
 class AdminRendimiento(admin.ModelAdmin):
-	list_display=["idRendimiento","total_costo","total_venta","margen_utilidad",
+	list_display=["idRendimiento","lote","total_costo","total_venta","margen_utilidad",
                 "rendimiento_neto","merma_deshidratacion","porcentaje_peso_neto"]
 	list_editable=["total_costo","total_venta","margen_utilidad",
                 "rendimiento_neto","merma_deshidratacion","porcentaje_peso_neto"]
 	list_filter=["total_costo"]
-	search_fields=["total_costo"]
+	search_fields=["lote","total_costo"]
 	class Meta:
 		model= Rendimiento
 admin.site.register(Rendimiento,AdminRendimiento)

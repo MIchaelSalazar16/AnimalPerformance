@@ -46,7 +46,6 @@ class Producto(models.Model):
     )
     idProducto= models.AutoField(primary_key=True)
     nombre_producto=  models.CharField(max_length=100)
-    animal=models.ForeignKey(Animal,on_delete=models.CASCADE,default='')
     rendimiento=models.ForeignKey(Rendimiento,on_delete=models.CASCADE,default='')
     peso_producto=  models.DecimalField(max_digits=5,decimal_places=3,blank=False,default=0,null=True)
     precio_costo=  models.DecimalField(max_digits=5,decimal_places=3,blank=False,default=0,null=True)
