@@ -1,14 +1,18 @@
 #exportar excel
-from openpyxl import Workbook
-from django.http.response import HttpResponse
-from django.views.generic.base import TemplateView
+# from openpyxl import Workbook
+# from django.http.response import HttpResponse
+# from django.views.generic.base import TemplateView
+############LIBRERÌAS EXPORTAR PDF A TRAVÉS DE UNA PLANTILLA HTML#########
+from weasyprint import HTML
+from weasyprint.fonts import FontConfiguration
+from django.template.loader import render_to_string
 ########################################################################
 from django.shortcuts import redirect,render
 from .models import Animal,Producto,Rendimiento,LoteAnimal
 from .forms import AnimalForm,LoteAnimalForm,ProductoForm,RendimientoForm ,ProductoForm2 ,ProductoForm3 ,RendimientoForm2
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.forms import BaseModelFormSet
-from django.http import HttpResponse,HttpResponseRedirect, HttpRequest
+from django.http import HttpResponse#,HttpResponseRedirect, HttpRequest
 from django.core import serializers
 from django.utils import timezone
 from django.contrib.auth.forms import UserCreationForm
@@ -312,31 +316,34 @@ def CalculaRendimiento(request,idRendimiento):
 	else:
 		return redirect(login)
 ##########EXPORTAR A PDF###############################################################################
-# def ExportarRendimientoPdf(TemplateView,idRendimiento):
-# 	def get(self, request, *args, **kwargs):
-# 		P= Producto.objects.all().filter(rendimiento_id=idRendimiento)
-# 		wb = Workbook()
-# 		ws = wb.active
-# 		ws['A1'] = 'REPORTE DETALLADO DE LAS CPP CORRESPONDIENTES A ARRIENDOS'
-#
-# 		ws['A2']= 'ID producto'
-# 		ws['B2']= 'Nombre Producto'
-# 		ws['C2'] = 'Peso Producto'
-# 		ws['D2'] = 'Rendimiento'
-# 		cont = 3
-# 		for p in P:
-# 			ws.cell(row=cont, column = 1).value = p.idProducto
-# 			ws.cell(row=cont, column = 2).value = p.nombre_producto
-# 			ws.cell(row=cont, column = 3).value = p.peso_producto
-# 			ws.cell(row=cont, column = 4).value = p.rendimiento.rendimiento_id
-# 			cont +=1
-#
-# 		nombre_reporte = "Rendimiento"+idRendimiento+".xlsx"
-# 		response = HttpResponse(content_type="application/ms-excel")
-# 		content = "attachment; filename = {0}".format(nombre_reporte)
-# 		response['content-Disposition'] = content
-# 		wb.save(response)
-# 		return response
+def ExportarRendimientoPdf(request,idRendimiento):
+	if request.user.is_authenticated:
+		#LLAMA LOS PRODUCTOS QUE PERTENECEN A ESE RENDIMIENTO
+		class ProductosRendimiento(BaseModelFormSet):
+		    def __init__(self, *args, **kwargs):
+		        super().__init__(*args, **kwargs)
+		        self.queryset =Producto.objects.all().filter(rendimiento_id=idRendimiento)
+		#######################################################################################
+		#######################################################################################
+		rend = Rendimiento.objects.get(idRendimiento=idRendimiento)
+		lt= rend.lote
+		Lt= LoteAnimal.objects.get(nombre_lote__exact=lt)
+		PesoLote=Lt.peso_lote
+		CostoTotal=round(Lt.precio_costo*PesoLote,2) #Total del costo del lote
+		#######################################################################################
+		ProdFormset= modelformset_factory(Producto,form=ProductoForm2 ,formset=ProductosRendimiento,extra=0)
+		formset= ProdFormset(request.POST or None)
+		context = {
+		'lt':lt,'ct':CostoTotal,'formset':formset,
+		}
+		html = render_to_string("rendimiento_pdf.html", context)
+		response = HttpResponse(content_type="application/pdf")
+		response["Content-Disposition"] = "inline;report.pdf"
+		font_config = FontConfiguration()
+		HTML(string=html).write_pdf(response, font_config=font_config)
+
+		return response
+
 #LISTAR ENTIDADES########################################################################
 def ListarAnimales(request):
 	if request.user.is_authenticated:

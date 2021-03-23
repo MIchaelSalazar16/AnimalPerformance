@@ -5,7 +5,7 @@ from appAnimalPerformance.views import inicioAdmin,IngresarRendimiento,IngresarA
 from appAnimalPerformance.views import  login,logout,register, ListarLotes,ListarProductos
 from appAnimalPerformance.views import ListarAnimales, ListarRendimiento, modificarLote, modificarAnimal
 from appAnimalPerformance.views import modificarProducto, modificarRendimiento , eliminarLote, eliminarRendimiento
-from appAnimalPerformance.views import eliminarAnimal, eliminarProducto ,RegistrarPesos,CalculaRendimiento#ExportarRendimientoPdf
+from appAnimalPerformance.views import eliminarAnimal, eliminarProducto ,RegistrarPesos,CalculaRendimiento, ExportarRendimientoPdf
 
 
 urlpatterns=[
@@ -33,5 +33,5 @@ urlpatterns=[
 	path('registrarPesos/<int:idRendimiento>',RegistrarPesos),
 	path('calculaR/<int:idRendimiento>',CalculaRendimiento),
 	path('calculaR/',ListarRendimiento),
-	# path('exportarPdf/<int:idRendimiento>',ExportarRendimientoPdf),
+	path('exportarPdf/<int:idRendimiento>',ExportarRendimientoPdf),
 ]
