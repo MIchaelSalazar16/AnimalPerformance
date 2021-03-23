@@ -22,7 +22,7 @@ class ProductoForm(ModelForm):
 
 class ProductoForm2(ModelForm):
     nombre_producto=forms.CharField(widget=forms.TextInput(attrs={ 'readonly':'readonly','class':'border-0','size':'25'}))
-    peso_producto=forms.FloatField(widget=forms.NumberInput(attrs={'style':'width: 5em', 'min':'0', 'max':'9999.9999'}))
+    peso_producto=forms.FloatField(widget=forms.NumberInput(attrs={'readonly':'readonly','class':'border-0','style':'width: 5em', 'min':'0', 'max':'9999.9999'}))
     precio_venta=forms.FloatField(widget=forms.NumberInput(attrs={ 'readonly':'readonly','class':'border-0 text-danger','style':'width: 5em'}))
     precio_costo=forms.FloatField(widget=forms.NumberInput(attrs={ 'readonly':'readonly','class':'border-0','style':'width: 5em'}))
     utilidad_producto=forms.FloatField(widget=forms.NumberInput(attrs={ 'readonly':'readonly','class':'border-0','style':'width: 5em'}))
@@ -51,6 +51,14 @@ class RendimientoForm(ModelForm):
         fields = ['idRendimiento','lote','nombre_rendimiento']
 
 class RendimientoForm2(ModelForm):
+    nombre_producto=forms.CharField(widget=forms.TextInput(attrs={ 'readonly':'readonly','class':'border-0','size':'20'}))
+    total_costo=forms.FloatField(widget=forms.NumberInput(attrs={'readonly':'readonly','class':'border-0','style':'width: 5em'}))
+    total_venta=forms.FloatField(widget=forms.NumberInput(attrs={'readonly':'readonly','class':'border-0','style':'width: 5em'}))
+    margen_utilidad=forms.FloatField(widget=forms.NumberInput(attrs={'readonly':'readonly','class':'border-0','style':'width: 5em'}))
+    rendimiento_neto=forms.FloatField(widget=forms.NumberInput(attrs={'readonly':'readonly','class':'border-0','style':'width: 5em'}))
+    merma_deshidratacion=forms.FloatField(widget=forms.NumberInput(attrs={'readonly':'readonly','class':'border-0','style':'width: 5em'}))
+    porcentaje_peso_neto=forms.FloatField(widget=forms.NumberInput(attrs={'readonly':'readonly','class':'border-0','style':'width: 5em'}))
+    porcent_merma_deshidratacion=forms.FloatField(widget=forms.NumberInput(attrs={'readonly':'readonly','class':'border-0','style':'width: 5em'}))
     class Meta:
         model = Rendimiento
         fields = ['idRendimiento','total_costo','total_venta','margen_utilidad',

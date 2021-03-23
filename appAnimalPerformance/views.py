@@ -1,8 +1,12 @@
+#exportar excel
+from openpyxl import Workbook
+from django.http.response import HttpResponse
+from django.views.generic.base import TemplateView
+########################################################################
 from django.shortcuts import redirect,render
 from .models import Animal,Producto,Rendimiento,LoteAnimal
 from .forms import AnimalForm,LoteAnimalForm,ProductoForm,RendimientoForm ,ProductoForm2 ,ProductoForm3 ,RendimientoForm2
 from django.core.files.uploadedfile import SimpleUploadedFile
-import json as simplejson
 from django.forms import BaseModelFormSet
 from django.http import HttpResponse,HttpResponseRedirect, HttpRequest
 from django.core import serializers
@@ -13,7 +17,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login as do_login
 from django.contrib.auth.models import User
-from django.forms import modelformset_factory , formset_factory
+from django.forms import modelformset_factory ,formset_factory
 
 def inicioAdmin(request):
 	if request.user.is_authenticated:
@@ -148,7 +152,7 @@ def RegistrarPesos(request,idRendimiento):
 			lt= rend.lote
 			Lt= LoteAnimal.objects.get(nombre_lote__exact=lt)
 			PesoLote=Lt.peso_lote
-			CostoTotal=round(Lt.precio_costo*PesoLote,2) #Total del costo del lote
+			CostoTotal=round(Lt.precio_costo*PesoLote,3) #Total del costo del lote
 			ProdFormset= modelformset_factory(Producto,form=ProductoForm3 ,formset=ProductosRendimiento,extra=0)
 			formset= ProdFormset(request.POST or None)
 			if request.method== 'POST':
@@ -206,37 +210,37 @@ def CalculaRendimiento(request,idRendimiento):
     #######################################################################################################################
 		#Calula el total de venta por producto y el porcentaje que equivale el peso de cada producto en referecia al peso del lote
 		for x in range(0,len(P)):
-			ListTotalVentaProd.append(round((float(P[int(x)].peso_producto)*float(P[int(x)].precio_venta)),2))
-			ListPorcenPesoXProd.append(round(float(P[int(x)].peso_producto)/CostoTotal,2))
+			ListTotalVentaProd.append(round((float(P[int(x)].peso_producto)*float(P[int(x)].precio_venta)),3))
+			ListPorcenPesoXProd.append(round(float(P[int(x)].peso_producto)/CostoTotal,3))
 		#Total de venta de todos los productos
 		for x in range(0,len(ListTotalVentaProd)):
-			VentaTotal+=round(ListTotalVentaProd[int(x)],2)
+			VentaTotal+=round(ListTotalVentaProd[int(x)],3)
 		#Calcula margen de utilidad del rendimiento
 		if CostoTotal!=0 and VentaTotal!=0:
-			MargUtilGen=round((((CostoTotal*100/VentaTotal)-100)*(-1)),2)
+			MargUtilGen=round((((CostoTotal*100/VentaTotal)-100)*(-1)),3)
 		#calcula margen de utilidad por KG en cada producto
 		for x in range(0,len(P)):
-			ListUtilXprodXkg.append(round(((float(P[int(x)].precio_venta)*MargUtilGen)/100),2))
+			ListUtilXprodXkg.append(round(((float(P[int(x)].precio_venta)*MargUtilGen)/100),3))
 		#Calcula el precio de costo por producto
 		range(0,len(ListUtilXprodXkg))
 		for x in range(0,len(P)):
-			ListPrecioCostXprod.append(round(float(P[int(x)].precio_venta)-ListUtilXprodXkg[x],2))
+			ListPrecioCostXprod.append(round(float(P[int(x)].precio_venta)-ListUtilXprodXkg[x],3))
 		#Calcula el costo total por producto segun el peso.
 		range(0,len(ListPrecioCostXprod))
 		for x in range(0,len(P)):
-			ListTotalCostoXprod.append(round((float(P[int(x)].peso_producto)*ListPrecioCostXprod[x]),2))
+			ListTotalCostoXprod.append(round((float(P[int(x)].peso_producto)*ListPrecioCostXprod[x]),3))
 		#Calcula la utilidad neta $ por producto y la suma de los totales en costo total por producto
 		#Preparamos las listas para poder iterar
 		range(0,len(ListTotalVentaProd))
 		range(0,len(ListTotalCostoXprod))
 		for x in range(0,len(P)):
-			ListUtilXprod.append(round(ListTotalVentaProd[x]-ListTotalCostoXprod[x],2))
-			TotalCos+=round(ListTotalCostoXprod[x],2)
+			ListUtilXprod.append(round(ListTotalVentaProd[x]-ListTotalCostoXprod[x],3))
+			TotalCos+=round(ListTotalCostoXprod[x],3)
 		#Rendimiento Neto
 		for x in range(0,len(P)):
-			RendNeto=round(RendNeto,2)+round(float(P[int(x)].peso_producto),2)
+			RendNeto=round(RendNeto,3)+round(float(P[int(x)].peso_producto),3)
 		#Merma por deshidratación
-		MermaDES=round((PesoLote-RendNeto),2)
+		MermaDES=round((PesoLote-RendNeto),3)
 		#PORCENTAJE MERMA POR DESHIDRATACIÓN
 		PorcentMermaDes=round(MermaDES*100/PesoLote)
 	############################################################################################################
@@ -267,12 +271,12 @@ def CalculaRendimiento(request,idRendimiento):
 		formset= ProdFormset(request.POST or None)
 		fr= RendimientoForm2(request.POST or None)
 		r=rend #Instancia del rendimiento a guardar
-		fr.fields["total_costo"].initial=round(TotalCos,2)
-		fr.fields["total_venta"].initial=round(VentaTotal,2)
+		fr.fields["total_costo"].initial=round(TotalCos,3)
+		fr.fields["total_venta"].initial=round(VentaTotal,3)
 		fr.fields["margen_utilidad"].initial=MargUtilGen
 		fr.fields["rendimiento_neto"].initial=round(RendNeto)
-		fr.fields["merma_deshidratacion"].initial=round(PesoLote-RendNeto,2)
-		fr.fields["porcentaje_peso_neto"].initial=round((RendNeto*100)/PesoLote,2)
+		fr.fields["merma_deshidratacion"].initial=round(PesoLote-RendNeto,3)
+		fr.fields["porcentaje_peso_neto"].initial=round((RendNeto*100)/PesoLote,3)
 		fr.fields["porcent_merma_deshidratacion"].initial=PorcentMermaDes
 		#GUARDAR EL RENDIMIENTO Y LOS FORMULARIOS DE PRODUCTO
 		if request.method== 'POST':
@@ -307,11 +311,32 @@ def CalculaRendimiento(request,idRendimiento):
 		return render(request,"CalculaRendimiento.html",context)
 	else:
 		return redirect(login)
-
-
-def ExportarRendimiento(request):
-
-	return render(request,"ExportarRendimiento.html",context)
+##########EXPORTAR A PDF###############################################################################
+# def ExportarRendimientoPdf(TemplateView,idRendimiento):
+# 	def get(self, request, *args, **kwargs):
+# 		P= Producto.objects.all().filter(rendimiento_id=idRendimiento)
+# 		wb = Workbook()
+# 		ws = wb.active
+# 		ws['A1'] = 'REPORTE DETALLADO DE LAS CPP CORRESPONDIENTES A ARRIENDOS'
+#
+# 		ws['A2']= 'ID producto'
+# 		ws['B2']= 'Nombre Producto'
+# 		ws['C2'] = 'Peso Producto'
+# 		ws['D2'] = 'Rendimiento'
+# 		cont = 3
+# 		for p in P:
+# 			ws.cell(row=cont, column = 1).value = p.idProducto
+# 			ws.cell(row=cont, column = 2).value = p.nombre_producto
+# 			ws.cell(row=cont, column = 3).value = p.peso_producto
+# 			ws.cell(row=cont, column = 4).value = p.rendimiento.rendimiento_id
+# 			cont +=1
+#
+# 		nombre_reporte = "Rendimiento"+idRendimiento+".xlsx"
+# 		response = HttpResponse(content_type="application/ms-excel")
+# 		content = "attachment; filename = {0}".format(nombre_reporte)
+# 		response['content-Disposition'] = content
+# 		wb.save(response)
+# 		return response
 #LISTAR ENTIDADES########################################################################
 def ListarAnimales(request):
 	if request.user.is_authenticated:
