@@ -12,6 +12,17 @@
     {% csrf_token %}
     <div class="card" style="width: 40rem;">
       <div class="card-body" style="padding:40px;">
+        {% if messages %}
+        <div class="row mt-3 mb-3">
+            <div class="col-12">
+              {% for message in messages %}
+                  <div class="alert alert-{{message.tags}}">
+                      {{message}}
+                  </div>
+              {% endfor %}
+            </div>
+        </div>
+        {% endif %}
         <tr class="row">
           <td class="float-right"><a href="/AnimalPerformance/login" class="btn btn-success">
             <img src="{% static '/images/atras.png'%}" alt="" width="30" height="30"> LOGIN

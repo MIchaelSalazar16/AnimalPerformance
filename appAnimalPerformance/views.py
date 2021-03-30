@@ -22,6 +22,8 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login as do_login
 from django.contrib.auth.models import User
 from django.forms import modelformset_factory ,formset_factory
+from django.contrib	import	messages
+
 
 def inicioAdmin(request):
 	if request.user.is_authenticated:
@@ -38,8 +40,15 @@ def register(request):
 			if user is not None:
 				do_login(request, user)
 				return redirect(inicioAdmin)
-			else:
-				return redirect(login)
+		elif form.cleaned_data.get("password1")!=form.cleaned_data.get("password2"):
+			print(form.cleaned_data.get("password1"))
+			print(form.cleaned_data.get("password2"))
+			messages.error(request,F"Las contraseñas no coinciden o carecen de seguridad")
+			return render(request, "registro.html", {'form': form})
+		elif form.cleaned_data.get("username")==None:
+			messages.error(request, F"El usuario ya se encuentra registrado, regrese al login")
+			return render(request, "registro.html", {'form': form})
+
 	return render(request, "registro.html", {'form': form})
 
 def login(request):
@@ -53,6 +62,12 @@ def login(request):
 			if user is not None:
 				do_login(request, user)
 				return redirect(inicioAdmin)
+		elif User.objects.filter(username=form.cleaned_data['username']).exists()!=True:
+			messages.error(request, F"Usuario no registrado, por favor registrese.")
+			return render(request, "login.html", {'form': form})
+		elif authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password'])!=True:
+			messages.error(request,F"Usuario o contraseña incorrectos.")
+			return render(request, "login.html", {'form': form})
 	return render(request, "login.html", {'form': form})
 
 def logout(request):
@@ -298,7 +313,7 @@ def CalculaRendimiento(request,idRendimiento):
 				else:
 					return redirect('/AnimalPerformance/registrarPesos/'+str(idRendimiento))
 			else:
-				mensaje="EL PORCENTAJE DE MERMA POR DESHIDRATACIÓN NO PUEDE EXEDER EL 7%"
+				mensaje="EL PORCENTAJE DE MERMA POR DESHIDRATACIÓN NO PUEDE EXCEDER EL 7%"
 				context={
 				'fr':fr,'lt':lt,'ct':CostoTotal,'formset':formset,
 				'P':P,'RendNeto':RendNeto,'ct2':TotalCos,'MD':MermaDES,
@@ -318,12 +333,6 @@ def CalculaRendimiento(request,idRendimiento):
 ##########EXPORTAR A PDF###############################################################################
 def ExportarRendimientoPdf(request,idRendimiento):
 	if request.user.is_authenticated:
-		#LLAMA LOS PRODUCTOS QUE PERTENECEN A ESE RENDIMIENTO
-		class ProductosRendimiento(BaseModelFormSet):
-		    def __init__(self, *args, **kwargs):
-		        super().__init__(*args, **kwargs)
-		        self.queryset =Producto.objects.all().filter(rendimiento_id=idRendimiento)
-		#######################################################################################
 		#######################################################################################
 		rend = Rendimiento.objects.get(idRendimiento=idRendimiento)
 		lt= rend.lote
@@ -331,10 +340,9 @@ def ExportarRendimientoPdf(request,idRendimiento):
 		PesoLote=Lt.peso_lote
 		CostoTotal=round(Lt.precio_costo*PesoLote,2) #Total del costo del lote
 		#######################################################################################
-		ProdFormset= modelformset_factory(Producto,form=ProductoForm2 ,formset=ProductosRendimiento,extra=0)
-		formset= ProdFormset(request.POST or None)
+		Prod=Producto.objects.all().filter(rendimiento_id=idRendimiento)
 		context = {
-		'lt':lt,'ct':CostoTotal,'formset':formset,
+		'lt':lt,'ct':CostoTotal,'Prod':Prod, 'rend':rend,
 		}
 		html = render_to_string("rendimiento_pdf.html", context)
 		response = HttpResponse(content_type="application/pdf")
